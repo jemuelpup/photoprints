@@ -1,0 +1,6 @@
+{
+"employees":[	{ "name":"jemuel Elimanco", "age":23, "city":"QC" },
+				{ "name":"Karen Joy talla", "age":22, "city":"QC" },
+				{ "name":"John Doe", "age":31, "city":"New York" }
+			]
+}

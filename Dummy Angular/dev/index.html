@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Angular js</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/reset.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/logoSvgStyle.css">
+		<link rel="stylesheet" href="css/cards.css">
+		<script src="node_modules/angular/angular.min.js"></script>
+	</head>
+	<body ng-app="appModule">
+		<div class="logo" ng-controller="svg">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 340 361" enable-background="new 0 0 340 361" xml:space="preserve">
+				<g id="Layer_3">
+					<path stroke-miterlimit="10" d="M336,217.8c0,76.04-61.64,137.681-137.68,137.681
+						c-69.93,0-127.68-52.131-136.51-119.641c20.53,50.24,69.89,85.641,127.51,85.641C265.36,321.48,327,259.84,327,183.8
+						c0-6.12-0.4-12.15-1.18-18.06C332.38,181.8,336,199.38,336,217.8z"/>
+				</g>
+				<g id="Layer_4">
+					<path stroke-miterlimit="10" d="M312,190c0,42.84-27.21,79.32-65.29,93.11
+						c29.69-17.5,49.62-49.811,49.62-86.78c0-55.59-45.07-100.66-100.66-100.66c-5.77,0-11.43,0.49-16.93,1.42
+						C189.41,93.15,200.96,91,213,91C267.68,91,312,135.32,312,190z"/>
+					<path stroke-miterlimit="10" d="M224,107.333c1.625-1.458-10.416,24.417-34.333,30.917
+						c-37.417,7.5-53.667-19.5-53.667-19.5s-19.5-24.5,11-43c0,0-10.75,13.625,1,17s15.25-19.375,45.75-22.25
+						c20,3.125,22.875,12.375,27.5,15.75S194.875,78,167,101.5C167,101.5,205.25,93.25,224,107.333z"/>
+				</g>
+				<g id="Layer_2">
+					<path stroke-miterlimit="10" d="M37,202.5c0,59.88,29.65,112.84,75.08,144.98
+						C49.08,320.23,5,257.51,5,184.5C5,86.47,84.47,7,182.5,7c38.15,0,73.49,12.04,102.42,32.52C263.33,30.18,239.52,25,214.5,25
+						C116.47,25,37,104.47,37,202.5z"/>
+				</g>
+			</svg>
+		</div>
+		<header>
+			<div class="container">
+				<p class="themeTitle">My Themes</p>
+				<ul class="navigation-link">
+					<li><a href="#">Lorem ipsum</a></li>
+					<li><a href="#">dolor sit</a></li>
+					<li><a href="#">quia nulla</a></li>
+				</ul>
+			</div>
+		</header>
+		<main>
+			<section class="banner">
+				<h1>Jemuel</h1>
+				<p class="subTitle">Lorem ipsum dolor sit amet consectetur.</p>
+				<p class="par">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit reprehenderit.</p>
+				<button class="theme-btn">Explore my designs</button>
+			</section>
+			<section class="content">
+				<div class="container">
+					<div class="" ng-controller="cards">
+						<!-- create cards -->
+						<div class="row">
+						  <div class="col-md-6">
+						  	<profile-card01></profile-card01>
+						  </div>
+						  <div class="col-md-6">
+						  	<article-card01></article-card01>
+						  </div>
+						  <div class="col-md-6">
+						  	<article-card02></article-card02>
+						  </div>
+						  <div class="col-md-6">
+						  	<div class="card">
+									<div class="shoppingCategoryCard01" ng-click="setActive()");">
+										<div class="background-img"><img src='images/img01.jpg' alt=""></div>
+										<a href="#">
+											<div class="categoryTitleBG"><!--effects only--></div>
+											<p class="categoryTitle">Lorem ipsum dolor sit amet.</p>
+											<button class="theme-btn">shop now</button>
+										</a>
+									</div>
+								</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer>
+			<div class="agreementBlock">
+				<input type="checkbox" ng-model="switch">I agree
+				<button ng-disabled="!switch">Next</button>
+			</div>
+		</footer>
+
+	<script src="node_modules/gsap/src/minified/TweenMax.min.js"></script>
+	<script src="js/appModule.js"></script>
+	<script src="js/appService.js"></script>
+	<script src="js/appController.js"></script>
+	<script src="js/appDirective.js"></script>
+	<!-- <script src="js/appFilter.js"></script> -->
+	</body>
+
+</html>
+
+
+<script>
+	function findMax(){
+
+		var curr=-Infinity;
+		for(var i=0; i<arguments.length;i++){
+			if(arguments[i]>curr) curr=arguments[i];
+		} 
+		return curr;
+	}
+	x = findMax(2,1,3,124,23,234,43,234,32,412,132,31,24,234,23,4)
+	console.log(x);
+</script>
+

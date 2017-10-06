@@ -1,0 +1,47 @@
+
+.cardContainer{
+	overflow: hidden;
+}
+
+
+/* other component style */
+.card img{
+	width: 100%;
+}
+
+.cardPar{
+	text-align: justify;
+}
+
+.card .imageBlock{
+	position: relative;
+}
+
+.card .imageBlock .cardTitle{
+	position: absolute;
+    color: #fff;
+    background-color: rgba(0,0,0,0.5);
+    margin: 0;
+    border-bottom: 0;
+    padding: 0px 12px 5px;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: 0;
+    line-height: 1.5;
+}
+
+.cWhite{
+	color: #fff!important;
+}
+.card .imageBlock .logo{
+	position: relative;
+	overflow: hidden;
+}
+
+.largeText{
+	text-align: left;
+	font-size: 150%;
+	line-height: 141%;
+	padding: 3% 1%;
+
+}

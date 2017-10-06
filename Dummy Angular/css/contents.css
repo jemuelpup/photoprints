@@ -1,0 +1,25 @@
+.banner{
+	width: 100%;
+	position: relative;
+	height: 675px;
+	min-height: 50%;
+}
+.banner img{
+	position: absolute;
+	width: 100%;
+	min-height: 50%;
+}
+
+.col-list-3 .card{
+	width: 33.3333333333%;
+	float: left;
+}
+
+/* footer */
+.agreementBlock{
+	clear: left;
+	overflow: hidden;
+}
+footer{
+	padding-bottom: 100px;
+}

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,aAAc;EACb,IAAI,EAAE,OAAO;;AAGd,aAAc;EACb,IAAI,EAAE,OAAO;;AAGd,aAAc;EACb,IAAI,EAAE,OAAO",
+"sources": ["../scss/logoSvgStyle.scss"],
+"names": [],
+"file": "logoSvgStyle.css"
+}

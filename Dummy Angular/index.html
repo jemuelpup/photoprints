@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Angular js</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/cardsStyle.css">
+		<link rel="stylesheet" href="css/reset.css">
+		
+		<script src="js/angular.min.js"></script>
+	</head>
+
+
+	<body ng-app="appModule">
+
+	<div style="display: none">
+		<p ng-reply="the word"></p>
+
+		<div ng-controller="appController">
+			
+			<input type="text" ng-model="name"><!-- models are for inputs and forms -->
+
+			<h1>{{name}}</h1>
+			
+			<ul>
+				<li ng-repeat="employee in employeeList">{{employee.name}}
+				<span ng-click="showSomething()">{{employee.age}}</span>
+				<card-directive></card-directive>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div ng-controller="jsonDataController">
+			<h2>{{header|capitalized}}</h2>
+			<h2>{{name2|capitalizedWithCount}}</h2>
+			<h3>{{count}}</h3>
+			<p>name = {{name}}</p>
+			<p>age = {{age}}</p>
+			<p>city = {{city}}</p>
+
+		</div>
+		<div ng-controller="companyEmployee">
+			<ul ng-repeat="employee in employees">
+				<li ng-if="$odd">
+					{{$index+1}}.
+					{{employee.name}}
+					{{employee.age}}
+				</li>
+				<li ng-if="$even" style="background-color:#f1f1f1">
+					{{$index+1}}.
+					{{employee.name}}
+					{{employee.age}}
+				</li>
+			</ul>
+			<h4>{{selectedName}}</h4>
+			<select ng-model="selectedName" name="employees" id="emp" ng-options="employee.name for employee in employees">{{employee.name}}</select>
+		</div>
+
+		<div ng-controller="databaseRecordsSample">
+			<input type="text" ng-model="filterName">
+			<table>
+			<tr ng-repeat="d in data | filter : filterName">
+				<td>{{d.id}}</td>
+				<td>{{d.name}}</td>
+				<td>{{d.employeeNum}}</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<div ng-controller="autoCompleteName">
+		<input ng-keyup="filterNameList()" type="text" ng-model="text">
+		<ul class=nameSelector>
+			<li ng-repeat = "name in names" ng-class="{'active': name == names[0]}">{{name}}</li>
+		</ul>
+	</div>
+
+	<script src="js/appModule.js"></script>
+	<script src="js/appService.js"></script>
+	<script src="js/appController.js"></script>
+	<script src="js/appDirective.js"></script>
+	<script src="js/appFilter.js"></script>
+	</body>
+
+
+</html>
