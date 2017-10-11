@@ -1,3 +1,80 @@
+header, main {
+  padding-left: 300px; }
 
+header {
+  display: block; }
+
+.sidenav.fixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+
+.container {
+  width: 85%; }
+
+.navigation li a {
+  display: table;
+  padding: 0 34px;
+  height: 64px; }
+  .navigation li a i, .navigation li a span {
+    display: table-cell;
+    vertical-align: middle; }
+  .navigation li a i {
+    width: 50px;
+    margin-right: 24px;
+    color: #000; }
+  .navigation li a span {
+    color: #565656; }
+
+h1 {
+  text-align: center; }
+
+h2 {
+  font-size: 3rem; }
+
+h3 {
+  color: #12005e;
+  font-size: 2rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #d0d0d0; }
+
+h4 {
+  font-size: 1.7rem; }
+
+.banner-area {
+  background-color: #4a148c;
+  color: #fff; }
+  .banner-area h2 {
+    margin: 0;
+    padding: 2.1rem 0 1.68rem 0; }
+
+.employee-management,
+.buisness-management {
+  display: none; }
+
+.fixed-bottom-right {
+  position: fixed;
+  bottom: 45px;
+  right: 25px;
+  background-color: #4a148c; }
+
+.employee-list tr {
+  -webkit-transition: background 200ms ease;
+  -moz-transition: background 200ms ease;
+  -ms-transition: background 200ms ease;
+  -o-transition: background 200ms ease;
+  transition: background 200ms ease; }
+  .employee-list tr.active {
+    background-color: #7c43bd;
+    color: #fff; }
+  .employee-list tr:hover {
+    opacity: 0.5; }
+
+.gender {
+  padding: 0 .75rem; }
 
 /*# sourceMappingURL=style.css.map */

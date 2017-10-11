@@ -1,20 +1,36 @@
 <?php
 
 
-
-$query = "CREATE TABLE IF NOT EXISTS `tbl_role` (
-`role_id` int(11) NOT NULL,
-  `role_title` varchar(50) NOT NULL,
-  `role_active` tinyint(4) NOT NULL DEFAULT '1'
+// for testing purposes only
+$query = "CREATE TABLE IF NOT EXISTS `employee_tbl` (
+  `name` varchar(100) NOT NULL,
+  `address` varchar(50) DEFAULT NULL,
+  `contact_number` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `position_fk` int(11) DEFAULT NULL,
+  `branch_fk` int(11) DEFAULT NULL,
+  `salary` decimal(11,2) NOT NULL,
+  `birth_day` date DEFAULT NULL,
+  `gender` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-";
-	
+		";
+
+
+
+$query = $_POST["createQuery"];
+
+
+
 $formattedQuery = formatStringForCodeGeneration($query);
 $jsonObject = json_decode(formatData($formattedQuery));
 
-createHTMLForms($jsonObject); echo "<hr>";
-createInsertQueries($jsonObject); echo "<hr>";
-createUpdateQueries($jsonObject); echo "<hr>";
+echo "
+{\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
+	\"insertQuery\":\"".createInsertQueries($jsonObject)."\",
+	\"updateQuery\":\"".createUpdateQueries($jsonObject)."\",
+	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\"
+}
+";
 
 
 
@@ -42,7 +58,7 @@ function createInsertQueries($jsonObject){
 	$fields = "(".substr($fields, 0, -1).")";
 	$values = "(".substr($values, 0, -1).")";
 	$sql = "INSERT INTO $tableName $fields VALUES $values";
-	echo "$sql<br><br>";
+	return "$sql";
 }
 
 function createUpdateQueries($jsonObject){
@@ -58,11 +74,8 @@ function createUpdateQueries($jsonObject){
 	}
 	$updateVal = substr($updateVal, 0, -1);
 	$sql = "UPDATE $tableName SET $updateVal";
-	echo "$sql<br><br>";
+	return "$sql";
 }
-
-
-
 
 
 
@@ -88,32 +101,31 @@ function createUpdateQueries($jsonObject){
 function createHTMLForms($jsonObject){
 	foreach($jsonObject as $object){
 		//	echo $object->tableName;
+		$code = "";
 		foreach($object->data as $jsonData){
 			$inputType = "text";
 			if($jsonData->dataType=="num"){
 				$inputType = "number";
 			}
-			echo "
-			<label for='$jsonData->columnName'>$jsonData->columnName</label>
-			<input type='$inputType' class='' name='$jsonData->columnName' maxlength='$jsonData->length' $jsonData->attribute/>
-			";
+			$code .= "<div class='input-field col s12'><input placeholder='' name='$jsonData->columnName' value='$jsonData->defaultVal' type='$inputType' class='validate' maxlength='$jsonData->length' $jsonData->attribute/><label for='$jsonData->columnName'>$jsonData->columnName</label></div>";
 		}
+		return $code;
 	}
 }
 
 function createDynamicDataTable($jsonObject){
-//	<table>
-//		<tr>
-//			<th>Company</th>
-//			<th>Contact</th>
-//			<th>Country</th>
-//		</tr>
-//		<tr>
-//			<td>Alfreds Futterkiste</td>
-//			<td>Maria Anders</td>
-//			<td>Germany</td>
-//		</tr>
-//	</table>
+	$th = "";
+	$td = "";
+	foreach($jsonObject as $object){
+		$code = "";
+		foreach($object->data as $jsonData){
+			$th .= "<th>$jsonData->columnName</th>";
+			$td .= "<td>$jsonData->columnName</td>";
+		}
+	}
+	$th = "<tr>$th</tr>";
+	$td = "<tr>$td</tr>";
+	return "<table>$th$td$td$td</table>";
 }
 
 
@@ -163,6 +175,7 @@ function formatData($formattedQuery){
 	$maxLength = "";
 	$colNameAndType = [];
 	$dataJSON = "";
+	$defaultVal = "";
 	
 	foreach($formattedQuery as $queryWord){
 		switch ($state) {
@@ -196,7 +209,7 @@ function formatData($formattedQuery){
 				$dataType = "";
 				$attribute = "";
 				$maxLength = "";
-				
+				$defaultVal = '';
 				$colName = $queryWord;
 				$state = $state4;
 			}break;
@@ -233,12 +246,15 @@ function formatData($formattedQuery){
 				if($queryWord=='('){
 					$state = $state6;
 				}
-				elseif($queryWord==','){
-					$state = $state3;
-					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength));
-				}
 				elseif($queryWord=='NOT'){
 					$state = $state9;
+				}
+				elseif($queryWord=='DEFAULT'){
+					$state = $state12;
+				}
+				elseif($queryWord==','){
+					$state = $state3;
+					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength,"defaultVal"=>$defaultVal));
 				}
 				else{ $state = $state8; }
 			}break;
@@ -249,9 +265,10 @@ function formatData($formattedQuery){
 			case $state7:{ if($queryWord==')'){ $state = $state8; } else{ $state = $state10; } }break;
 			case $state8:{
 				if($queryWord=='NOT'){ $state = $state9; }
-				else if($queryWord==','){
+				elseif($queryWord=='DEFAULT'){ $state = $state11; }
+				elseif($queryWord==','){
 					$state = $state3;
-					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength));
+					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength,"defaultVal"=>$defaultVal));
 				}
 				else{ $state = $state3; }
 			}break;
@@ -265,15 +282,29 @@ function formatData($formattedQuery){
 			case $state10:{
 				if($queryWord==','){
 					$state = $state3;
-					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength));
+					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength,"defaultVal"=>$defaultVal));
 				}
 				elseif($queryWord==')'){
 					$state = $stateEnd;
-					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength));
+					array_push($colNameAndType,array("columnName"=>$colName,"dataType"=>$dataType,"attribute"=>$attribute,"length"=>$maxLength,"defaultVal"=>$defaultVal));
+				}
+				elseif($queryWord=="DEFAULT"){
+					$state = $state12;
 				}
 				else{
 					$state = $state10;
 				}
+			}break;
+			case $state11:{
+				if($queryWord=='NULL'){
+					$state = $state10;
+					$attribute="";
+				}
+			}break;
+			case $state12:{
+				$state = $state10;
+				// if($queryWord=="NULL")
+				$defaultVal=($queryWord=="NULL")? "":str_replace("'","",$queryWord);
 			}break;
 			case $stateEnd:{ }break;
 		}
@@ -292,19 +323,18 @@ function formatData($formattedQuery){
 
 // This function returns array of generated String
 function formatStringForCodeGeneration($query){
+	// echo preg_replace('/uel\d+/','asd',"jemuel123");
+	
+	$query = preg_replace('/decimal\(\d+,?\d\)/', 'int(11)' ,$query);
 	$query = trim(preg_replace('/\s+/', ' ', $query));// trim removes space before and after the string
 	$query = str_replace('(', ' ( ', $query);
 	$query = str_replace(')', ' ) ', $query);
 	$query = str_replace(',', ' , ', $query);
 	$query = str_replace('`', '', $query);
 	$query = preg_replace('/\s+/', ' ', $query);
+	// echo $query;
 	return explode(' ',$query);
 }
-
-
-
-
-
 
 
 
@@ -364,7 +394,7 @@ function createHTMLFormsTest($jsonObject){
 			}
 			echo "
 			<label for='$jsonData->columnName'>$jsonData->columnName</label>
-			<input type='$inputType' class='' name='$jsonData->columnName' maxlength='$jsonData->length' value=$dummyValues $jsonData->attribute/>
+			<input type='$inputType' class='' name='$jsonData->columnName' maxlength='$jsonData->length' value='$jsonData->defaultVal' $jsonData->attribute/>
 			";
 		}
 	}
@@ -405,7 +435,7 @@ function getTheKeysAndValueOfObject($jsonObject){
 			echo "<hr>";
 		}
 	}
-
 }
+
 
 ?>
