@@ -37,20 +37,22 @@
 								<div class="col s6">
 									<div class="category">
 										<h3>Category</h3>
-										<div class="input-field col s12">
-										    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
-										    <label for="name">name</label>
-										</div>
-										<div class="input-field col s12">
-										    <input name="code" value="" type="text" class="validate" maxlength="10">
-										    <label for="code">code</label>
-										</div>
-										<div class="input-field col s12">
-										    <input name="description" value="" type="text" class="validate" maxlength="500">
-										    <label for="description">description</label>
-										</div>
-						        <a class="waves-effect waves-light btn">Add</a>
-						        <a class="waves-effect waves-light btn">Clear</a>
+										<form action="#">
+											<div class="input-field col s12">
+											    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
+											    <label for="name">name</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="code" value="" type="text" class="validate" maxlength="10">
+											    <label for="code">code</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="description" value="" type="text" class="validate" maxlength="500">
+											    <label for="description">description</label>
+											</div>
+							        <button class="waves-effect waves-light btn add" type="submit">Add</button>
+							        <a class="waves-effect waves-light btn">Clear</a>
+						        </form>
 					        </div>
 				        </div>
 				        <div class="col s6">

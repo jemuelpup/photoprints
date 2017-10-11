@@ -14,15 +14,35 @@ $(document).ready(function(){
 		hideAll();
 		$(".buisness-management").show();
 	});
-	hideAll();
+	// hideAll();
 	function hideAll(){
 		$(".product-management,.employee-management,.buisness-management").hide();
 	}
 /********************************************/
 /*
+	Operations
+*/
+$(".category form").submit(function(e){
+	e.preventDefault();
+	console.log("dumaan dito");
+	var dataInputs = $( this ).serializeArray();
+	// console.log(dataInputs);
+	$.post("functions.php",
+	{
+		process: "AddCategory",
+		data: dataInputs
+	},
+	function(data,status){
+		console.log(status);
+		console.log(data);
+	});
+	
+});
+/********************************************/
+/*
 	Materialize codes
 */	
-	// $('.modal').modal();
+	$('.modal').modal();
 /********************************************/
 /*
 	Employee table
