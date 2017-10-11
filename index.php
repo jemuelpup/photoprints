@@ -43,14 +43,14 @@
 											    <label for="name">name</label>
 											</div>
 											<div class="input-field col s12">
-											    <input name="code" value="" type="text" class="validate" maxlength="10">
-											    <label for="code">code</label>
+											    <input name="category_code" value="" type="text" class="validate" maxlength="10">
+											    <label for="category_code">category_code</label>
 											</div>
 											<div class="input-field col s12">
 											    <input name="description" value="" type="text" class="validate" maxlength="500">
 											    <label for="description">description</label>
 											</div>
-							        <button class="waves-effect waves-light btn add" type="submit">Add</button>
+							        <button class="waves-effect waves-light btn" type="submit">Add</button>
 							        <a class="waves-effect waves-light btn">Clear</a>
 						        </form>
 					        </div>
@@ -61,22 +61,22 @@
 										    <tbody>
 										        <tr>
 										            <th>name</th>
-										            <th>code</th>
+										            <th>category_code</th>
 										            <th>description</th>
 										        </tr>
 										        <tr>
 										            <td>name</td>
-										            <td>code</td>
+										            <td>category_code</td>
 										            <td>description</td>
 										        </tr>
 										        <tr>
 										            <td>name</td>
-										            <td>code</td>
+										            <td>category_code</td>
 										            <td>description</td>
 										        </tr>
 										        <tr>
 										            <td>name</td>
-										            <td>code</td>
+										            <td>category_code</td>
 										            <td>description</td>
 										        </tr>
 										    </tbody>

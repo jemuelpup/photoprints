@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2017 at 12:04 PM
+-- Generation Time: Oct 11, 2017 at 11:13 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -36,12 +36,17 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brancg_tbl`
+-- Table structure for table `branch_tbl`
 --
 
-CREATE TABLE IF NOT EXISTS `brancg_tbl` (
+CREATE TABLE IF NOT EXISTS `branch_tbl` (
+`id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `code` varchar(10) NOT NULL
+  `address` varchar(200) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `code` varchar(10) NOT NULL,
+  `modified_by_fk` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -51,9 +56,12 @@ CREATE TABLE IF NOT EXISTS `brancg_tbl` (
 --
 
 CREATE TABLE IF NOT EXISTS `category_tbl` (
+`id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `code` varchar(10) DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL
+  `category_code` varchar(10) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -63,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `category_tbl` (
 --
 
 CREATE TABLE IF NOT EXISTS `employee_tbl` (
+`id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `address` varchar(50) DEFAULT NULL,
   `contact_number` varchar(50) DEFAULT NULL,
@@ -70,6 +79,8 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
   `position_fk` int(11) DEFAULT NULL,
   `branch_fk` int(11) DEFAULT NULL,
   `salary` decimal(11,2) NOT NULL,
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   `birth_day` date DEFAULT NULL,
   `gender` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -81,10 +92,13 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
 --
 
 CREATE TABLE IF NOT EXISTS `item_tbl` (
+`id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `code` varchar(10) DEFAULT NULL,
   `category_fk` int(11) DEFAULT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by_fk` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   `price` decimal(11,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -119,9 +133,9 @@ CREATE TABLE IF NOT EXISTS `position_tbl` (
 --
 
 --
--- Indexes for table `brancg_tbl`
+-- Indexes for table `branch_tbl`
 --
-ALTER TABLE `brancg_tbl`
+ALTER TABLE `branch_tbl`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -159,9 +173,9 @@ ALTER TABLE `position_tbl`
 --
 
 --
--- AUTO_INCREMENT for table `brancg_tbl`
+-- AUTO_INCREMENT for table `branch_tbl`
 --
-ALTER TABLE `brancg_tbl`
+ALTER TABLE `branch_tbl`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `category_tbl`

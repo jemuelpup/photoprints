@@ -7,21 +7,28 @@ switch($_POST['process']){
 	}break;
 }
 
+//UPDATE category_tbl SET name = '$name',category_code = '$category_code',description = '$description'
+
 function insertCategory(){
 	$d = $_POST['data'];
-	print_r( $d );
-	echo getFieldValue($d,"name");
-}
+	
 
+	$sql = "INSERT INTO category_tbl (name,category_code,description) VALUES ('".getFieldValue($d,'name')."','".getFieldValue($d,'category_code')."','".getFieldValue($d,'description')."')";
+
+	echo $sql;
+}
+/*
+@param
+$d - serialize array value from jquery
+$name - name of the field
+*/
 function getFieldValue($d,$name){
 	foreach($d as $data){
-		print_r( $data );
 		if($data["name"]==$name){
-			echo "Pumasok sa if";
-			print_r( $data );
 			return $data["value"];
 		}
 	}
 }
 
 ?>
+
