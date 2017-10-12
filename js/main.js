@@ -24,20 +24,32 @@ $(document).ready(function(){
 */
 $(".category form").submit(function(e){
 	e.preventDefault();
-	console.log("dumaan dito");
-	var dataInputs = $( this ).serializeArray();
-	// console.log(dataInputs);
+	dbOperations("AddCategory",$(this).serializeArray());
+});
+$(".item form").submit(function(e){
+	e.preventDefault();
+	dbOperations("AddItem",$(this).serializeArray());
+});
+$(".position form").submit(function(e){
+	e.preventDefault();
+	dbOperations("AddPosition",$(this).serializeArray());
+});
+$(".branch form").submit(function(e){
+	e.preventDefault();
+	dbOperations("AddBranch",$(this).serializeArray());
+});
+
+function dbOperations(processName,dataInputs){
 	$.post("functions.php",
 	{
-		process: "AddCategory",
+		process: processName,
 		data: dataInputs
 	},
 	function(data,status){
 		console.log(status);
 		console.log(data);
 	});
-	
-});
+}
 /********************************************/
 /*
 	Materialize codes

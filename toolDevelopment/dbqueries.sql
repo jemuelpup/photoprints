@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2017 at 11:13 AM
+-- Generation Time: Oct 12, 2017 at 10:40 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Table structure for table `account_tbl`
 --
 
-CREATE TABLE IF NOT EXISTS `account` (
+CREATE TABLE IF NOT EXISTS `account_tbl` (
   `employee_id_fk` int(11) NOT NULL,
   `username` int(11) NOT NULL,
   `password` int(11) NOT NULL,
@@ -118,6 +118,22 @@ CREATE TABLE IF NOT EXISTS `log_tbl` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_tbl`
+--
+
+CREATE TABLE IF NOT EXISTS `order_tbl` (
+`id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashier_fk` int(11) NOT NULL,
+  `branch_fk` int(11) NOT NULL,
+  `operator_fk` int(11) NOT NULL,
+  `void_fk` int(11) NOT NULL DEFAULT '0',
+  `total_amount` decimal(11,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `position_tbl`
 --
 
@@ -126,6 +142,22 @@ CREATE TABLE IF NOT EXISTS `position_tbl` (
   `name` varchar(50) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_tbl`
+--
+
+CREATE TABLE IF NOT EXISTS `transaction_tbl` (
+  `order_id_fk` int(11) NOT NULL,
+  `item_id_fk` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(11,2) NOT NULL,
+  `discount` decimal(11,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -163,6 +195,12 @@ ALTER TABLE `log_tbl`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `order_tbl`
+--
+ALTER TABLE `order_tbl`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `position_tbl`
 --
 ALTER TABLE `position_tbl`
@@ -196,6 +234,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `log_tbl`
 --
 ALTER TABLE `log_tbl`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `order_tbl`
+--
+ALTER TABLE `order_tbl`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `position_tbl`

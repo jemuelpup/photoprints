@@ -26,14 +26,21 @@ $jsonObject = json_decode(formatData($formattedQuery));
 
 echo "
 {\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
-	\"insertQuery\":\"".createInsertQueries($jsonObject)."\",
-	\"updateQuery\":\"".createUpdateQueries($jsonObject)."\",
+	\"insertQuery\":\"".addFunctionCall("getFieldValue",createInsertQueries($jsonObject))."\",
+	\"updateQuery\":\"".addFunctionCall("getFieldValue",createUpdateQueries($jsonObject))."\",
 	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\"
 }
 ";
 
+/*********************************************************************************************************
+* Output customization functions *************************************************************************
+* Output formatter here
+*********************************************************************************************************/
+function addFunctionCall($fc,$str){
+	return preg_replace('/\$(\w*)/', ("\\\".$fc(\$d,'$1').\\\""), $str);
+}
 
-
+/********************************************************************************************************/
 
 
 
@@ -51,7 +58,7 @@ function createInsertQueries($jsonObject){
 		$tableName = $object->tableName;
 		foreach($object->data as $key){
 			$fields .= $key->columnName.",";
-			if ($key->dataType == "str") {	$values .= "'$".$key->columnName."',";	}
+			if ($key->dataType == "str"||$key->dataType == "date") {	$values .= "'$".$key->columnName."',";	}
 			elseif("num") {	$values .= "$".$key->columnName.",";	};
 		}
 	}

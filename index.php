@@ -91,23 +91,25 @@
 								<div class="col s6">
 									<div class="item">
 					        	<h3>Item</h3>
-					        	<div class="input-field col s12">
-										    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
-										    <label for="name">name</label>
-										</div>
-										<div class="input-field col s12">
-										    <input name="code" value="" type="text" class="validate" maxlength="10">
-										    <label for="code">code</label>
-										</div>
-										<div class="input-field col s12">
-										    <input name="category_fk" value="" type="number" class="validate" maxlength="11">
-										    <label for="category_fk">category_fk</label>
-										</div>
-										<div class="input-field col s12">
-										    <input name="price" value="" type="number" class="validate" maxlength="11">
-										    <label for="price">price</label>
-										</div>
-						        <a class="waves-effect waves-light btn">Add</a>
+					        	<form action="#">
+						        	<div class="input-field col s12">
+											    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
+											    <label for="name">name</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="code" value="" type="text" class="validate" maxlength="10">
+											    <label for="code">code</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="category_fk" value="" type="number" class="validate" maxlength="11">
+											    <label for="category_fk">category_fk</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="price" value="" type="number" class="validate" maxlength="11">
+											    <label for="price">price</label>
+											</div>
+							        <button class="waves-effect waves-light btn" type="submit">Add</button>
+						        </form>
 						        <a class="waves-effect waves-light btn">Clear</a>
 					        </div>
 								</div>
@@ -232,25 +234,29 @@
 							<h3>Branch management</h3>
 							<div class="row">
 				      	<div class="col s6">
-									<h4>Add Branch</h4>
-									<div class="input-field col s12">
-									    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
-									    <label for="name">name</label>
-									</div>
-									<div class="input-field col s12">
-									    <input name="code" value="" type="text" class="validate" maxlength="10" required="">
-									    <label for="code">code</label>
-									</div>
-									<div class="input-field col s12">
-									    <input name="address" value="" type="text" class="validate" maxlength="200">
-									    <label for="address">address</label>
-									</div>
-									<div class="input-field col s12">
-									    <input name="description" value="" type="text" class="validate" maxlength="200">
-									    <label for="description">description</label>
-									</div>
-					        <a class="waves-effect waves-light btn">Add</a>
-						      <a class="waves-effect waves-light btn">Clear</a>
+				      		<div class="branch">
+										<h4>Add Branch</h4>
+										<form action="#">
+										<div class="input-field col s12">
+										    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
+										    <label for="name">name</label>
+										</div>
+										<div class="input-field col s12">
+										    <input name="code" value="" type="text" class="validate" maxlength="10" required="">
+										    <label for="code">code</label>
+										</div>
+										<div class="input-field col s12">
+										    <input name="address" value="" type="text" class="validate" maxlength="200">
+										    <label for="address">address</label>
+										</div>
+										<div class="input-field col s12">
+										    <input name="description" value="" type="text" class="validate" maxlength="200">
+										    <label for="description">description</label>
+										</div>
+						        <button class="waves-effect waves-light btn" type="submit">Add</button>
+							      <a class="waves-effect waves-light btn">Clear</a>
+							      </form>
+						      </div>
 					      </div>
 					      <div class="col s6">
 									<h4>Branch list</h4>
@@ -291,17 +297,21 @@
 							<h3>Employee position management</h3>
 							<div class="row">
 				      	<div class="col s6">
-									<h4>Add Employee Position</h4>
-									<div class="input-field col s12">
-									    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
-									    <label for="name">name</label>
-									</div>
-									<div class="input-field col s12">
-									    <input name="description" value="" type="text" class="validate" maxlength="500">
-									    <label for="description">description</label>
-									</div>
-					        <a class="waves-effect waves-light btn">Add</a>
-						      <a class="waves-effect waves-light btn">Clear</a>
+				      		<div class="position">
+					      		<form action="#">
+											<h4>Add Employee Position</h4>
+											<div class="input-field col s12">
+											    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
+											    <label for="name">name</label>
+											</div>
+											<div class="input-field col s12">
+											    <input name="description" value="" type="text" class="validate" maxlength="500">
+											    <label for="description">description</label>
+											</div>
+							        <button class="waves-effect waves-light btn" type="submit">Add</button>
+								      <a class="waves-effect waves-light btn">Clear</a>
+							      </form>
+						      </div>
 					      </div>
 					      <div class="col s6">
 									<h4>Employee Position list</h4>
