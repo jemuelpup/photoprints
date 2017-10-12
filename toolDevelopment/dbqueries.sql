@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
   `gender` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+
 -- --------------------------------------------------------
 
 --

@@ -42,6 +42,18 @@ function insertBranch(){
 	$sql = "INSERT INTO branch_tbl (name,address,description,code) VALUES ('".getFieldValue($d,'name')."','".getFieldValue($d,'address')."','".getFieldValue($d,'description')."','".getFieldValue($d,'code')."')";
 	echo $sql;
 }
+
+function insertEmployee(){
+	$d = $_POST['data'];
+	$sql = "INSERT INTO employee_tbl (name,address,contact_number,email,position_fk,branch_fk,salary,birth_day,gender) VALUES ('".getFieldValue($d,'name')."','".getFieldValue($d,'address')."','".getFieldValue($d,'contact_number')."','".getFieldValue($d,'email')."',".getFieldValue($d,'position_fk').",".getFieldValue($d,'branch_fk').",".getFieldValue($d,'salary').",'".getFieldValue($d,'birth_day')."',".getFieldValue($d,'gender').")";
+	echo $sql;
+}
+function updateEmployee(){
+	$d = $_POST['data'];
+	$employeeID = $_POST['id'];
+	$sql = "UPDATE employee_tbl SET name = '".getFieldValue($d,'name')."',address = '".getFieldValue($d,'address')."',contact_number = '".getFieldValue($d,'contact_number')."',email = '".getFieldValue($d,'email')."',position_fk = ".getFieldValue($d,'position_fk').",branch_fk = ".getFieldValue($d,'branch_fk').",salary = ".getFieldValue($d,'salary').",birth_day = ".getFieldValue($d,'birth_day').",gender = ".getFieldValue($d,'gender')." WHERE id = $employeeID";
+	echo $sql;
+}
 /**************************************************************************/
 
 /*

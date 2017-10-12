@@ -3,9 +3,9 @@
 	function getEmployeeModal(){
 	echo '
 <div id="add-employee" class="modal">
+  <form action="#">
     <div class="modal-content">
         <h2>Add Employee</h2>
-        <form action="#">
         <div class="input-field col s12">
             <input name="name" value="" type="text" class="validate" maxlength="100" required="">
             <label for="name">name</label>
@@ -39,7 +39,7 @@
             <label for="birth_day">birth_day</label>
         </div>
         <div class="gender">
-        	<p>Gender
+          <p>Gender
                 <input name="gender" type="radio" id="male" checked/>
                 <label for="male">Male</label>
                 <input name="gender" type="radio" id="female" />
@@ -47,12 +47,13 @@
             </p>
         </div>
         
-    </form>
+    
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Clear</a>
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
     </div>
+  </form>
 </div>
 	';
 	}
