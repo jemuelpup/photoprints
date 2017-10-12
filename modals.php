@@ -2,7 +2,7 @@
 
 	function getEmployeeModal(){
 	echo '
-<div id="add-employee" class="modal">
+<div id="add-employee" class="modal employee">
   <form action="#">
     <div class="modal-content">
         <h2>Add Employee</h2>
@@ -51,7 +51,7 @@
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Clear</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+        <button class="waves-effect waves-light btn" type="submit">Add</button>
     </div>
   </form>
 </div>
