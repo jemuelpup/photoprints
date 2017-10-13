@@ -28,9 +28,13 @@ echo "
 {\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
 	\"insertQuery\":\"".addFunctionCall("getFieldValue",createInsertQueries($jsonObject))."\",
 	\"updateQuery\":\"".addFunctionCall("getFieldValue",createUpdateQueries($jsonObject))."\",
-	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\"
+	\"selectQuery\":\"".createSelectQueries($jsonObject)."\",
+	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\",
+	\"viewDataTableFunc\":\"".createPHPselect($jsonObject)."\"
 }
 ";
+
+
 
 /*********************************************************************************************************
 * Output customization functions *************************************************************************
@@ -42,13 +46,48 @@ function addFunctionCall($fc,$str){
 
 /********************************************************************************************************/
 
+/*********************************************************************************************************
+* PHP CODE Area **********************************************************************************
+* This is the area where all the PHP code are generated
+*********************************************************************************************************/
+// echo createPHPselect($jsonObject);
+function createPHPselect($jsonObject){
 
+	$functionName = "functionName";
+
+	$tdCode = "";
+	$selectStatement = createSelectQueries($jsonObject);
+
+	foreach($jsonObject as $object){
+		$tableName = $object->tableName;
+		foreach($object->data as $key){
+			$tdCode .= "\\n<td name='$key->columnName'>\\\".\$row[\\\"$key->columnName\\\"].\\\"</td>";
+		}
+	}
+	$rowCode = "\\\"<tr data-id='\\\".\$row[\\\"id\\\"].\\\"'>$tdCode</tr>\\\"";
+	return "/* This function needs some edit*/\\nfunction $functionName(\$c){\\n\$sql = \\\"$selectStatement\\\";\\n\$code = \\\"\\\";\\n\$res = \$c->query(\$sql);\\nif(\$res->num_rows>0){\\nwhile(\$row = \$res->fetch_assoc()){\\n\$code.=$rowCode;\\n}\\n}\\necho \$code;\\n}";
+}
 
 
 /*********************************************************************************************************
 * Database process Area **********************************************************************************
 * This is the area where all the queries are generated
 *********************************************************************************************************/
+function createSelectQueries($jsonObject){
+	$tableName = "";
+	$fields = "";
+	$values = "";
+	
+	foreach($jsonObject as $object){
+		$tableName = $object->tableName;
+		foreach($object->data as $key){
+			$fields .= $key->columnName.",";
+		}
+	}
+	$fields = substr($fields, 0, -1);
+	$sql = "SELECT $fields FROM $tableName";
+	return "$sql";
+}
 function createInsertQueries($jsonObject){
 	$tableName = "";
 	$fields = "";
@@ -86,19 +125,6 @@ function createUpdateQueries($jsonObject){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*********************************************************************************************************
 * UI/UX Development Area **********************************************************************************
 * This is the area where all the forms and usefull code in user view is found
@@ -127,7 +153,7 @@ function createDynamicDataTable($jsonObject){
 		$code = "";
 		foreach($object->data as $jsonData){
 			$th .= "<th>$jsonData->columnName</th>";
-			$td .= "<td>$jsonData->columnName</td>";
+			$td .= "<td name='$jsonData->columnName'>$jsonData->columnName</td>";
 		}
 	}
 	$th = "<tr>$th</tr>";

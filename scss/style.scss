@@ -83,14 +83,18 @@ h4{
 	background-color: $themeColor;
 }
 
-.employee-list tr{
+.data-clickable tr{
 	@include transition(background 200ms ease);
+	cursor: pointer;
 	&.active{
 		background-color: $themeColorLight;
 		color: #fff;
 	}
 	&:hover{
 		opacity: 0.5;
+	}
+	td,th{
+		border-radius: 0;
 	}
 }
 .gender{

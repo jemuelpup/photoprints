@@ -33,21 +33,22 @@
 					<h2>Product management</h2>
 					<div class="row">
 						<div class="col s12">
+							<?php getCategoryUpdateModal(); ?>
 							<div class="row">
 								<div class="col s6">
 									<div class="category">
 										<h3>Category</h3>
 										<form action="#">
 											<div class="input-field col s12">
-											    <input name="name" value="" type="text" class="validate" maxlength="50" required="">
+											    <input name="name" value="PAPER" type="text" class="validate" maxlength="50" required="">
 											    <label for="name">name</label>
 											</div>
 											<div class="input-field col s12">
-											    <input name="category_code" value="" type="text" class="validate" maxlength="10">
+											    <input name="category_code" value="123" type="text" class="validate" maxlength="10">
 											    <label for="category_code">category_code</label>
 											</div>
 											<div class="input-field col s12">
-											    <input name="description" value="" type="text" class="validate" maxlength="500">
+											    <input name="description" value="DUMMY" type="text" class="validate" maxlength="500">
 											    <label for="description">description</label>
 											</div>
 							        <button class="waves-effect waves-light btn" type="submit">Add</button>
@@ -56,33 +57,35 @@
 					        </div>
 				        </div>
 				        <div class="col s6">
+				        	<div class="category-list-table">
 				        		<h3>Item category</h3>
-										<table>
-										    <tbody>
-										        <tr>
-										            <th>name</th>
-										            <th>category_code</th>
-										            <th>description</th>
-										        </tr>
-										        <tr>
-										            <td>name</td>
-										            <td>category_code</td>
-										            <td>description</td>
-										        </tr>
-										        <tr>
-										            <td>name</td>
-										            <td>category_code</td>
-										            <td>description</td>
-										        </tr>
-										        <tr>
-										            <td>name</td>
-										            <td>category_code</td>
-										            <td>description</td>
-										        </tr>
-										    </tbody>
+										<table class="data-clickable">
+											<tbody>
+												<tr>
+													<th>name</th>
+													<th>category_code</th>
+													<th>description</th>
+												</tr>
+												<tr data-id="1">
+													<td name="name">id</td>
+													<td name="category_code">id123</td>
+													<td name="description">dsgffdafdsfsdf</td>
+												</tr>
+												<tr data-id="2">
+													<td name="name">document</td>
+													<td name="category_code">doc123</td>
+													<td name="description">werwerwerwer</td>
+												</tr>
+												<tr data-id="3">
+													<td name="name">picture</td>
+													<td name="category_code">pic123</td>
+													<td name="description">xcvbvbxcvbxvcbxcvb</td>
+												</tr>
+											</tbody>
 										</table>
-					        	<a class="waves-effect waves-light btn">Edit</a>
+					        	<button class="waves-effect waves-light btn" id="edit-category-trigger">Edit</button>
 						        <a class="waves-effect waves-light btn">Delete</a>
+						      </div>
 				        </div>
 				      </div>
 						</div>
@@ -116,7 +119,7 @@
 								<div class="col s6">
 									<div class="item-list">
 										<h3>Item list</h3>
-										<table>
+										<table class="data-clickable">
 										    <tbody>
 										        <tr>
 										            <th>name</th>
@@ -355,6 +358,8 @@
 		<script src="/plugin/node_modules/materialize-css/dist/js/materialize.min.js"></script>
 		<script src="/js/angularFiles/modules.js"></script>
 		<script src="/js/angularFiles/directives.js"></script>
+		<!-- <script src="/common/js/operations.js"></script> -->
+		<script src="/js/view.js"></script>
 		<script src="/js/main.js"></script>
 	</body>
 </html>

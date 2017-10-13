@@ -1,5 +1,11 @@
 $(document).ready(function(){
 /*
+	Variables:
+*/
+	var itemId = 0; // this is the active item in the table
+
+
+/*
 	Navigation buttons
 */
 	$(".product-management-btn").click(function(){
@@ -20,25 +26,73 @@ $(document).ready(function(){
 	}
 /********************************************/
 /*
-	Operations
+	Database Operations
 */
-$(".category form").submit(function(e){
-	e.preventDefault();
-	dbOperations("AddCategory",$(this).serializeArray());
+// EDIT TRIGGERS
+$("#edit-category-trigger").click(function(){
+	var activeRow = $(".category-list-table table tr.active");
+	itemId = activeRow.attr("data-id");
+	if(itemId){
+		$(activeRow.children("td")).each(function(e){
+			$('#edit-category input[name="'+$(this).attr('name')+'"]').val($(this).text())
+			console.log($(this).attr('name'));
+		});
+		$('#edit-category').modal('open');
+	}
+	else{ alert("Select item category"); }
 });
-$(".item form").submit(function(e){
+// FOR EDITTING
+$(".edit-category form").submit(function(e){
 	e.preventDefault();
-	dbOperations("AddItem",$(this).serializeArray());
-});
-$(".position form").submit(function(e){
-	e.preventDefault();
-	dbOperations("AddPosition",$(this).serializeArray());
-});
-$(".branch form").submit(function(e){
-	e.preventDefault();
-	dbOperations("AddBranch",$(this).serializeArray());
+
+	var d = $(this).serializeArray();
+	d.push({name:"id",value:itemId});// get the id... add to serialize array...
+	init();
+	dbOperations("EditCategory",d,function(){displayDataInTable()});
+	$('#edit-category').modal('close');
 });
 
+
+/**/
+	// FOR ADDING
+	$(".category form").submit(function(e){
+		e.preventDefault();
+		dbOperations("AddCategory",$(this).serializeArray());
+	});
+	$(".item form").submit(function(e){
+		e.preventDefault();
+		dbOperations("AddItem",$(this).serializeArray());
+	});
+	$(".position form").submit(function(e){
+		e.preventDefault();
+		dbOperations("AddPosition",$(this).serializeArray());
+	});
+	$(".branch form").submit(function(e){
+		e.preventDefault();
+		dbOperations("AddBranch",$(this).serializeArray());
+	});
+/**/
+
+
+// FOR DELETING
+
+/********************************************/
+/*
+	System Operations
+*/
+// This function highlight the row selected
+$(".data-clickable tr").click(function(){
+	if($(this).index()!=0){
+		if($(this).hasClass("active")){
+			$(this).removeClass("active");
+		}
+		else{
+			$(this).parent().children().removeClass("active");
+			$(this).addClass("active");
+		}
+	}
+});
+// This function pass data to php file that handles database recording
 function dbOperations(processName,dataInputs){
 	$.post("functions.php",
 	{
@@ -50,17 +104,27 @@ function dbOperations(processName,dataInputs){
 		console.log(data);
 	});
 }
+function dbOperations(processName,dataInputs,callback){
+	$.post("functions.php",
+	{
+		process: processName,
+		data: dataInputs
+	},
+	function(data,status){
+		console.log(status);
+		console.log(data);
+		callback();
+	});
+}
 /********************************************/
 /*
 	Materialize codes
 */	
 	$('.modal').modal();
 /********************************************/
-/*
-	Employee table
-*/
-	$(".employee-list tr").click(function(){
-		$(".employee-list tr.active").removeClass("active");
-		$(this).toggleClass("active");
-	});
+
+
+	
+
+
 });

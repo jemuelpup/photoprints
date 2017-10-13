@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2017 at 10:40 AM
+-- Generation Time: Oct 13, 2017 at 02:52 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -61,8 +61,17 @@ CREATE TABLE IF NOT EXISTS `category_tbl` (
   `category_code` varchar(10) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by_fk` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category_tbl`
+--
+
+INSERT INTO `category_tbl` (`id`, `name`, `category_code`, `description`, `date_modified`, `modified_by_fk`, `active`) VALUES
+(1, 'id', 'id123', 'dsgffdafdsfsdf', '2017-10-13 07:05:06', NULL, 1),
+(2, 'ewan', 'werwer', '123123', '2017-10-13 07:35:32', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -84,9 +93,6 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
   `birth_day` date DEFAULT NULL,
   `gender` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
 
 -- --------------------------------------------------------
 
@@ -222,7 +228,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `category_tbl`
 --
 ALTER TABLE `category_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `employee_tbl`
 --

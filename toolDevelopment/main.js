@@ -16,9 +16,11 @@ $(document).ready(function(){
 		function(data,status){
 			// console.log(data);
 			$(".code-snippet").html($.parseJSON(data).htmlForms);
+			$(".selectQuery").text($.parseJSON(data).selectQuery);
 			$(".insertQuery").text($.parseJSON(data).insertQuery);
 			$(".updateQuery").text($.parseJSON(data).updateQuery);
 			$(".data-table").html($.parseJSON(data).dataTable);
+			$(".view-data-table-function").text($.parseJSON(data).viewDataTableFunc);
 		});
 	});
 	
