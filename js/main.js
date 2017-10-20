@@ -1,13 +1,41 @@
 $(document).ready(function(){
+
+/* 
+	@Process:
+	Remove all the data tables:
+
+*/
+
+
+
+
+
 /*
 	Variables:
 */
 	var itemId = 0; // this is the active item in the table
+	var v = views;
+	// console.log(v);
+
+
+/*
+	Functions
+*/
+
+	
+	// function init(){
+	// 	v.displayItemCategoryList();
+	// 	v.displayItemList();
+	// }
 
 
 /*
 	Navigation buttons
 */
+
+hideAll();
+$(".employee-management").show();
+
 	$(".product-management-btn").click(function(){
 		hideAll();
 		$(".product-management").show();
@@ -47,8 +75,7 @@ $(".edit-category form").submit(function(e){
 
 	var d = $(this).serializeArray();
 	d.push({name:"id",value:itemId});// get the id... add to serialize array...
-	init();
-	dbOperations("EditCategory",d,function(){displayDataInTable()});
+	dbOperations("EditCategory",d,function(){v.displayItemCategoryList()});
 	$('#edit-category').modal('close');
 });
 
@@ -57,19 +84,23 @@ $(".edit-category form").submit(function(e){
 	// FOR ADDING
 	$(".category form").submit(function(e){
 		e.preventDefault();
-		dbOperations("AddCategory",$(this).serializeArray());
+		// dbOperations("AddCategory",$(this).serializeArray(),function(){ v.displayItemCategoryList(); });
 	});
 	$(".item form").submit(function(e){
 		e.preventDefault();
-		dbOperations("AddItem",$(this).serializeArray());
+		// dbOperations("AddItem",$(this).serializeArray());
 	});
 	$(".position form").submit(function(e){
 		e.preventDefault();
-		dbOperations("AddPosition",$(this).serializeArray());
+		// dbOperations("AddPosition",$(this).serializeArray());
 	});
 	$(".branch form").submit(function(e){
 		e.preventDefault();
-		dbOperations("AddBranch",$(this).serializeArray());
+		// dbOperations("AddBranch",$(this).serializeArray());
+	});
+	$(".employee form").submit(function(e){
+		e.preventDefault();
+		// dbOperations("AddBranch",$(this).serializeArray());
 	});
 /**/
 
@@ -81,29 +112,19 @@ $(".edit-category form").submit(function(e){
 	System Operations
 */
 // This function highlight the row selected
-$(".data-clickable tr").click(function(){
+$(".data-clickable").on("click", "tr", function(){
 	if($(this).index()!=0){
-		if($(this).hasClass("active")){
-			$(this).removeClass("active");
-		}
+		if($(this).hasClass("active")){ $(this).removeClass("active"); }
 		else{
 			$(this).parent().children().removeClass("active");
 			$(this).addClass("active");
 		}
 	}
 });
-// This function pass data to php file that handles database recording
-function dbOperations(processName,dataInputs){
-	$.post("functions.php",
-	{
-		process: processName,
-		data: dataInputs
-	},
-	function(data,status){
-		console.log(status);
-		console.log(data);
-	});
-}
+$(".modal-trigger").on("click",function(){
+	$('select').material_select();
+});
+
 function dbOperations(processName,dataInputs,callback){
 	$.post("functions.php",
 	{
@@ -113,16 +134,26 @@ function dbOperations(processName,dataInputs,callback){
 	function(data,status){
 		console.log(status);
 		console.log(data);
-		callback();
+		if(callback){
+			callback();
+		}
 	});
 }
 /********************************************/
 /*
 	Materialize codes
 */	
-	$('.modal').modal();
-/********************************************/
 
+		$('.modal').modal();
+		$('select').material_select();
+	
+	
+	// $('select').material_select('destroy');
+/********************************************/
+/*
+	Function calls;
+*/
+// init();
 
 	
 

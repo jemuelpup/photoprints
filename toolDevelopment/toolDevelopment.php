@@ -25,12 +25,13 @@ $formattedQuery = formatStringForCodeGeneration($query);
 $jsonObject = json_decode(formatData($formattedQuery));
 
 echo "
-{\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
+{	\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
 	\"insertQuery\":\"".addFunctionCall("getFieldValue",createInsertQueries($jsonObject))."\",
 	\"updateQuery\":\"".addFunctionCall("getFieldValue",createUpdateQueries($jsonObject))."\",
 	\"selectQuery\":\"".createSelectQueries($jsonObject)."\",
 	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\",
-	\"viewDataTableFunc\":\"".createPHPselect($jsonObject)."\"
+	\"viewDataTableFunc\":\"".createPHPselect($jsonObject)."\",
+	\"viewHTMLModalUpdate\":\"".createModalViewForEditting($jsonObject)."\"
 }
 ";
 
@@ -41,7 +42,7 @@ echo "
 * Output formatter here
 *********************************************************************************************************/
 function addFunctionCall($fc,$str){
-	return preg_replace('/\$(\w*)/', ("\\\".$fc(\$d,'$1').\\\""), $str);
+	return preg_replace('/\$(\w*)/', ("\\\".validateData(\$d->$1).\\\""), $str);
 }
 
 /********************************************************************************************************/
@@ -140,7 +141,8 @@ function createHTMLForms($jsonObject){
 			if($jsonData->dataType=="num"){
 				$inputType = "number";
 			}
-			$code .= "<div class='input-field col s12'><input placeholder='' name='$jsonData->columnName' value='$jsonData->defaultVal' type='$inputType' class='validate' maxlength='$jsonData->length' $jsonData->attribute/><label for='$jsonData->columnName'>$jsonData->columnName</label></div>";
+			// $code .= "<div class='input-field col s12'><input placeholder='' name='$jsonData->columnName' value='$jsonData->defaultVal' type='$inputType' class='validate' maxlength='$jsonData->length' $jsonData->attribute/><label for='$jsonData->columnName'>$jsonData->columnName</label></div>";
+			$code .= "<div class='input-field col s12'><input ng-model='angularSerialCode.$jsonData->columnName' value='$jsonData->defaultVal' type='$inputType' class='validate' maxlength='$jsonData->length' $jsonData->attribute/><label for='$jsonData->columnName'>$jsonData->columnName</label></div>";
 		}
 		return $code;
 	}
@@ -153,15 +155,18 @@ function createDynamicDataTable($jsonObject){
 		$code = "";
 		foreach($object->data as $jsonData){
 			$th .= "<th>$jsonData->columnName</th>";
-			$td .= "<td name='$jsonData->columnName'>$jsonData->columnName</td>";
+			$td .= "<td name='$jsonData->columnName'>{{x.$jsonData->columnName}}</td>";
 		}
 	}
 	$th = "<tr>$th</tr>";
-	$td = "<tr>$td</tr>";
+	$td = "<tr ng-repeat='x in scopeArray' data-id='{{x.id}}'>$td</tr>";
 	return "<table>$th$td$td$td</table>";
 }
 
-
+function createModalViewForEditting($jsonObject){
+	$modalBody = createHTMLForms($jsonObject);
+	return "<div id='id-name-here' class='modal class-name-here'><form action='#'><div class='modal-content'><h2>Update name here</h2>$modalBody</div><div class='modal-footer'><button class='waves-effect waves-light btn' type='submit'>Update</button></div></form></div>";
+}
 
 
 

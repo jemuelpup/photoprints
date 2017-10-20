@@ -1,14 +1,12 @@
+var views = {
 
-init();
-displayDataInTable();
-function displayDataInTable(){
-	$.post("view.php",{ process: "getItemCategoryTable" },
-	function(data,status){
-		// console.log(data);
-		$(".category-list-table table tbody").append(data);
-	});
-}
+	// displayItemList: function(){
+	// 	$.post("view.php",{ process: "getItemTable" },
+	// 	function(data,status){
+	// 		$(".item-list-table table tbody td").parent().remove();
+	// 		$(".item-list-table table tbody").append(data);
+	// 	});
+	// }
 
-function init(){
-	$(".category-list-table table tbody tr td").parent().remove();
+
 }

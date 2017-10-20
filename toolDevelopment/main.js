@@ -21,6 +21,7 @@ $(document).ready(function(){
 			$(".updateQuery").text($.parseJSON(data).updateQuery);
 			$(".data-table").html($.parseJSON(data).dataTable);
 			$(".view-data-table-function").text($.parseJSON(data).viewDataTableFunc);
+			$(".views-update-modal-code").text($.parseJSON(data).viewHTMLModalUpdate);
 		});
 	});
 	
