@@ -7,41 +7,41 @@
                 <div class="modal-content">
                     <h2>Add Employee</h2>
                     <div class="input-field col s12">
-  <input ng-model="employeeFields.name" value="" type="text" class="validate" maxlength="100" required>
+  <input ng-model="employeeFields.name" type="text" class="validate" maxlength="100" required>
   <label ng-class=" employeeFields.name.length>0 ? \'active\':\'\'" for="name">name</label>
 </div>
 <div class="input-field col s12">
-  <input ng-model="employeeFields.address" value="" type="text" class="validate" maxlength="50">
+  <input ng-model="employeeFields.address" type="text" class="validate" maxlength="50">
   <label ng-class="employeeFields.address.length>0 ? \'active\':\'\'" for="address">address</label>
 </div>
 <div class="input-field col s12">
-  <input ng-model="employeeFields.contact_number" value="" type="text" class="validate" maxlength="50">
+  <input ng-model="employeeFields.contact_number" type="text" class="validate" maxlength="50">
   <label ng-class="employeeFields.contact_number.length>0 ? \'active\':\'\'" for="contact_number">contact_number</label>
 </div>
 <div class="input-field col s12">
-  <input ng-model="employeeFields.email" value="" type="text" class="validate" maxlength="50">
+  <input ng-model="employeeFields.email" type="text" class="validate" maxlength="50">
   <label ng-class="employeeFields.email.length>0 ? \'active\':\'\'" for="email">email</label>
 </div>
 <div class="input-field col s12">
   <select name="positionField" ng-model="employeeFields.position_fk">
-    <option value="" selected>Choose position</option>
+    <option selected>Choose position</option>
     <option value="{{c.id}}" ng-repeat="c in positions">{{c.name}}</option>
   </select>
   <label for="position_fk">position_fk</label>
 </div>
 <div class="input-field col s12">
   <select name="branchField" ng-model="employeeFields.branch_fk">
-    <option value="" selected>Choose branch</option>
+    <option selected>Choose branch</option>
     <option value="{{branch.id}}" ng-repeat="branch in branches">{{branch.name}}</option>
   </select>
   <label for="branch_fk">branch_fk</label>
 </div>
 <div class="input-field col s12">
-  <input ng-model="employeeFields.salary" value="" type="number" class="validate" maxlength="11" required>
+  <input ng-model="employeeFields.salary" type="number" class="validate" maxlength="11" required>
   <label ng-class="employeeFields.salary>0 ? \'active\':\'\'" for="salary">salary</label>
 </div>
 <div class="input-field col s12">
-  <input placeholder="" ng-model="employeeFields.birth_day" value="" type="date" class="validate" maxlength="" required>
+  <input placeholder="" ng-model="employeeFields.birth_day" type="date" class="validate" maxlength="" required>
   <label for="birth_day" class="active">birth_day</label>
 </div>
 <div class="col s12">
@@ -69,11 +69,11 @@
 				<div class="modal-content">
 				    <h4>Add access</h4>
 				    <div class="input-field col s12">
-                <input ng-model="employeeAccessFields.username" value="" type="text" class="validate" maxlength="50" required="">
+                <input ng-model="employeeAccessFields.username" type="text" class="validate" maxlength="50" required="">
                 <label for="username">username</label>
             </div>
             <div class="input-field col s12">
-                <input ng-model="employeeAccessFields.password" value="" type="text" class="validate" maxlength="50" required="">
+                <input ng-model="employeeAccessFields.password" type="text" class="validate" maxlength="50" required="">
                 <label for="password">password</label>
             </div>
 				</div>
@@ -91,15 +91,15 @@
           <div class="modal-content">
             <h4>Edit category</h4>
             <div class="input-field col s12">
-              <input placeholder="" name="name" value="" type="text" class="validate" maxlength="50" required="">
+              <input placeholder="" name="name" type="text" class="validate" maxlength="50" required="">
               <label for="name">name</label>
             </div>
             <div class="input-field col s12">
-              <input placeholder="" name="category_code" value="" type="text" class="validate" maxlength="10">
+              <input placeholder="" name="category_code" type="text" class="validate" maxlength="10">
               <label for="category_code">category_code</label>
             </div>
             <div class="input-field col s12">
-              <input placeholder="" name="description" value="" type="text" class="validate" maxlength="500">
+              <input placeholder="" name="description" type="text" class="validate" maxlength="500">
               <label for="description">description</label>
             </div>
           </div>
@@ -111,9 +111,41 @@
     ';
   }
 
-?>
+  function getItemUpdateModal(){
+    echo '
+      <div id="edit-item" class="modal edit-item">
+        <form ng-submit="editItem()">
+          <div class="modal-content">
+            <h4>Edit category</h4>
+            <div class="input-field col s12">
+              <input placeholder="" ng-model="editItemFields.name" type="text" class="validate" maxlength="50" required="">
+              <label for="name" class="active">name</label>
+            </div>
+            <div class="input-field col s12">
+              <input placeholder="" ng-model="editItemFields.item_code" type="text" class="validate" maxlength="10">
+              <label for="item_code" class="active">item_code</label>
+            </div>
+            <div class="input-field col s12">
+              <select name="itemCategory" id="categoryUpdate" ng-model="editItemFields.category_fk">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="{{c.id}}" ng-repeat="c in categories">{{c.name}}</option>
+              </select>
+              <label>Category</label>
+            </div>
+            <div class="input-field col s12">
+              <input placeholder="" ng-model="editItemFields.price" type="number" class="validate" maxlength="11">
+              <label for="price" class="active">price</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="waves-effect waves-light btn" type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+    ';
+  }
 
-        
+?>
 
 
 

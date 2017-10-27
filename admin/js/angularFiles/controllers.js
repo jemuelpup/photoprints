@@ -3,6 +3,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.items = [];
 	$scope.categoryFields = {};
 	$scope.itemFields = {};
+	$scope.editItemFields = {};
 	$scope.addNewCategory = function(){
 		dbOperations.processData("AddItem",$scope.categoryFields,function(){getCategories();});
 	}
@@ -12,9 +13,22 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 		dbOperations.processData("AddItem",$scope.itemFields,function(){getItems();});
 	}
 
+	$scope.itemIndex = function(i,id){ $scope.editItemFields = ($scope.items)[i]; }
+
+	$scope.editItemsTrigger = function(){
+		$('#edit-item').modal('open');
+	}
+
+	$scope.editItem = function(){
+		$scope.editItemFields.category_fk = $("select#categoryUpdate").val();
+		// $scope.editItemFields.category = $("select#categoryUpdate").val();
+		dbOperations.processData("EditItem",$scope.editItemFields,function(){getItems();});
+		// console.log($scope.editItemFields);
+	}
+
 	function getCategories(){
 		$http({
-			method:"POST", url:"/view.php",
+			method:"POST", url:"/admin/view.php",
 			data: { 'process': "getItemCategory" }
 		}).then(function success(res){
 			$scope.categories = res.data;
@@ -23,10 +37,16 @@ app.controller("productManagement",function($scope,$http,dbOperations){
     }
 	function getItems(){
 		$http({
-			method:"POST", url:"/view.php",
+			method:"POST", url:"/admin/view.php",
 			data: { 'process': "getItems" }
 		}).then(function success(res){
+			(res.data).map(function(e){
+				e.price = Number(e.price);
+				e.category_fk = Number(e.category_fk);
+				return e
+			});
 			$scope.items = res.data;
+			// $scope.items.price = Number(res.data.price);
 		}, function myError(response) {
 	    });
     }
@@ -45,11 +65,9 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	$scope.newPosition = function(){
 		dbOperations.processData("AddPosition",$scope.positionFields,function(){getPositions();});
 	}
-
-
 	function getBranches(){
 		$http({
-			method:"POST", url:"/view.php",
+			method:"POST", url:"/admin/view.php",
 			data: { 'process': "getBranches" }
 		}).then(function success(res){
 			// console.log(res.data)
@@ -60,7 +78,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	}
 	function getPositions(){
 		$http({
-			method:"POST", url:"/view.php",
+			method:"POST", url:"/admin/view.php",
 			data: { 'process': "getPositions"}
 		}).then(function success(res){
 			$scope.positions = res.data;
@@ -89,7 +107,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	
 	function getEmployees(){
 		$http({
-			method:"POST", url:"/view.php",
+			method:"POST", url:"/admin/view.php",
 			data: { 'process': "getEmployees" }
 		}).then(function success(res){
 			// console.log(res.data)

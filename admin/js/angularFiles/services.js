@@ -8,7 +8,7 @@ app.service('dbOperations',function($http){
 	this.processData = function(process,dataInputs,callback){
 		$http({
 			method:"POST",
-			url:"/functions.php",
+			url:"/admin/functions.php",
 			data: {
 				'process': process,
 				'data': dataInputs

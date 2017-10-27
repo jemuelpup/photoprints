@@ -1,7 +1,7 @@
 <?php
 /* This file contains the elements for viewing */
 
-require 'dbconnect.php';
+require $_SERVER['DOCUMENT_ROOT'].'/common/dbconnect.php';
 // 
 
 $process="";

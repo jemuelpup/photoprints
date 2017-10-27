@@ -176,12 +176,25 @@ CREATE TABLE IF NOT EXISTS `log_tbl` (
 
 CREATE TABLE IF NOT EXISTS `order_tbl` (
 `id` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cashier_fk` int(11) NOT NULL,
   `branch_fk` int(11) NOT NULL,
   `operator_fk` int(11) NOT NULL,
   `void_fk` int(11) NOT NULL DEFAULT '0',
-  `total_amount` decimal(11,2) NOT NULL
+  `total_amount` decimal(11,2) NOT NULL,
+  `customer_name` varchar(50) NOT NULL,
+  `payment` decimal(11,2) DEFAULT NULL,
+  `received_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS `order_tbl` (
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cashier_fk` int(11) NOT NULL,
+  `branch_fk` int(11) NOT NULL,
+  `operator_fk` int(11) NOT NULL,
+  `total_amount` decimal(11,2) NOT NULL,
+  `customer_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

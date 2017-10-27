@@ -1,0 +1,53 @@
+.h4-design, .categories h4, .ordered-items h4 {
+  padding: 8px 15px;
+  color: #fff;
+  margin: 0; }
+
+.categories {
+  display: none; }
+  .categories .menu {
+    padding: 8px 15px;
+    overflow: hidden;
+    -webkit-transition: max-height 1s ease;
+    -moz-transition: max-height 1s ease;
+    -ms-transition: max-height 1s ease;
+    -o-transition: max-height 1s ease;
+    transition: max-height 1s ease; }
+  .categories table input[type='number'] {
+    height: 20px;
+    margin: 0;
+    width: 60px; }
+
+.categories.active {
+  display: block; }
+
+.category-list {
+  padding: 8px 15px; }
+  .category-list li {
+    display: inline;
+    margin-right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #4a148c; }
+    .category-list li:hover {
+      color: #7c43bd; }
+
+.ordered-items .orders {
+  padding: 8px 15px; }
+.ordered-items input {
+  margin-top: 0; }
+
+.data-header {
+  background-color: #7c43bd;
+  overflow: hidden; }
+  .data-header h4 {
+    width: 50%; }
+  .data-header .categoryHeaderSearch {
+    width: 50%;
+    padding: 8px 15px; }
+    .data-header .categoryHeaderSearch input {
+      color: #fff;
+      height: 30px;
+      margin-bottom: 0; }
+
+/*# sourceMappingURL=operator.css.map */

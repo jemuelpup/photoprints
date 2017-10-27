@@ -1,5 +1,5 @@
 <?php
-require 'dbconnect.php';
+require $_SERVER['DOCUMENT_ROOT'].'/common/dbconnect.php';
 
 $process="";
 $data = "";
@@ -38,6 +38,9 @@ switch($process){
 	}break;
 	case "EditCategory": {
 		updateCategory($conn);
+	}break;
+	case "EditItem": {
+		updateItem($conn,$data);
 	}break;
 }
 
@@ -93,12 +96,20 @@ function updateCategory($c){
 	// echo $sql;
 	// echo $msg;
 }
-function updateItem(){
-	$id = $_POST['id'];
-	$d = $_POST['data'];
-	$sql = " WHERE id = $id";
-	echo $sql;
+
+function updateItem($c,$d){
+	$sql = "UPDATE item_tbl SET name = '".validateData($d->name)."',item_code = '".validateData($d->item_code)."',category_fk = ".validateData($d->category_fk).",price = ".validateData($d->price)." WHERE id = ".validateData($d->id)."";
+	// echo "$sql";
+	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
+
+
+// function updateItem(){
+// 	$id = $_POST['id'];
+// 	$d = $_POST['data'];
+// 	$sql = " WHERE id = $id";
+// 	echo $sql;
+// }
 function updatePosition(){
 	$id = $_POST['id'];
 	$d = $_POST['data'];

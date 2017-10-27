@@ -1,0 +1,80 @@
+$themeColor: #4a148c;
+$themeColorLight: #7c43bd;
+$themeColorDark: #12005e;
+$menuPadding:  8px 15px;
+
+@mixin transition($val){
+	-webkit-transition: $val;
+	-moz-transition: $val;
+	-ms-transition: $val;
+	-o-transition: $val;
+	transition: $val;
+}
+
+.h4-design{
+	padding: $menuPadding;
+	color: #fff;
+	margin: 0;
+}
+.categories{
+	display: none;
+	h4{
+		@extend .h4-design;
+	}
+	.menu{
+		padding: $menuPadding;
+		overflow: hidden;
+		@include transition(max-height 1s ease);
+	}
+	 table input[type='number']{
+		height: 20px;
+	    margin: 0;
+	    width: 60px;
+	}
+	
+}
+
+.categories.active{
+	display: block;
+}
+.category-list{
+	padding: $menuPadding;
+	li{
+		display: inline;
+	    margin-right: 20px;
+	    font-size: 24px;
+	    cursor: pointer;
+	    color: $themeColor;
+	    &:hover{
+	    	color: $themeColorLight;
+	    }
+	}
+}
+.ordered-items{
+	h4{
+		@extend .h4-design;
+	}
+	.orders{
+		padding: $menuPadding;
+	}
+	input{
+		margin-top: 0;
+	}
+}
+
+.data-header{
+	background-color: $themeColorLight;
+	overflow:hidden;
+	h4{
+		width: 50%;
+	}
+	.categoryHeaderSearch{
+		width: 50%;
+		padding: $menuPadding;
+		input{
+			color: #fff;
+			height: 30px;
+			margin-bottom: 0;
+		}
+	}
+}
