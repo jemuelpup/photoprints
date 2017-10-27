@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2017 at 12:04 PM
+-- Generation Time: Oct 27, 2017 at 02:49 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `category_tbl` (
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by_fk` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category_tbl`
@@ -89,12 +89,7 @@ INSERT INTO `category_tbl` (`id`, `name`, `category_code`, `description`, `date_
 (1, 'ID', 'id123', 'dsgffdafdsfsdf', '2017-10-13 07:05:06', NULL, 1),
 (2, 'Document', 'D01', 'werwerwerwer', '2017-10-13 07:35:32', NULL, 1),
 (3, 'Pictures', 'p01', 'DUMMY', '2017-10-16 03:06:22', NULL, 1),
-(4, 'Others', 'O01', 'DUMMY', '2017-10-16 03:09:47', NULL, 1),
-(6, 'testing', 'Test01', 'just testing', '2017-10-16 08:47:40', NULL, 1),
-(7, 'testing02', 'Test123', 'adadfgdfgadfgadfgdfg', '2017-10-16 08:52:13', NULL, 1),
-(8, 'testing03', 'Test4', 'adadfgdfgadfgadfgdfg', '2017-10-16 08:52:25', NULL, 1),
-(9, 'testing04', 't04', 'dsfg,mfdgnsdflgnsfldkgns', '2017-10-16 08:55:19', NULL, 1),
-(10, 'test05', 'wlekjrhgfe', '123kjbglkjsadblkghsdfgjbsjg', '2017-10-16 09:04:17', NULL, 1);
+(4, 'Others', 'O01', 'DUMMY', '2017-10-16 03:09:47', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -143,17 +138,30 @@ CREATE TABLE IF NOT EXISTS `item_tbl` (
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by_fk` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `price` decimal(11,2) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `price` decimal(11,2) DEFAULT NULL,
+  `price_changing` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item_tbl`
 --
 
-INSERT INTO `item_tbl` (`id`, `name`, `item_code`, `category_fk`, `date_modified`, `modified_by_fk`, `active`, `price`) VALUES
-(1, 'werwe', '123', 8, '2017-10-17 00:59:32', 1, 1, '123.00'),
-(2, 'ghjghjghj', '123', 4, '2017-10-17 02:34:43', 1, 1, '123.00'),
-(3, 'rtyrtyr', '1wer', 7, '2017-10-17 02:35:57', 1, 1, '234.00');
+INSERT INTO `item_tbl` (`id`, `name`, `item_code`, `category_fk`, `date_modified`, `modified_by_fk`, `active`, `price`, `price_changing`) VALUES
+(1, 'Digital coat', 'ID01', 1, '2017-10-24 07:32:18', 1, 1, '100.00', 0),
+(2, 'Name tag', 'ID02', 1, '2017-10-24 07:32:43', 1, 1, '50.00', 0),
+(3, 'Change background', 'ID02', 1, '2017-10-24 07:32:59', 1, 1, '100.00', 0),
+(4, 'Package A', 'ID04P01', 1, '2017-10-24 07:34:12', 1, 1, '100.00', 0),
+(5, 'Package B', 'ID04P02', 1, '2017-10-24 07:34:29', 1, 1, '150.00', 0),
+(6, 'Package C', 'ID04P03', 1, '2017-10-24 07:34:37', 1, 1, '140.00', 0),
+(7, 'Package D', 'ID04P04', 1, '2017-10-24 07:35:00', 1, 1, '160.00', 0),
+(8, 'Cute size', 'PIC01', 3, '2017-10-24 07:35:34', 1, 1, '20.00', 0),
+(9, 'Wallet size', 'PIC01', 3, '2017-10-24 07:35:57', 1, 1, '25.00', 0),
+(10, '3x4 grad pic', 'PIC03', 3, '2017-10-24 07:36:20', 1, 1, '100.00', 0),
+(11, '3R', 'PIC04', 3, '2017-10-24 07:36:45', 1, 1, '180.00', 0),
+(12, 'Tarpulin', 'OT01', 4, '2017-10-26 07:58:28', 1, 1, '40.00', 0),
+(13, 'Wide format', 'OT02', 4, '2017-10-26 07:58:51', 1, 1, '20.00', 0),
+(14, 'Scan', 'OT03', 4, '2017-10-26 07:59:05', 1, 1, '10.00', 0),
+(15, 'File transfer', 'OT04', 4, '2017-10-26 07:59:24', 1, 1, '5.00', 0);
 
 -- --------------------------------------------------------
 
@@ -185,17 +193,27 @@ CREATE TABLE IF NOT EXISTS `order_tbl` (
   `customer_name` varchar(50) NOT NULL,
   `payment` decimal(11,2) DEFAULT NULL,
   `received_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `order_tbl`
+--
 
-CREATE TABLE IF NOT EXISTS `order_tbl` (
-  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cashier_fk` int(11) NOT NULL,
-  `branch_fk` int(11) NOT NULL,
-  `operator_fk` int(11) NOT NULL,
-  `total_amount` decimal(11,2) NOT NULL,
-  `customer_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `order_tbl` (`id`, `order_date`, `cashier_fk`, `branch_fk`, `operator_fk`, `void_fk`, `total_amount`, `customer_name`, `payment`, `received_date`) VALUES
+(1, '2017-10-27 10:52:12', 1, 1, 1, 0, '100.00', 'jemuel', NULL, NULL),
+(2, '2017-10-27 11:11:51', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(3, '2017-10-27 11:20:31', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(4, '2017-10-27 11:23:01', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(5, '2017-10-27 11:23:03', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(6, '2017-10-27 11:23:04', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(7, '2017-10-27 11:23:05', 1, 1, 1, 0, '100.00', '', NULL, NULL),
+(8, '2017-10-27 12:13:10', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(9, '2017-10-27 12:14:04', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(10, '2017-10-27 12:19:35', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(11, '2017-10-27 12:20:03', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(12, '2017-10-27 12:20:24', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(13, '2017-10-27 12:20:55', 1, 1, 1, 0, '600.00', '', NULL, NULL),
+(14, '2017-10-27 12:21:29', 1, 1, 1, 0, '600.00', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,6 +252,22 @@ CREATE TABLE IF NOT EXISTS `transaction_tbl` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `transaction_tbl`
+--
+
+INSERT INTO `transaction_tbl` (`order_id_fk`, `item_id_fk`, `name`, `code`, `quantity`, `price`, `discount`) VALUES
+(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(9, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
+(9, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
+(13, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(13, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
+(13, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
+(14, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(14, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
+(14, 3, 'Change background', 'ID02', 1, '100.00', '0.00');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -265,7 +299,7 @@ ALTER TABLE `employee_tbl`
 -- Indexes for table `item_tbl`
 --
 ALTER TABLE `item_tbl`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `category_fk` (`category_fk`);
 
 --
 -- Indexes for table `log_tbl`
@@ -298,7 +332,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `category_tbl`
 --
 ALTER TABLE `category_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `employee_tbl`
 --
@@ -308,7 +342,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `item_tbl`
 --
 ALTER TABLE `item_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `log_tbl`
 --
@@ -318,12 +352,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `position_tbl`
 --
 ALTER TABLE `position_tbl`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `item_tbl`
+--
+ALTER TABLE `item_tbl`
+ADD CONSTRAINT `item_tbl_ibfk_1` FOREIGN KEY (`category_fk`) REFERENCES `category_tbl` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
