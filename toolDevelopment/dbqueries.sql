@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2017 at 02:49 PM
+-- Generation Time: Oct 30, 2017 at 11:27 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -179,6 +179,37 @@ CREATE TABLE IF NOT EXISTS `log_tbl` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_line_tbl`
+--
+
+CREATE TABLE IF NOT EXISTS `order_line_tbl` (
+  `order_id_fk` int(11) NOT NULL,
+  `item_id_fk` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(11,2) NOT NULL,
+  `discount` decimal(11,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_line_tbl`
+--
+
+INSERT INTO `order_line_tbl` (`order_id_fk`, `item_id_fk`, `name`, `code`, `quantity`, `price`, `discount`) VALUES
+(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(9, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
+(9, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
+(13, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
+(13, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
+(13, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
+(15, 8, 'Cute size', 'PIC01', 1, '20.00', '0.00'),
+(15, 9, 'Wallet size', 'PIC01', 1, '25.00', '0.00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `order_tbl`
 --
 
@@ -193,27 +224,16 @@ CREATE TABLE IF NOT EXISTS `order_tbl` (
   `customer_name` varchar(50) NOT NULL,
   `payment` decimal(11,2) DEFAULT NULL,
   `received_date` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_tbl`
 --
 
 INSERT INTO `order_tbl` (`id`, `order_date`, `cashier_fk`, `branch_fk`, `operator_fk`, `void_fk`, `total_amount`, `customer_name`, `payment`, `received_date`) VALUES
-(1, '2017-10-27 10:52:12', 1, 1, 1, 0, '100.00', 'jemuel', NULL, NULL),
-(2, '2017-10-27 11:11:51', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(3, '2017-10-27 11:20:31', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(4, '2017-10-27 11:23:01', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(5, '2017-10-27 11:23:03', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(6, '2017-10-27 11:23:04', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(7, '2017-10-27 11:23:05', 1, 1, 1, 0, '100.00', '', NULL, NULL),
-(8, '2017-10-27 12:13:10', 1, 1, 1, 0, '600.00', '', NULL, NULL),
 (9, '2017-10-27 12:14:04', 1, 1, 1, 0, '600.00', '', NULL, NULL),
-(10, '2017-10-27 12:19:35', 1, 1, 1, 0, '600.00', '', NULL, NULL),
-(11, '2017-10-27 12:20:03', 1, 1, 1, 0, '600.00', '', NULL, NULL),
-(12, '2017-10-27 12:20:24', 1, 1, 1, 0, '600.00', '', NULL, NULL),
 (13, '2017-10-27 12:20:55', 1, 1, 1, 0, '600.00', '', NULL, NULL),
-(14, '2017-10-27 12:21:29', 1, 1, 1, 0, '600.00', '', NULL, NULL);
+(15, '2017-10-30 08:52:21', 1, 1, 1, 0, '45.00', 'Karen', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,38 +254,6 @@ CREATE TABLE IF NOT EXISTS `position_tbl` (
 
 INSERT INTO `position_tbl` (`id`, `name`, `description`, `active`) VALUES
 (1, 'cashier', 'Gets the payment', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transaction_tbl`
---
-
-CREATE TABLE IF NOT EXISTS `transaction_tbl` (
-  `order_id_fk` int(11) NOT NULL,
-  `item_id_fk` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` decimal(11,2) NOT NULL,
-  `discount` decimal(11,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `transaction_tbl`
---
-
-INSERT INTO `transaction_tbl` (`order_id_fk`, `item_id_fk`, `name`, `code`, `quantity`, `price`, `discount`) VALUES
-(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
-(9, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
-(9, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
-(9, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
-(13, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
-(13, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
-(13, 3, 'Change background', 'ID02', 1, '100.00', '0.00'),
-(14, 1, 'Digital coat', 'ID01', 3, '100.00', '0.00'),
-(14, 2, 'Name tag', 'ID02', 4, '50.00', '0.00'),
-(14, 3, 'Change background', 'ID02', 1, '100.00', '0.00');
 
 --
 -- Indexes for dumped tables
@@ -352,7 +340,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `position_tbl`
 --

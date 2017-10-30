@@ -2,12 +2,6 @@ operations.controller('login',function($scope){
 	
 });
 
-var orderedItem = {
-	itemID: 0,
-	price: 0,
-	quantity: 0
-}
-
 operations.controller('operator',function($scope,$http,dbOperations){
 	$scope.catAndItems = [];
 	$scope.orders = [];
@@ -18,7 +12,7 @@ operations.controller('operator',function($scope,$http,dbOperations){
 	$scope.activeCategoryIndex = 0;
 	
 
- 	dbOperations.items("getCategoriesAndItems","",function wala(){}).then(function(res) {
+ 	dbOperations.items("getCategoriesAndItems","").then(function(res) {
  		// console.log(res);
  		$scope.catAndItems = res;
  	})
@@ -72,4 +66,30 @@ operations.controller('operator',function($scope,$http,dbOperations){
 		// console.log(index);
 		$scope.activeCategoryIndex=index;
 	}
+});
+
+operations.controller('cashier',function($scope,$http,dbOperations){
+
+	$scope.orders = [];
+	$scope.orderItems = "";
+
+	dbOperations.unclaimedOrders("getUnclaimedOrders","").then(function(res) {
+ 		// console.log(res);
+ 		$scope.orders = res;
+ 		console.log(res)
+ 	});
+
+
+	dbOperations.items("getUnclaimedOrders","").then(function(res) {
+ 		// console.log(res);
+ 		$scope.orders = res;
+ 		// $scope.catAndItems = res;
+ 	})
+
+	// dbOperations.view("getOrderById","").then(function(res) {
+ // 		// console.log(res);
+ // 		$scope.orders = res;
+ // 		console.log(res)
+ // 	})
+
 });

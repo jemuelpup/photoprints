@@ -18,13 +18,10 @@ function insertOrder($c,$d){
 	// print_r($data);
 	$sql = "INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name) VALUES (NOW(),".validateData($d->cashier_fk).",".validateData($d->branch_fk).",".validateData($d->operator_fk).",".validateData($d->total_amount).",'".validateData($d->customer_name)."')";
 
-
-
-
 	if (mysqli_query($c, $sql)) {
 		$order_id = mysqli_insert_id($c);
 		// create query here for transaction
-		$sql2 = "INSERT INTO transaction_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount) VALUES";
+		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount) VALUES";
 		foreach ($d->items as $item) {
 			$sql2 .= " (".validateData($order_id).",".validateData($item->itemID).",'".validateData($item->itemName)."','".validateData($item->code)."',".validateData($item->quantity).",".validateData($item->price).",".validateData($item->discount)."),";
 			# code...

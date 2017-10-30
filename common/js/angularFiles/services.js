@@ -5,6 +5,7 @@ dataInputs(Object), -like in serialize array in jqueyr
 callback(Function) - function call after the request
 */
 operations.service('dbOperations',function($http){
+	// this is responsible for insertion and updating of data
 	this.processData = function(process,dataInputs,callback){
 		return $http({
 			method:"POST",
@@ -21,7 +22,7 @@ operations.service('dbOperations',function($http){
 			// console.log("Error");
 	    });
 	}
-	this.items = function(process,dataInputs,callback){
+	this.view = function(process,dataInputs){
 		return $http({
 			method:"POST",
 			url:"/common/views.php",
@@ -30,7 +31,64 @@ operations.service('dbOperations',function($http){
 				'data': dataInputs
 			}
 		}).then(function success(res){
-			
+			return res.data;
+		}, function myError(response) {
+			return "Something wrong in the system";
+	    });
+	}
+
+	this.unclaimedOrders = function(process,dataInputs){
+		return $http({
+			method:"POST",
+			url:"/common/views.php",
+			data: {
+				'process': process,
+				'data': dataInputs
+			}
+		}).then(function success(res){
+			// var orderData = "";
+			// var prevVal = 0;
+			// var orderLineList = [];
+			// (res.data).forEach(function(e,idx,array){
+			// 	if(prevVal==0){
+			// 		prevVal=e.id;
+			// 		categoryID = e.id;
+			// 		categoryName = e.category_name;
+			// 	}
+			// 	if (idx === array.length - 1){// check if last iteration
+			// 		orderLineList.push(e);
+			// 		categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,orderLine:orderLineList});
+			// 	}
+			// 	else if(prevVal!=e.id){
+			// 		categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,orderLine:orderLineList});
+			// 		orderLineList = [];
+			// 		categoryID = e.id;
+			// 		categoryName = e.category_name;
+			// 		prevVal=e.id;
+			// 		orderLineList.push(e);
+			// 	}
+			// 	else{// first iteration and equal categories
+			// 		orderLineList.push(e);
+			// 	}
+			// });
+
+			return res.data;
+		}, function myError(response) {
+			return "Something wrong in the system";
+	    });
+	}
+
+
+
+	this.items = function(process,dataInputs){
+		return $http({
+			method:"POST",
+			url:"/common/views.php",
+			data: {
+				'process': process,
+				'data': dataInputs
+			}
+		}).then(function success(res){
 			var categorieInQueries = [];
 			var prevVal = 0;
 			var itemArray = [];
@@ -45,28 +103,19 @@ operations.service('dbOperations',function($http){
 				if (idx === array.length - 1){// check if last iteration
 					itemArray.push(e);
 					categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
-					// console.log("pushCategory 1");
 				}
 				else if(prevVal!=e.category_fk){
 					categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
 					itemArray = [];
-					// console.log("pushCategory 2");
 					categoryID = e.category_fk;
 					categoryName = e.category_name;
 					prevVal=e.category_fk;
 					itemArray.push(e);
-					// console.log(e.name,"pushItem 2");
 				}
 				else{// first iteration and equal categories
 					itemArray.push(e);
-					// console.log("pushItem");
-					// console.log(e.name,"pushItem 3");
 				}
 			});
-			// console.log(categorieInQueries);
-
-			// callback();
-			// console.log(res.data);
 			return categorieInQueries;
 		}, function myError(response) {
 			// console.log("Error");
