@@ -101,12 +101,13 @@
 										<th>Disc</th>
 										<th>Total</th>
 									</tr>
-									<tr ng-repeat="order in orders">
+									<tr ng-repeat="order in orders" class="show-on-hover">
 										<td>{{order.itemName}}-{{order.multiplyer}}</td>
 										<td>{{order.price*order.multiplyer}}</td>
 										<td> x {{order.quantity}}</td>
 										<td>{{order.discount}}%</td>
-										<td>{{order.itemTotalPrice}}</td>
+										<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
+
 									</tr>
 								</table>
 
