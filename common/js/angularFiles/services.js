@@ -46,32 +46,6 @@ operations.service('dbOperations',function($http){
 				'data': dataInputs
 			}
 		}).then(function success(res){
-			// var orderData = "";
-			// var prevVal = 0;
-			// var orderLineList = [];
-			// (res.data).forEach(function(e,idx,array){
-			// 	if(prevVal==0){
-			// 		prevVal=e.id;
-			// 		categoryID = e.id;
-			// 		categoryName = e.category_name;
-			// 	}
-			// 	if (idx === array.length - 1){// check if last iteration
-			// 		orderLineList.push(e);
-			// 		categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,orderLine:orderLineList});
-			// 	}
-			// 	else if(prevVal!=e.id){
-			// 		categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,orderLine:orderLineList});
-			// 		orderLineList = [];
-			// 		categoryID = e.id;
-			// 		categoryName = e.category_name;
-			// 		prevVal=e.id;
-			// 		orderLineList.push(e);
-			// 	}
-			// 	else{// first iteration and equal categories
-			// 		orderLineList.push(e);
-			// 	}
-			// });
-
 			return res.data;
 		}, function myError(response) {
 			return "Something wrong in the system";

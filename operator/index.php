@@ -25,6 +25,7 @@
 <title>Operator</title>
 	<link rel="stylesheet" href="/plugin/node_modules/materialize-css/dist/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="/common/css/common.css">
 	<link rel="stylesheet" href="/operator/css/operator.css">
 	<script src="/plugin/node_modules/angular/angular.min.js"></script>
 </head>
@@ -45,8 +46,8 @@
 					<div class='col s12' ng-repeat="category in catAndItems">
 						<div class='categories z-depth-2' ng-class="{active: $index==activeCategoryIndex}">
 							<div class="data-header">
-								<h4 class="left">{{category.categoryName}}</h4>
-								<div class="categoryHeaderSearch right">
+								<h4 class="left w50p">{{category.categoryName}}</h4>
+								<div class="headerSearch right w50p">
 									<input placeholder="Search" id="{{category.categoryName}}" type="text" class="validate" ng-model="itemFilter" ng-focus="focus=true" ng-blur="focus=false">
 								</div>
 							</div>
@@ -111,7 +112,7 @@
 									</tr>
 								</table>
 
-								<p>Total:{{totalPrice}}</p>
+								<p>Total: Php. {{totalPrice}}</p>
 								<p>------------------------</p>
 								<!-- create table here and remove orders
 								{{orders}}

@@ -11,16 +11,8 @@ $menuPadding:  8px 15px;
 	transition: $val;
 }
 
-.h4-design{
-	padding: $menuPadding;
-	color: #fff;
-	margin: 0;
-}
 .categories{
 	display: none;
-	h4{
-		@extend .h4-design;
-	}
 	.menu{
 		padding: $menuPadding;
 		overflow: hidden;
@@ -51,9 +43,6 @@ $menuPadding:  8px 15px;
 	}
 }
 .ordered-items{
-	h4{
-		@extend .h4-design;
-	}
 	.orders{
 		padding: $menuPadding;
 	}
@@ -68,22 +57,6 @@ $menuPadding:  8px 15px;
 	}
 }
 
-.data-header{
-	background-color: $themeColorLight;
-	overflow:hidden;
-	h4{
-		width: 50%;
-	}
-	.categoryHeaderSearch{
-		width: 50%;
-		padding: $menuPadding;
-		input{
-			color: #fff;
-			height: 30px;
-			margin-bottom: 0;
-		}
-	}
-}
 
 .show-on-hover{
 	td:last-child{
