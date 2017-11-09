@@ -304,5 +304,9 @@
 		<!-- <script src="/common/js/operations.js"></script> -->
 		<script src="/admin/js/view.js"></script>
 		<script src="/admin/js/main.js"></script>
+		<!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+		<script>
+		  var socket = io();
+		</script> -->
 	</body>
 </html>

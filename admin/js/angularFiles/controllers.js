@@ -20,10 +20,17 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	}
 
 	$scope.editItem = function(){
+		console.log($scope.editItemFields.category_fk," - problem");
+		if($scope.editItemFields.category_fk){
 		$scope.editItemFields.category_fk = $("select#categoryUpdate").val();
 		// $scope.editItemFields.category = $("select#categoryUpdate").val();
 		dbOperations.processData("EditItem",$scope.editItemFields,function(){getItems();});
 		// console.log($scope.editItemFields);
+
+		}
+		else{
+			alert("Put Category");
+		}
 	}
 
 	function getCategories(){
@@ -52,6 +59,16 @@ app.controller("productManagement",function($scope,$http,dbOperations){
     }
 	getCategories();
 	getItems();
+
+
+	$scope.sendMessage = function(){
+
+	}
+	// $http({
+	// 	method:"GET", url:"http://localhost:3000/",
+	// }).then(function(r){
+	// 	console.log(r);
+	// });
 });
 
 app.controller("buisnessManagement",function($scope,$http,dbOperations){

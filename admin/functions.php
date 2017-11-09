@@ -99,7 +99,7 @@ function updateCategory($c){
 
 function updateItem($c,$d){
 	$sql = "UPDATE item_tbl SET name = '".validateData($d->name)."',item_code = '".validateData($d->item_code)."',category_fk = ".validateData($d->category_fk).",price = ".validateData($d->price)." WHERE id = ".validateData($d->id)."";
-	// echo "$sql";
+	echo "$sql";
 	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 

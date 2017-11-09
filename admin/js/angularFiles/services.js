@@ -15,7 +15,7 @@ app.service('dbOperations',function($http){
 			}
 		}).then(function success(res){
 			callback();
-			console.log(res);
+			console.log(res,"ito yun");
 		}, function myError(response) {
 			// console.log("Error");
 	    });
