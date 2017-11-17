@@ -13,6 +13,7 @@ else{
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);
 	$process = $request->process;
+	$data = $request->data;
 }
 
 switch($process){
@@ -30,6 +31,12 @@ switch($process){
 	}break;
 	case "getEmployees":{
 		selectEmployee($conn);
+	}break;
+	case "getTotalSales":{
+		getTotalSalesOn($conn,$data);
+	}break;
+	case "getTransationsData":{
+		getTransationsDataOn($conn,$data);
 	}break;
 }
 
@@ -64,6 +71,24 @@ function selectEmployee($c){
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 
+function getTotalSales($c,$date){
+	$sql = "SELECT SUM(payment) as totalSales FROM `order_tbl` WHERE received_date LIKE '$date%'";
+	// echo "$sql";
+	$totalSales = selectQuery($c,$sql)[0]["totalSales"];
+	return $totalSales ? $totalSales : 0;
+}
+
+function getTransationsDataOn($c,$data){
+	$date = substr($data,0,10);
+	$sql = "SELECT `id`, `cashier_fk`, `branch_fk`, `operator_fk`, `void_fk`, `total_amount`, `customer_name`, `payment`, `received_date` FROM `order_tbl` WHERE order_date LIKE '$date%'";
+	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
+	
+}
+
+
+function getTotalSalesOn($c,$data){
+	print_r(getTotalSales($c,substr($data,0,10)));
+}
 
 /*
 	FUNCTIONS AREA

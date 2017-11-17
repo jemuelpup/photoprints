@@ -36,7 +36,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	function getCategories(){
 		$http({
 			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getItemCategory" }
+			data: { 'process': "getItemCategory",'data':'' }
 		}).then(function success(res){
 			$scope.categories = res.data;
 		}, function myError(response) {
@@ -45,7 +45,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	function getItems(){
 		$http({
 			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getItems" }
+			data: { 'process': "getItems",'data':'' }
 		}).then(function success(res){
 			(res.data).map(function(e){
 				e.price = Number(e.price);
@@ -85,7 +85,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	function getBranches(){
 		$http({
 			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getBranches" }
+			data: { 'process': "getBranches",'data':'' }
 		}).then(function success(res){
 			// console.log(res.data)
 			$scope.branches = res.data;
@@ -96,7 +96,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	function getPositions(){
 		$http({
 			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getPositions"}
+			data: { 'process': "getPositions",'data':'' }
 		}).then(function success(res){
 			$scope.positions = res.data;
 		},function error(){
@@ -125,7 +125,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	function getEmployees(){
 		$http({
 			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getEmployees" }
+			data: { 'process': "getEmployees",'data':'' }
 		}).then(function success(res){
 			// console.log(res.data)
 			$scope.employees = res.data;
@@ -149,7 +149,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 		if(employeeId==0){
 			alert("Select employee");
 		}
-		else{http://localhost/phpmyadmin/tbl_export.php?db=photoprints&table=account_tbl&token=2c0a9b807c72e1e53692b467fe2e4960&single_table=true
+		else{
 			$scope.employeeFields = $scope.employeeData;
 			$('select').material_select();
 			$("#add-employee").modal("open");
@@ -206,3 +206,29 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	}
 	getEmployees();
 })
+
+app.controller("reports",function($scope,$http,dbOperations){
+
+	$scope.selectedDate = new Date();
+	$scope.transactions = [];
+	$scope.totalSales = 0;	
+
+
+	getTotalSalesOn($scope.selectedDate);
+	getTransationsOn($scope.selectedDate);
+	function getTotalSalesOn(selectedDate){
+		dbOperations.getData('getTotalSales',selectedDate).then(function(res) {
+			$scope.totalSales = res.data;
+		});
+	}
+	function getTransationsOn(selectedDate){
+		dbOperations.getData('getTransationsData',selectedDate).then(function(res) {
+			$scope.transactions = res.data;
+			console.log(res);
+		});
+	}
+	$scope.getTransactionData = function(){
+		getTotalSalesOn($scope.selectedDate);
+		getTransationsOn($scope.selectedDate);
+	}
+});

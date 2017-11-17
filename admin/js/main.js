@@ -33,9 +33,10 @@ $(document).ready(function(){
 	Navigation buttons
 */
 
+// hideAll();
+// $(".product-management").show();
 hideAll();
-$(".product-management").show();
-
+		$(".reports-management").show();
 	$(".product-management-btn").click(function(){
 		hideAll();
 		$(".product-management").show();
@@ -48,6 +49,13 @@ $(".product-management").show();
 		hideAll();
 		$(".buisness-management").show();
 	});
+	$(".reports-btn").click(function(){
+		hideAll();
+		$(".reports-management").show();
+	});
+
+
+
 	// hideAll();
 	function hideAll(){
 		$(".product-management,.employee-management,.buisness-management").hide();
@@ -143,11 +151,19 @@ function dbOperations(processName,dataInputs,callback){
 	Materialize codes
 */	
 
-		$('.modal').modal();
-		$('select').material_select();
+	$('.modal').modal();
+	$('select').material_select();
 	
-	
-	// $('select').material_select('destroy');
+	// $('.datepicker').pickadate({
+	//     selectMonths: true, // Creates a dropdown to control month
+	//     selectYears: 15, // Creates a dropdown of 15 years to control year,
+	//     today: 'Today',
+	//     clear: 'Clear',
+	//     close: 'Ok',
+	//     format: 'yyyy-mm-dd',
+	//     closeOnSelect: false // Close upon selecting a date,
+	// });
+	$('select').material_select('destroy');
 /********************************************/
 /*
 	Function calls;

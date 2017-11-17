@@ -283,9 +283,36 @@
 					</div>
 				</div>
 			</section>
-			<section class="reports">
+			<section class="reports" ng-controller="reports">
 				<div class="container">
-					
+					<div class="row">
+						<div class="col s6">
+							<h2>Sales</h2>
+							<input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker">
+							<p>Total sales : {{totalSales}}</p>
+						</div>
+						<div class="col s6">
+							<h2>Transactions</h2>
+							<table>
+								<tr>
+									<th>branch_fk</th>
+									<th>cashier_fk</th>
+									<th>customer_name</th>
+									<th>operator_fk</th>
+									<th>payment</th>
+									<th>total_amount</th>
+								</tr>
+								<tr ng-repeat="transaction in transactions">
+									<td>{{transaction.branch_fk}}</td>
+									<td>{{transaction.cashier_fk}}</td>
+									<td>{{transaction.customer_name}}</td>
+									<td>{{transaction.operator_fk}}</td>
+									<td>{{transaction.payment}}</td>
+									<td>{{transaction.total_amount}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
 				</div>
 			</section>
 		</main>
