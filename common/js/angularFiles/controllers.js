@@ -1,8 +1,12 @@
-operations.controller('login',function($scope){
-	
-});
-
 operations.controller('operator',function($scope,$http,dbOperations){
+
+	/* Testing sessions */
+	
+	dbOperations.accessID().then(function(res){
+		if(res.data==='0'){ window.location.href = '/'; }
+	});
+	
+	/* /Testing sessions */
 	$scope.catAndItems = [];
 	$scope.orders = [];
 	$scope.totalPrice = 0;
@@ -13,7 +17,6 @@ operations.controller('operator',function($scope,$http,dbOperations){
 	
 
  	dbOperations.items("getCategoriesAndItems","").then(function(res) {
- 		// console.log(res);
  		$scope.catAndItems = res;
  	})
 
@@ -27,8 +30,8 @@ operations.controller('operator',function($scope,$http,dbOperations){
 		var itemTotalPrice = (multiplyer*price*quantity*(100-discount)/100);
 		if(quantity>0){
 			$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,multiplyer:multiplyer,discount:discount,price:price,itemTotalPrice:itemTotalPrice});
-			$scope.totalPrice += itemTotalPrice;
-
+			// $scope.totalPrice += itemTotalPrice;
+			updateTotal();
 			// processDataprocessData
 		}
 		else{
@@ -36,6 +39,18 @@ operations.controller('operator',function($scope,$http,dbOperations){
 		}
 	}
 	
+	$scope.customPrice = function(orderIndex,price){
+		$scope.orders[orderIndex].price = price;
+		console.log(price);
+		updateTotal();
+	}
+
+	function updateTotal(){
+		$scope.totalPrice = 0;
+		($scope.orders).forEach(function(e){
+			$scope.totalPrice += (e.multiplyer*e.price*e.quantity*(100-e.discount)/100);
+		});
+	}
 	$scope.addToQueue = function(){
 		// console.log($scope.orders);
 		if(($scope.orders).length){
@@ -76,12 +91,16 @@ operations.controller('operator',function($scope,$http,dbOperations){
 		$scope.activeCategoryIndex=index;
 	}
 	$scope.removeItem = function(index,itemTotalPrice){
-		$scope.totalPrice -= itemTotalPrice; 
+		// $scope.totalPrice -= itemTotalPrice; 
 		$scope.orders.splice(index, 1);
+		updateTotal();
 	}
 });
 
 operations.controller('cashier',function($scope,$http,dbOperations){
+	dbOperations.accessID().then(function(res){
+		if(res.data==='0'){ window.location.href = '/'; }
+	});
 
 	$scope.orders = [];
 	$scope.order = {};
@@ -185,5 +204,4 @@ operations.controller('cashier',function($scope,$http,dbOperations){
 
     // window.onbeforeprint = beforePrint;
     // window.onafterprint = afterPrint;
-
 });

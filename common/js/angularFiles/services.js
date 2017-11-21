@@ -36,7 +36,6 @@ operations.service('dbOperations',function($http){
 			return "Something wrong in the system";
 	    });
 	}
-
 	this.unclaimedOrders = function(process,dataInputs){
 		return $http({
 			method:"POST",
@@ -52,8 +51,20 @@ operations.service('dbOperations',function($http){
 	    });
 	}
 
-
-
+	this.accessID = function(){
+		return $http({
+			method:"POST",
+			url:"/common/functions.php",
+			data: {
+				'process': "getID",
+				'data': ""
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			// console.log("Error");
+	    });
+	}
 	this.items = function(process,dataInputs){
 		return $http({
 			method:"POST",
@@ -95,7 +106,18 @@ operations.service('dbOperations',function($http){
 			// console.log("Error");
 	    });
 	}
-	// function categoryBasedJsonFormat(data){
-	// 	data.
-	// }
+
+	this.access = function(dataInputs){
+		return $http({
+			method:"POST",
+			url:"/common/login.php",
+			data: {
+				'data': dataInputs
+			}
+		}).then(function success(res){
+			return res.data;
+		}, function myError(response) {
+			return "Something wrong in the system";
+	    });
+	}
 });

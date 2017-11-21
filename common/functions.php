@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require $_SERVER['DOCUMENT_ROOT'].'/common/dbconnect.php';
 
 $postdata = file_get_contents("php://input");
@@ -14,6 +15,10 @@ switch($process){
 	case "orderPaid":{
 		updateOrder($conn,$data);
 	}break;
+	case "getID":{
+		getSessionId($conn,$data);
+	}break;
+
 }
 
 function updateOrder($c,$d){
@@ -89,6 +94,11 @@ function hasRows($c,$sql){
 		return true;
 	}
 	return false;
+}
+
+function getSessionId(){
+	$id = isset($_SESSION["employeeID"]) ? $_SESSION["employeeID"] : 0;
+	echo $id;
 }
 
 ?>

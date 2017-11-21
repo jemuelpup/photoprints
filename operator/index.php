@@ -1,24 +1,3 @@
-<?php
-
-	class Item{
-		function Item($id,$name){
-			$this->id = $id;
-			$this->name = $name;
-		}
-	}
-	require $_SERVER['DOCUMENT_ROOT'].'/common/dbconnect.php';
-	$categoryArray = [];
-	$res = $conn->query("SELECT id,name FROM `category_tbl` WHERE 1");
-
-	$categories = [];
-	if($res->num_rows>0){
-		while($row = $res->fetch_assoc()){
-			array_push($categories, (new Item($row['id'],$row['name'])));
-		}
-	}
-	
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,13 +81,17 @@
 										<th>Disc</th>
 										<th>Total</th>
 									</tr>
-									<tr ng-repeat="order in orders" class="show-on-hover">
-										<td>{{order.itemName}}-{{order.multiplyer}}</td>
-										<td>{{order.price*order.multiplyer}}</td>
+									<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false">
+										<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
+										</td>
+										<td>{{order.price*order.multiplyer}}
+											<div class="customPrice" ng-class="{'active': active === true}">
+												<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
+											</div></td>
 										<td> x {{order.quantity}}</td>
 										<td>{{order.discount}}%</td>
 										<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
-
+										
 									</tr>
 								</table>
 
