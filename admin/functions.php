@@ -85,6 +85,7 @@ function insertAccess($c,$d){
 function updateEmployee($c,$d){
 	$sql = "UPDATE employee_tbl SET name = '".validateData($d->name)."',address = '".validateData($d->address)."',contact_number = '".validateData($d->contact_number)."',email = '".validateData($d->email)."',position_fk = ".validateData($d->position_fk).",branch_fk = ".validateData($d->branch_fk).",salary = ".validateData($d->salary).",birth_day = '".validateDate($d->birth_day)."',gender = ".validateData($d->gender)." WHERE id = ".validateData($d->id)."";
 	// echo "$sql";
+	
 	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 

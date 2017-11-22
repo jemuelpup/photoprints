@@ -18,11 +18,15 @@ switch($process){
 	case "getID":{
 		getSessionId($conn,$data);
 	}break;
-
+	case "getAccessPosition":{
+		getAccessPosition($conn,$data);
+	}
 }
 
 function updateOrder($c,$d){
-	$sql = "UPDATE order_tbl SET payment = ".validateData($d->total_amount).",received_date = NOW() WHERE id = ".validateData($d->id)."";
+	$sql = "UPDATE order_tbl SET payment = ".validateData($d->cash).",received_date = NOW() WHERE id = ".validateData($d->id)."";
+	echo $sql;
+	return 
 	$msg = ($c->query($sql) === TRUE) ? "Setting order paid success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
@@ -99,6 +103,11 @@ function hasRows($c,$sql){
 function getSessionId(){
 	$id = isset($_SESSION["employeeID"]) ? $_SESSION["employeeID"] : 0;
 	echo $id;
+}
+
+function getAccessPosition(){
+	$accessPosition = isset($_SESSION["position"]) ? $_SESSION["position"] : 0;
+	echo $accessPosition;
 }
 
 ?>

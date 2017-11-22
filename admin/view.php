@@ -72,7 +72,8 @@ function selectEmployee($c){
 }
 
 function getTotalSales($c,$date){
-	$sql = "SELECT SUM(payment) as totalSales FROM `order_tbl` WHERE received_date LIKE '$date%'";
+	// echo $date;
+	$sql = "SELECT SUM(total_amount) as totalSales FROM `order_tbl` WHERE received_date LIKE '$date%' AND received_date IS NOT NULL";
 	// echo "$sql";
 	$totalSales = selectQuery($c,$sql)[0]["totalSales"];
 	return $totalSales ? $totalSales : 0;

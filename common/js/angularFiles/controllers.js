@@ -1,11 +1,20 @@
-operations.controller('operator',function($scope,$http,dbOperations){
+var loginEnabled = 0;
+var strictModeEnabled = 0;
+
+operations.controller('operator',function($scope,$http,dbOperations,systemOperations){
 
 	/* Testing sessions */
-	
-	dbOperations.accessID().then(function(res){
-		if(res.data==='0'){ window.location.href = '/'; }
-	});
-	
+	if(loginEnabled){
+		systemOperations.getAccessID().then(function(res){
+			if(res.data==='0'){ window.location.href = '/'; }
+		});
+	}
+	if(strictModeEnabled){
+		systemOperations.getAccessPosition().then(function(res){
+			console.log(res.data);
+			if(!(res.data==='2')){ window.location.href = '/'; }
+		});
+	}
 	/* /Testing sessions */
 	$scope.catAndItems = [];
 	$scope.orders = [];
@@ -97,11 +106,17 @@ operations.controller('operator',function($scope,$http,dbOperations){
 	}
 });
 
-operations.controller('cashier',function($scope,$http,dbOperations){
-	dbOperations.accessID().then(function(res){
-		if(res.data==='0'){ window.location.href = '/'; }
-	});
-
+operations.controller('cashier',function($scope,$http,dbOperations,systemOperations){
+	if(loginEnabled){
+		systemOperations.getAccessID().then(function(res){
+			if(res.data==='0'){ window.location.href = '/'; }
+		});
+	}
+	if(strictModeEnabled){
+		systemOperations.getAccessPosition().then(function(res){
+			if(!(res.data==='1')){ window.location.href = '/'; }
+		});
+	}
 	$scope.orders = [];
 	$scope.order = {};
 	$scope.orderItems = [];
@@ -133,6 +148,7 @@ operations.controller('cashier',function($scope,$http,dbOperations){
 	$scope.setOrderPaid = function(){
 		if(($scope.cash-$scope.order.total_amount)>-1){
 			if(receiptPrinted){
+				$scope.order.cash = $scope.cash;
 				dbOperations.processData("orderPaid",$scope.order,function paidTransaction(){
 					getUnclaimedOrders();
 					$scope.order = {};
@@ -150,6 +166,7 @@ operations.controller('cashier',function($scope,$http,dbOperations){
 		else{
 			alert("Not enough money");
 		}
+		/**/
 		
 	}
 

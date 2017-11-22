@@ -11,7 +11,7 @@ app.filter('gender',function(){
 });
 
 app.filter('position',function($http){
-	var positions = [{name:"cashier",val:1}];
+	var positions = [{name:"cashier",val:1},{name:"operator",val:2},{name:"admin",val:3}];
 	var poitionName = "";
 	return function(positionNum){
 		positions.forEach(function(p){

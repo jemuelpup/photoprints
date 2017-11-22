@@ -35,8 +35,8 @@ $(document).ready(function(){
 
 // hideAll();
 // $(".product-management").show();
-hideAll();
-		$(".reports-management").show();
+	hideAll();
+	$(".reports-management").show();
 	$(".product-management-btn").click(function(){
 		hideAll();
 		$(".product-management").show();
@@ -58,7 +58,7 @@ hideAll();
 
 	// hideAll();
 	function hideAll(){
-		$(".product-management,.employee-management,.buisness-management").hide();
+		$(".product-management,.employee-management,.buisness-management,.reports-management").hide();
 	}
 /********************************************/
 /*

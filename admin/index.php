@@ -283,7 +283,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="reports" ng-controller="reports">
+			<section class="reports-management" ng-controller="reports">
 				<div class="container">
 					<div class="row">
 						<div class="col s6">

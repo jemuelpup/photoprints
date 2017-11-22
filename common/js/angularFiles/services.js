@@ -50,21 +50,6 @@ operations.service('dbOperations',function($http){
 			return "Something wrong in the system";
 	    });
 	}
-
-	this.accessID = function(){
-		return $http({
-			method:"POST",
-			url:"/common/functions.php",
-			data: {
-				'process': "getID",
-				'data': ""
-			}
-		}).then(function success(res){
-			return res;
-		}, function myError(response) {
-			// console.log("Error");
-	    });
-	}
 	this.items = function(process,dataInputs){
 		return $http({
 			method:"POST",
@@ -106,7 +91,6 @@ operations.service('dbOperations',function($http){
 			// console.log("Error");
 	    });
 	}
-
 	this.access = function(dataInputs){
 		return $http({
 			method:"POST",
@@ -118,6 +102,38 @@ operations.service('dbOperations',function($http){
 			return res.data;
 		}, function myError(response) {
 			return "Something wrong in the system";
+	    });
+	}
+
+});
+
+operations.service('systemOperations',function($http){
+	this.getAccessID = function(){
+		return $http({
+			method:"POST",
+			url:"/common/functions.php",
+			data: {
+				'process': "getID",
+				'data': ""
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			// console.log("Error");
+	    });
+	}
+	this.getAccessPosition = function(){
+		return $http({
+			method:"POST",
+			url:"/common/functions.php",
+			data: {
+				'process': "getAccessPosition",
+				'data': ""
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			// console.log("Error");
 	    });
 	}
 });
