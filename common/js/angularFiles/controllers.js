@@ -1,5 +1,5 @@
-var loginEnabled = 0;
-var strictModeEnabled = 0;
+var loginEnabled = 1;
+var strictModeEnabled = 1;
 
 operations.controller('operator',function($scope,$http,dbOperations,systemOperations){
 

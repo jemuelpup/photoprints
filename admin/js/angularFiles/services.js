@@ -19,7 +19,19 @@ app.service('dbOperations',function($http){
 		}, function myError(response) {
 			// console.log("Error");
 	    });
-	},
+	}
+	this.views = function(process,data){
+		return $http({
+			method:"POST", url:"/admin/view.php",
+			data: { 'process': process,
+					'data':data 
+			}
+		}).then(function success(res){
+			return res.data;
+		},function error(){
+			alert("something went wrong.");
+		});
+	}
 	this.getData = function(process,date){
 		return $http({
 			method:"POST",
@@ -34,18 +46,32 @@ app.service('dbOperations',function($http){
 			return 0;
 	    });
 	}
-	// this.getSalesOn = function(process,date){
-	// 	return $http({
-	// 		method:"POST",
-	// 		url:"/admin/view.php",
-	// 		data: {
-	// 			'process': process,
-	// 			'data': date
-	// 		}
-	// 	}).then(function success(res){
-	// 		return res;
-	// 	}, function myError(response) {
-	// 		return 0;
-	//     });
-	// }
+	this.getAccessID = function(){
+		return $http({
+			method:"POST",
+			url:"/common/functions.php",
+			data: {
+				'process': "getID",
+				'data': ""
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			// console.log("Error");
+	    });
+	}
+	this.getAccessPosition = function(){
+		return $http({
+			method:"POST",
+			url:"/common/functions.php",
+			data: {
+				'process': "getAccessPosition",
+				'data': ""
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			// console.log("Error");
+	    });
+	}
 });

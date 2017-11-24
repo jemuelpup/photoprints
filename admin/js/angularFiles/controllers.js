@@ -1,3 +1,45 @@
+var loginEnabled = 1;
+var strictModeEnabled = 1;
+
+app.controller("buisnessManagement",function($scope,$http,dbOperations){
+	/* Testing sessions */
+	if(loginEnabled){
+		dbOperations.getAccessID().then(function(res){
+			if(res.data==='0'){ window.location.href = '/'; }
+		});
+	}
+	if(strictModeEnabled){
+		dbOperations.getAccessPosition().then(function(res){
+			console.log(res.data);
+			if(!(res.data==='3')){ window.location.href = '/'; }
+		});
+	}
+	/* /Testing sessions */
+
+	$scope.branchFields = {};
+	$scope.branches = [];
+	$scope.positionFields = {};
+	$scope.positions = [];
+	$scope.newBranch = function(){
+		dbOperations.processData("AddBranch",$scope.branchFields,function(){getBranches();});
+	}
+	$scope.newPosition = function(){
+		dbOperations.processData("AddPosition",$scope.positionFields,function(){getPositions();});
+	}
+	function getBranches(){
+		dbOperations.views("getBranches","").then(function(res){
+			$scope.branches = res;
+		});
+	}
+	function getPositions(){
+		dbOperations.views("getPositions","").then(function(res){
+			$scope.positions = res;
+		});
+	}
+	getBranches();
+	getPositions();
+});
+
 app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.categories = [];
 	$scope.items = [];
@@ -69,42 +111,6 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	// }).then(function(r){
 	// 	console.log(r);
 	// });
-});
-
-app.controller("buisnessManagement",function($scope,$http,dbOperations){
-	$scope.branchFields = {};
-	$scope.branches = [];
-	$scope.positionFields = {};
-	$scope.positions = [];
-	$scope.newBranch = function(){
-		dbOperations.processData("AddBranch",$scope.branchFields,function(){getBranches();});
-	}
-	$scope.newPosition = function(){
-		dbOperations.processData("AddPosition",$scope.positionFields,function(){getPositions();});
-	}
-	function getBranches(){
-		$http({
-			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getBranches",'data':'' }
-		}).then(function success(res){
-			// console.log(res.data)
-			$scope.branches = res.data;
-		},function error(){
-			alert("something went wrong.");
-		});
-	}
-	function getPositions(){
-		$http({
-			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getPositions",'data':'' }
-		}).then(function success(res){
-			$scope.positions = res.data;
-		},function error(){
-			alert("something went wrong.");
-		});
-	}
-	getBranches();
-	getPositions();
 });
 
 app.controller("employeeManagement",function($scope,$http,dbOperations){
@@ -186,9 +192,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	$scope.addEmployeeAccess = function(){
 		$scope.employeeAccessFields.id = employeeId;
 		dbOperations.processData("AddAccess",$scope.employeeAccessFields,function(){getEmployees();$("#add-access").modal("close");});
-		// console.log($scope.employeeAccessFields);
 	}
-	
 	$scope.addEmployee = function(){
 		$scope.employeeFields.position_fk = $(".employee-management select[name='positionField']").val();
 		$scope.employeeFields.branch_fk = $(".employee-management select[name='branchField']").val();
@@ -205,6 +209,10 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 		// alert();
 	}
 	getEmployees();
+	$scope.employeeManagementInit = function(){
+		dbOperations.views("getBranches","").then(function(res){ $scope.branches = res; });
+		dbOperations.views("getPositions","").then(function(res){ $scope.positions = res; });
+	}
 })
 
 app.controller("reports",function($scope,$http,dbOperations){

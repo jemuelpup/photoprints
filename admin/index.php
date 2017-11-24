@@ -15,10 +15,18 @@
 			<div class="sidenav fixed">
 				<h1><img src="/common/images/logo.png" alt=""></h1>
 				<ul class="navigation">
-					<li><a href="#" class="product-management-btn"><i class="small material-icons">note_add</i><span>Product management</span></a></li>
-					<li><a href="#" class="employee-management-btn"><i class="small material-icons">person</i><span><span>Employee management</span></a></li>
-					<li><a href="#" class="buisness-management-btn"><i class="small material-icons">business</i><span><span>Buisness management</span></a></li>
-					<li><a href="#" class="reports-btn"><i class="small material-icons">library_books</i><span><span>Reports</span></a></li>
+					<li ng-controller="productManagement">
+						<a href="#" class="product-management-btn"><i class="small material-icons">note_add</i><span>Product management</span></a>
+					</li>
+					<li ng-controller="employeeManagement">
+						<a href="#" class="employee-management-btn" ng-click="employeeManagementInit()"><i class="small material-icons">person</i><span><span>Employee management</span></a>
+					</li>
+					<li ng-controller="buisnessManagement">
+						<a href="#" class="buisness-management-btn"><i class="small material-icons">business</i><span><span>Buisness management</span></a>
+					</li>
+					<li ng-controller="reports">
+						<a href="#" class="reports-btn"><i class="small material-icons">library_books</i><span><span>Reports</span></a>
+					</li>
 				</ul>
 			</div>
 		</header>
@@ -159,19 +167,20 @@
 								            <th>address</th>
 								            <th>contact_number</th>
 								            <th>email</th>
-								            <th>position_fk</th>
+								            <th>position</th>
 								            <th>branch_fk</th> 
 								            <th>salary</th>
 								            <th>birth_day</th>
 								            <th>gender</th>
 								        </tr>
 								        <tr ng-click="getEmployeeInfo(employee.id)"; ng-repeat="employee in employees" data-id="{{employee.id}}">
+								        	<!-- <td>{{employee}}</td> -->
 								            <td>{{employee.name}}</td>
 								            <td>{{employee.address}}</td>
 								            <td>{{employee.contact_number}}</td>
 								            <td>{{employee.email}}</td>
-								            <td>{{employee.position_fk|position}}</td>
-								            <td>{{employee.branch_fk|branch}}</td>
+								            <td>{{employee.position_name}}</td>
+								            <td>{{employee.branch_name}}</td>
 								            <td>{{employee.salary}}</td>
 								            <td>{{employee.birth_day|shortDateFromat}}</td>
 								            <td>{{employee.gender|gender}}</td>
