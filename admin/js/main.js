@@ -163,7 +163,7 @@ function dbOperations(processName,dataInputs,callback){
 	//     format: 'yyyy-mm-dd',
 	//     closeOnSelect: false // Close upon selecting a date,
 	// });
-	$('select').material_select('destroy');
+	// $('select').material_select('destroy');
 /********************************************/
 /*
 	Function calls;

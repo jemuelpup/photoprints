@@ -140,7 +140,7 @@
 										    </tbody>
 										</table>
 										<a class="waves-effect waves-light btn" ng-click="editItemsTrigger()">Edit</a>
-						        <a class="waves-effect waves-light btn">Delete</a>
+						        <a class="waves-effect waves-light btn" ng-click="deleteItem()">Delete</a>
 									</div>
 								</div>
 							</div>
@@ -188,7 +188,7 @@
 								    </tbody>
 								</table>
 								<a class="waves-effect waves-light btn" ng-click="editEmployeeData()">Edit</a>
-							  <a class="waves-effect waves-light btn" ng-click="getSelectVal()">Delete</a>
+							  <a class="waves-effect waves-light btn" ng-click="deleteEmployee()">Delete</a>
 							  <a class="waves-effect waves-light btn" ng-click="newEmployeeAccess()">Add Access</a>
 						  </div>
 						</div>
@@ -298,6 +298,14 @@
 						<div class="col s6">
 							<h2>Sales</h2>
 							<input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker">
+							<form action="#">
+						    <ul>
+						    	<li ng-repeat="repFilter in reportFilters">
+						    		<input name="reportFilter1" class="filled-in" type="radio" id={{repFilter.id}} />
+						      	<label for={{repFilter.id}}>{{repFilter.name}}</label>
+						    	</li>
+						    </ul>
+						  </form>
 							<p>Total sales : {{totalSales}}</p>
 						</div>
 						<div class="col s6">

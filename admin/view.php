@@ -52,7 +52,7 @@ function selectItemCategory($c){
 
 /* This function needs some edit*/
 function selectItem($c){
-	$sql = "SELECT id,name,item_code,category_fk,date_modified,price FROM item_tbl";
+	$sql = "SELECT id,name,item_code,category_fk,date_modified,price FROM item_tbl WHERE active = 1";
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 
@@ -68,7 +68,7 @@ function selectPosition($c){
 }
 
 function selectEmployee($c){
-	$sql = "SELECT e.id,e.name,e.address,e.contact_number,e.email,p.name as position_name,b.name as branch_name,e.salary,e.date_modified,e.active,e.birth_day,e.gender FROM employee_tbl e,position_tbl p,branch_tbl b WHERE p.id = e.position_fk AND e.branch_fk=b.id";
+	$sql = "SELECT e.id,e.name,e.address,e.contact_number,e.email,p.name as position_name,b.name as branch_name,e.salary,e.date_modified,e.active,e.birth_day,e.gender,e.position_fk,e.branch_fk FROM employee_tbl e,position_tbl p,branch_tbl b WHERE p.id = e.position_fk AND e.branch_fk=b.id AND e.active=1";
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 

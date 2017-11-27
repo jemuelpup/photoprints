@@ -42,6 +42,12 @@ switch($process){
 	case "EditItem": {
 		updateItem($conn,$data);
 	}break;
+	case "RemoveEmployee":{
+		deleteEmployee($conn,$data);
+	}break;
+	case "RemoveItem":{
+		deleteItem($conn,$data);
+	}break;
 }
 
 /****************************************************************************
@@ -82,6 +88,7 @@ function insertAccess($c,$d){
 	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
+/* UPDATE */
 function updateEmployee($c,$d){
 	$sql = "UPDATE employee_tbl SET name = '".validateData($d->name)."',address = '".validateData($d->address)."',contact_number = '".validateData($d->contact_number)."',email = '".validateData($d->email)."',position_fk = ".validateData($d->position_fk).",branch_fk = ".validateData($d->branch_fk).",salary = ".validateData($d->salary).",birth_day = '".validateDate($d->birth_day)."',gender = ".validateData($d->gender)." WHERE id = ".validateData($d->id)."";
 	// echo "$sql";
@@ -89,7 +96,6 @@ function updateEmployee($c,$d){
 	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
-/* UPDATE */
 function updateCategory($c){
 	$d = $_POST['data'];
 	$sql = "UPDATE category_tbl SET name = '".getFieldValue($d,'name')."',category_code = '".getFieldValue($d,'category_code')."',description = '".getFieldValue($d,'description')."' WHERE id = ".getFieldValue($d,'id')."";
@@ -104,13 +110,6 @@ function updateItem($c,$d){
 	$msg = ($c->query($sql) === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
-
-// function updateItem(){
-// 	$id = $_POST['id'];
-// 	$d = $_POST['data'];
-// 	$sql = " WHERE id = $id";
-// 	echo $sql;
-// }
 function updatePosition(){
 	$id = $_POST['id'];
 	$d = $_POST['data'];
@@ -127,11 +126,21 @@ function updateBranch(){
 
 /* DELETE */
 function deleteCategory(){
-	
 	$sql = "UPDATE category_tbl SET date_modified = NOW(),modified_by_fk = 1,active = 0 WHERE id = $id";
-
-
 	echo $sql;
+}
+function deleteItem($c,$d){
+	$id = $d->id;
+	$sql = "UPDATE item_tbl SET active = 0 WHERE id = $id";
+	// // echo "$sql";
+	$msg = ($c->query($sql) === TRUE) ? "Deleting employee success" : "Error: " . $sql . "<br>" . $c->error;
+}
+
+function deleteEmployee($c,$d){
+	$id = $d->id;
+	$sql = "UPDATE employee_tbl SET active = 0 WHERE id = $id";
+	// echo "$sql";
+	$msg = ($c->query($sql) === TRUE) ? "Deleting employee success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
 /**************************************************************************/

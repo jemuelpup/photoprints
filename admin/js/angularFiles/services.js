@@ -5,8 +5,8 @@ dataInputs(Object), -like in serialize array in jqueyr
 callback(Function) - function call after the request
 */
 app.service('dbOperations',function($http){
-	this.processData = function(process,dataInputs,callback){
-		$http({
+	this.processData = function(process,dataInputs){
+		return $http({
 			method:"POST",
 			url:"/admin/functions.php",
 			data: {
@@ -14,10 +14,9 @@ app.service('dbOperations',function($http){
 				'data': dataInputs
 			}
 		}).then(function success(res){
-			callback();
-			console.log(res,"ito yun");
+			return res;
 		}, function myError(response) {
-			// console.log("Error");
+			return 0;
 	    });
 	}
 	this.views = function(process,data){

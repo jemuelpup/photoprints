@@ -21,10 +21,14 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	$scope.positionFields = {};
 	$scope.positions = [];
 	$scope.newBranch = function(){
-		dbOperations.processData("AddBranch",$scope.branchFields,function(){getBranches();});
+		dbOperations.processData("AddBranch",$scope.branchFields).then(function(res){
+			getBranches();
+		});
 	}
 	$scope.newPosition = function(){
-		dbOperations.processData("AddPosition",$scope.positionFields,function(){getPositions();});
+		dbOperations.processData("AddPosition",$scope.positionFields).then(function(res){
+			getPositions();
+		});
 	}
 	function getBranches(){
 		dbOperations.views("getBranches","").then(function(res){
@@ -47,31 +51,40 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.itemFields = {};
 	$scope.editItemFields = {};
 	$scope.addNewCategory = function(){
-		dbOperations.processData("AddItem",$scope.categoryFields,function(){getCategories();});
+		dbOperations.processData("AddItem",$scope.categoryFields).then(function(res){getCategories();});
 	}
 
 	$scope.addNewItem = function(){
 		$scope.itemFields.category = $("select#category").val();
-		dbOperations.processData("AddItem",$scope.itemFields,function(){getItems();});
+		dbOperations.processData("AddItem",$scope.itemFields).then(function(res){getItems();});
 	}
 
-	$scope.itemIndex = function(i,id){ $scope.editItemFields = ($scope.items)[i]; }
+	$scope.itemIndex = function(i,id){
+		$scope.editItemFields = ($scope.items)[i];
+		// $(".categoryUpdate [value="+$scope.editItemFields.category_fk+"]").attr("selected='selected'");
+	}
 
 	$scope.editItemsTrigger = function(){
 		$('#edit-item').modal('open');
 	}
 
 	$scope.editItem = function(){
-		console.log($scope.editItemFields.category_fk," - problem");
 		if($scope.editItemFields.category_fk){
-		$scope.editItemFields.category_fk = $("select#categoryUpdate").val();
-		// $scope.editItemFields.category = $("select#categoryUpdate").val();
-		dbOperations.processData("EditItem",$scope.editItemFields,function(){getItems();});
-		// console.log($scope.editItemFields);
-
+			if(!isNaN($("select#categoryUpdate").val())){
+				$scope.editItemFields.category_fk = $("select#categoryUpdate").val();
+			}
+			dbOperations.processData("EditItem",$scope.editItemFields).then(function(res){getItems();});
 		}
 		else{
 			alert("Put Category");
+		}
+	}
+	$scope.deleteItem = function(){
+		if (confirm("Are you sure you want to delete this item?")) {
+			dbOperations.processData("RemoveItem",$scope.editItemFields).then(function(res){
+				console.log(res)
+				getItems();
+			});
 		}
 	}
 
@@ -81,6 +94,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 			data: { 'process': "getItemCategory",'data':'' }
 		}).then(function success(res){
 			$scope.categories = res.data;
+			console.log(res.data,'nandit yun')
 		}, function myError(response) {
 	    });
     }
@@ -129,15 +143,9 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	}
 	
 	function getEmployees(){
-		$http({
-			method:"POST", url:"/admin/view.php",
-			data: { 'process': "getEmployees",'data':'' }
-		}).then(function success(res){
-			// console.log(res.data)
-			$scope.employees = res.data;
+		dbOperations.views("getEmployees","").then(function(res){
+			$scope.employees = res;
 			formatData();
-		},function error(){
-			alert("something went wrong.");
 		});
 	}
 	function formatData(){
@@ -147,6 +155,17 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 			$scope.employeeFields = e;
 		});
 	}
+	$scope.deleteEmployee = function(){
+		if (confirm("Area you sure you want to delete this employee?")) {
+			$scope.employeeFields.id = employeeId;
+			dbOperations.processData("RemoveEmployee",$scope.employeeFields).then(function(res){
+				getEmployees();
+				$scope.branches = res;
+				alert("Employee deleted");
+			});
+		}
+	}
+
 	$scope.newEmployee = function(){
 		$scope.employeeFields = {};
 		$("#add-employee").modal("open");
@@ -156,20 +175,27 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 			alert("Select employee");
 		}
 		else{
-			$scope.employeeFields = $scope.employeeData;
 			$('select').material_select();
 			$("#add-employee").modal("open");
 		}
 	}
 	$scope.updateEmployeeData = function(){
-		$scope.employeeFields.position_fk = $(".employee-management select[name='positionField']").val();
-		$scope.employeeFields.branch_fk = $(".employee-management select[name='branchField']").val();
-		$scope.employeeFields.id = employeeId;
+		if(!isNaN($(".employee-management select[name='positionField']").val())){
+			$scope.employeeFields.position_fk = $(".employee-management select[name='positionField']").val();
+		}
+		if(!isNaN($(".employee-management select[name='branchField']").val())){
+			$scope.employeeFields.branch_fk = $(".employee-management select[name='branchField']").val();
+		}
+		// $scope.employeeFields.id = employeeId;
 		console.log($scope.employeeFields);
-		dbOperations.processData("EditEmployee",$scope.employeeFields,function(){getEmployees();$("#add-employee").modal("close");});
+		dbOperations.processData("EditEmployee",$scope.employeeFields).then(function(res){
+			console.log(res)
+			getEmployees();//$("#add-employee").modal("close");
+		});
 	}
+
+
 	$scope.getEmployeeInfo = function(dataId){
-		console.log(employeeId);
 		($scope.employees).forEach(function(e){// loop  to all the employee data
 			if(e.id==dataId){
 				if(employeeId==dataId){ $scope.employeeData = {}; employeeId = 0;}
@@ -178,6 +204,8 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 			}
 
 		});
+		$scope.employeeFields = $scope.employeeData;
+		// console.log(employeeId);
 	}
 	$scope.newEmployeeAccess = function(){
 		if(employeeId==0){
@@ -191,7 +219,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	}
 	$scope.addEmployeeAccess = function(){
 		$scope.employeeAccessFields.id = employeeId;
-		dbOperations.processData("AddAccess",$scope.employeeAccessFields,function(){getEmployees();$("#add-access").modal("close");});
+		dbOperations.processData("AddAccess",$scope.employeeAccessFields).then(function(res){getEmployees();$("#add-access").modal("close");});
 	}
 	$scope.addEmployee = function(){
 		$scope.employeeFields.position_fk = $(".employee-management select[name='positionField']").val();
@@ -201,7 +229,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 		}
 		else{
 			console.log($scope.employeeFields);
-			dbOperations.processData("AddEmployee",$scope.employeeFields,function(){getEmployees();$("#add-employee").modal("close");});
+			dbOperations.processData("AddEmployee",$scope.employeeFields).then(function(res){getEmployees();$("#add-employee").modal("close");});
 			$scope.employeeFields={};
 		}
 		// console.log($scope.employeeFields);
@@ -219,7 +247,13 @@ app.controller("reports",function($scope,$http,dbOperations){
 
 	$scope.selectedDate = new Date();
 	$scope.transactions = [];
-	$scope.totalSales = 0;	
+	$scope.totalSales = 0;
+	$scope.reportFilters = [
+		{"name":"Daily","id":"d1","val":1},
+		{"name":"Weekly","id":"d2","val":2},
+		{"name":"Monthly","id":"d3","val":3},
+		{"name":"Yearly","id":"d4","val":4},
+	];
 
 
 	getTotalSalesOn($scope.selectedDate);

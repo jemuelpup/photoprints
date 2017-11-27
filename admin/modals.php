@@ -116,7 +116,7 @@
       <div id="edit-item" class="modal edit-item">
         <form ng-submit="editItem()">
           <div class="modal-content">
-            <h4>Edit category</h4>
+            <h4>Edit Item</h4>
             <div class="input-field col s12">
               <input placeholder="" ng-model="editItemFields.name" type="text" class="validate" maxlength="50" required="">
               <label for="name" class="active">name</label>
@@ -138,7 +138,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="waves-effect waves-light btn" type="submit">Update</button>
+            <button class="waves-effect waves-light btn" type="submit" ng-click="editItem()">Update</button>
           </div>
         </form>
       </div>
