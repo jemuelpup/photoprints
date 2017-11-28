@@ -28,14 +28,14 @@
 						<tr>
 							<th>Customer name</th>
 							<th>Amount</th>
-							<th>Payment</th>
+							<th>Down payment</th>
 							<th>Operator</th>
 							<th>Order date</th>
 						</tr>
 						<tr ng-repeat="order in orders|filter:orderFilter" ng-click="viewItemsOrdered(order,order.order_line)">
 							<td>{{order.customer_name}}</td>
 							<td>{{order.total_amount}}</td>
-							<td>{{order.payment}}</td>
+							<td>{{order.down_payment}}</td>
 							<td>{{order.operator_fk}}</td>
 							<td>{{order.order_date}}</td>
 						</tr>
@@ -48,7 +48,7 @@
 						<div class="data-header">
 							<h4 class="left">Items</h4>
 							<div class="headerInput">
-								<input placeholder="Cash" type="number"  ng-model="cash">
+								<input placeholder="Cash" type="number" value=0 ng-model="cash" min="0">
 							</div>
 						</div>
 					</div>
@@ -69,11 +69,12 @@
 						</tr>
 					</table>
 					<p>Total: Php. {{order.total_amount}}</p>
+					<p>Down payment: Php. {{order.down_payment}}</p>
 					<p>Cash: Php. {{cash}}</p>
-					<p>Change: Php. <span>{{cash-order.total_amount}}</span></p>
+					<p>Change: Php. <span>{{ cash + change}}</span></p>
 					<p>------------------------</p>
 				</div>
-				 <button class="btn waves-effect waves-light" name="action" ng-click="printReceipt()">Print<i class="material-icons right">local_printshop</i></button>
+		<!-- 		 <button class="btn waves-effect waves-light" name="action" ng-click="printReceipt()">Print<i class="material-icons right">local_printshop</i></button> -->
 				 <button class="btn waves-effect waves-light right" name="action" ng-click="setOrderPaid(order.id);">Paid<i class="material-icons right">payment</i></button>
 			</div>
 		</div>

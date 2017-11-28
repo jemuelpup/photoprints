@@ -50,18 +50,24 @@ $menuPadding:  8px 15px;
 			overflow: hidden;
 			td{
 				position: relative;
+				overflow: hidden;
 				.customPrice{
 					position: absolute;
-					bottom: -100px;
-				}
-				.customPrice.active{
-					bottom: -18px;
+					bottom: -25px;
+					@include transition(bottom 200ms ease);
+					&.active{
+						bottom: -18px;
+					}
+					input{
+						border-bottom-color: #309b1c;
+					}
 				}
 			}
 		}
 	}
 	input{
 		margin-top: 0;
+		margin-bottom: 0;
 	}
 	tr{
 		border-bottom: 1px solid #e4e4e4;
@@ -106,5 +112,29 @@ $menuPadding:  8px 15px;
 		.edit-btn{
 			left: 5px;
 		}
+	}
+}
+.showOnPrint{
+	display: none;
+}
+@media print {
+	body * {
+		visibility: hidden;
+	}
+	.showOnPrint{
+		display: block;
+		text-align: center;
+	}
+	#section-to-print, #section-to-print * {
+		visibility: visible;
+	}
+	#section-to-print {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	@page {
+		size: auto;   /* auto is the initial value */
+		margin: 0;  /* this affects the margin in the printer settings */
 	}
 }

@@ -67,40 +67,47 @@
 			<div class="col s4">
 				<div class="row">
 					<div class="col s12">
-						<div class="ordered-items z-depth-2">
-							<div class="data-header">
-								<h4>Ordered Items</h4>
-							</div>
-							<div class="orders">
-				          <input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
-								<table>
-									<tr>
-										<th>Item</th>
-										<th>Price</th>
-										<th>Qty</th>
-										<th>Disc</th>
-										<th>Total</th>
-									</tr>
-									<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false">
-										<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
-										</td>
-										<td>{{order.price*order.multiplyer}}
-											<div class="customPrice" ng-class="{'active': active === true}">
-												<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
-											</div></td>
-										<td> x {{order.quantity}}</td>
-										<td>{{order.discount}}%</td>
-										<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
-										
-									</tr>
-								</table>
+						<div id="section-to-print">
+							<div class="ordered-items z-depth-2">
+								<div class="data-header">
+									<div class="showOnPrint">
+										<p>OrderSlip</p>
+									</div>
+									<h4>Ordered Items</h4>
+								</div>
+								<div class="orders">
+					        		<input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
+					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate" ng-model="downPayment">
+									<table>
+										<tr>
+											<th>Item</th>
+											<th>Price</th>
+											<th>Qty</th>
+											<th>Disc</th>
+											<th>Total</th>
+										</tr>
+										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false">
+											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
+											</td>
+											<td>{{order.price*order.multiplyer}}
+												<div class="customPrice" ng-class="{'active': active === true}">
+													<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
+												</div></td>
+											<td> x {{order.quantity}}</td>
+											<td>{{order.discount}}%</td>
+											<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
+											
+										</tr>
+									</table>
 
-								<p>Total: Php. {{totalPrice}}</p>
-								<p>------------------------</p>
-								<!-- create table here and remove orders
-								{{orders}}
-								{{databaseData}} -->
-								<button ng-click="addToQueue()">Set orders</button>
+									<p>Total: Php. {{totalPrice}}</p>
+									<p>------------------------</p>
+									<!-- create table here and remove orders
+									{{orders}}
+									{{databaseData}} -->
+									<button ng-click="printOrderSlip()">Print order slip</button>
+									<button ng-click="addToQueue()">Set orders</button>
+								</div>
 							</div>
 						</div>
 					</div>

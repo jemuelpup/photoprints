@@ -1,8 +1,9 @@
-var loginEnabled = 1;
-var strictModeEnabled = 1;
+var loginEnabled = 0;
+var strictModeEnabled = 0;
 
 operations.controller('operator',function($scope,$http,dbOperations,systemOperations){
 
+	var orderSlipPrinted = false;
 	/* Testing sessions */
 	if(loginEnabled){
 		systemOperations.getAccessID().then(function(res){
@@ -61,40 +62,41 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 		});
 	}
 	$scope.addToQueue = function(){
-		// console.log($scope.orders);
+		// console.log(($scope.orders).length);
 		if(($scope.orders).length){
-			if($scope.customerName==""){
-				alert("Please place the cutomer name");
-			}
-			else{
-				var orderData = {
-					cashier_fk:1,
-					branch_fk:1,
-					operator_fk:1,
-					total_amount:$scope.totalPrice,
-					customer_name:$scope.customerName,
-					items: $scope.orders
+			if(orderSlipPrinted){
+				if($scope.customerName==""){
+					alert("Please place the cutomer name");
 				}
+				else{
+					var orderData = {
+						cashier_fk:1,
+						branch_fk:1,
+						operator_fk:1,
+						total_amount:$scope.totalPrice,
+						customer_name:$scope.customerName,
+						down_payment:$scope.downPayment,
+						items: $scope.orders
+					}
+					dbOperations.processData("addOrder",orderData,function newTransaction(){
+						orderData = {};
+						$scope.customerName = "";
+						$scope.downPayment = 0;
+						$scope.orders = [];
+						$scope.totalPrice = 0;
+					})
 
-				dbOperations.processData("addOrder",orderData,function newTransaction(){
-					orderData = {};
-					$scope.customerName = "";
-					$scope.orders = [];
-					$scope.totalPrice = 0;
-				})
 
-
-				$scope.databaseData = {
-					customerName:$scope.customerName,
-					items:$scope.orders
+					$scope.databaseData = {
+						customerName:$scope.customerName,
+						items:$scope.orders
+					}
+					// console.log("push the order to the table...");
 				}
-				// console.log("push the order to the table...");
 			}
+			else{	alert("Print the order slip first");	}
 		}
-		else{
-			alert("place order first");
-			console.log("push order first");
-		}
+		else{	alert("place order first");	}
 	}
 	$scope.showCategoryIndex = function(index){
 		$scope.activeCategoryIndex=index;
@@ -103,6 +105,18 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 		// $scope.totalPrice -= itemTotalPrice; 
 		$scope.orders.splice(index, 1);
 		updateTotal();
+	}
+	$scope.printOrderSlip = function(){
+		if(($scope.orders).length){
+			if($scope.customerName==""){
+				alert("Please place the cutomer name");
+			}
+			else{
+				orderSlipPrinted = true;
+				window.print();
+			}
+		}
+		else{	alert("place order first");	}
 	}
 });
 
@@ -120,34 +134,38 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 	$scope.orders = [];
 	$scope.order = {};
 	$scope.orderItems = [];
-	var receiptPrinted = false;
+	$scope.change = 0;
+	// var receiptPrinted = false; // for printing the receipt
 	
 
 	function getUnclaimedOrders(){
 		dbOperations.unclaimedOrders("getUnclaimedOrders","").then(function(res) {
-	 		// console.log(res);
+	 		console.log(res);
 	 		$scope.orders = res;
 	 		console.log(res)
 	 	});
 	}
 
 	$scope.viewItemsOrdered = function(order,orderLine){
-		// console.log(itemsOrdered);
 		$scope.order = order;
 		$scope.orderItems = orderLine;
+		$scope.change = $scope.order.down_payment - $scope.order.total_amount;
+		console.log($scope.order,"ito na ako");
+
 	}
 	$scope.printReceipt = function(){
 		if(($scope.cash-$scope.order.total_amount)>-1){
 			window.print();
-			receiptPrinted = true;
+			// receiptPrinted = true; // for printing the receipt
 		}
 		else{
 			alert("Not enough money");
 		}
 	}
 	$scope.setOrderPaid = function(){
-		if(($scope.cash-$scope.order.total_amount)>-1){
-			if(receiptPrinted){
+		$scope.cash = $scope.cash ? $scope.cash : 0;
+		if(($scope.change+$scope.cash)>=0){
+			// if(receiptPrinted){ // for printing the receipt
 				$scope.order.cash = $scope.cash;
 				dbOperations.processData("orderPaid",$scope.order,function paidTransaction(){
 					getUnclaimedOrders();
@@ -156,12 +174,13 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 					$scope.cash = 0;
 					$scope.cash = "";
 					receiptPrinted = false;
+					$scope.change = 0;
 				})
-			}
-			else{
-				alert("Print the receipt first");
-			}
-			// console.log("transaction success");
+			// } // for printing the receipt
+			// else{ // for printing the receipt
+			// 	alert("Print the receipt first"); // for printing the receipt
+			// } // for printing the receipt
+			
 		}
 		else{
 			alert("Not enough money");
@@ -173,52 +192,4 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 
 	getUnclaimedOrders();
 
-	// var beforePrint = function () {
- //            alert('Functionality to run before printing.');
- //        };
-
- //    var afterPrint = function () {
-
- //        alert('Functionality to run after printing');
- //    };
-
- //    if (window.matchMedia) {
- //        var mediaQueryList = window.matchMedia('print');
-
- //        mediaQueryList.addListener(function (mql) {
- //            //alert($(mediaQueryList).html());
- //            if (mql.matches) {
- //                beforePrint();
- //            } else {
- //                afterPrint();
- //            }
- //        });
- //    }
-
-
-
-	// printing area ....
-    // var beforePrint = function() {
-    //     console.log('Functionality to run before printing.');
-    // };
-
-    // var afterPrint = function() {
-    // 	console.log($scope.order.id," ito yung nai-print");
-    //     console.log('Functionality to run after printing');
-    // };
-
-    // if (window.matchMedia) {
-    //     var mediaQueryList = window.matchMedia('print');
-    //     mediaQueryList.addListener(function(mql) {
-    //     	console.log(mql)
-    //         if (mql.matches) {
-    //             beforePrint();
-    //         } else {
-    //             afterPrint();
-    //         }
-    //     });
-    // }
-
-    // window.onbeforeprint = beforePrint;
-    // window.onafterprint = afterPrint;
 });

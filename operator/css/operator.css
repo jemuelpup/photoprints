@@ -33,14 +33,23 @@
     position: relative;
     overflow: hidden; }
     .ordered-items .orders tr td {
-      position: relative; }
+      position: relative;
+      overflow: hidden; }
       .ordered-items .orders tr td .customPrice {
         position: absolute;
-        bottom: -100px; }
-      .ordered-items .orders tr td .customPrice.active {
-        bottom: -18px; }
+        bottom: -25px;
+        -webkit-transition: bottom 200ms ease;
+        -moz-transition: bottom 200ms ease;
+        -ms-transition: bottom 200ms ease;
+        -o-transition: bottom 200ms ease;
+        transition: bottom 200ms ease; }
+        .ordered-items .orders tr td .customPrice.active {
+          bottom: -18px; }
+        .ordered-items .orders tr td .customPrice input {
+          border-bottom-color: #309b1c; }
 .ordered-items input {
-  margin-top: 0; }
+  margin-top: 0;
+  margin-bottom: 0; }
 .ordered-items tr {
   border-bottom: 1px solid #e4e4e4; }
   .ordered-items tr:hover {
@@ -77,5 +86,30 @@
     right: 5px; }
   .show-on-hover:hover .edit-btn {
     left: 5px; }
+
+.showOnPrint {
+  display: none; }
+
+@media print {
+  body * {
+    visibility: hidden; }
+
+  .showOnPrint {
+    display: block;
+    text-align: center; }
+
+  #section-to-print, #section-to-print * {
+    visibility: visible; }
+
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0; }
+
+  @page {
+    size: auto;
+    /* auto is the initial value */
+    margin: 0;
+    /* this affects the margin in the printer settings */ } }
 
 /*# sourceMappingURL=operator.css.map */

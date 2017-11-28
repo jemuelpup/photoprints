@@ -36,7 +36,7 @@
 		print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 	}
 	function selectUnclaimedOrders($c){
-		$sql = "SELECT o.id, o.order_date, o.cashier_fk, o.branch_fk, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.received_date, ol.order_id_fk, ol.item_id_fk, ol.name, ol.code, ol.quantity, ol.price, ol.discount, ol.multiplyer FROM order_line_tbl ol, order_tbl o WHERE ol.order_id_fk = o.id and o.received_date IS NULL";
+		$sql = "SELECT o.id, o.order_date, o.cashier_fk, o.branch_fk, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.received_date, o.down_payment, ol.order_id_fk, ol.item_id_fk, ol.name, ol.code, ol.quantity, ol.price, ol.discount, ol.multiplyer FROM order_line_tbl ol, order_tbl o WHERE ol.order_id_fk = o.id and o.received_date IS NULL";
 
 
 		$orders = array();
@@ -57,6 +57,7 @@
 			$prevtotal_amount = $row['total_amount'];
 			$prevcustomer_name = $row['customer_name'];
 			$prevpayment = $row['payment'];
+			$prevdownpayment = $row['down_payment'];
 			$prevreceived_date = $row['received_date'];
 
 			array_push($orderLine,$row);
@@ -80,6 +81,7 @@
 											'total_amount'=>$prevtotal_amount,
 											'customer_name'=>$prevcustomer_name,
 											'payment'=>$prevpayment,
+											'down_payment'=>$prevdownpayment,
 											'received_date'=>$prevreceived_date,
 											'order_line'=>$orderLine));
 					$orderLine = array();
@@ -93,6 +95,7 @@
 					$prevtotal_amount = $row['total_amount'];
 					$prevcustomer_name = $row['customer_name'];
 					$prevpayment = $row['payment'];
+					$prevdownpayment = $row['down_payment'];
 					$prevreceived_date = $row['received_date'];
 				}
 			}
@@ -105,6 +108,7 @@
 											'total_amount'=>$prevtotal_amount,
 											'customer_name'=>$prevcustomer_name,
 											'payment'=>$prevpayment,
+											'down_payment'=>$prevdownpayment,
 											'received_date'=>$prevreceived_date,
 											'order_line'=>$orderLine));
 

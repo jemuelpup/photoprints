@@ -33,7 +33,7 @@ function updateOrder($c,$d){
 
 function insertOrder($c,$d){
 	$operator = $_SESSION["employeeID"];
-	$sql = "INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name) VALUES (NOW(),".validateData($d->cashier_fk).",".validateData($d->branch_fk).",".$operator.",".validateData($d->total_amount).",'".validateData($d->customer_name)."')";
+	$sql = "INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name,down_payment) VALUES (NOW(),".validateData($d->cashier_fk).",".validateData($d->branch_fk).",".$operator.",".validateData($d->total_amount).",'".validateData($d->customer_name)."',".validateData($d->down_payment).")";
 
 	if (mysqli_query($c, $sql)) {
 		$order_id = mysqli_insert_id($c);
