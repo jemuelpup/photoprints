@@ -1,8 +1,9 @@
 operations.controller('login',function($scope,$http,dbOperations){
 	console.log("nasa login ako");
-
+	var loading = false;
 	// access working...
 	$scope.validateAcess = function(){
+		
 		
 		console.log($scope.loginForm);
 

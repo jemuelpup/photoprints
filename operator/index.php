@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Operator</title>
+	<title>Operator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/plugin/node_modules/materialize-css/dist/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="/common/css/common.css">
@@ -20,7 +21,7 @@
 			<li ng-repeat="category in catAndItems" ng-click="showCategoryIndex($index)">{{category.categoryName}}</li>
 		</ul>
 		<div class="row">
-			<div class='col s8'>
+			<div class='col l7 ms12'>
 				<div class="row">
 					<div class='col s12' ng-repeat="category in catAndItems">
 						<div class='categories z-depth-2' ng-class="{active: $index==activeCategoryIndex}">
@@ -30,13 +31,11 @@
 									<input placeholder="Search" id="{{category.categoryName}}" type="text" class="validate" ng-model="itemFilter" ng-focus="focus=true" ng-blur="focus=false">
 								</div>
 							</div>
-							
-							
 							<div class='menu'>
 								<table>
 									<tr>
 										<th>Name</th>
-										<th>Code</th>
+										<!-- <th>Code</th> -->
 										<th>Price</th>
 										<th>Quantity</th>
 										<th>Multiplyer</th>
@@ -45,7 +44,7 @@
 									<!-- <p><input type="text" ng-model="test"></p> -->
 									<tr ng-repeat="item in category.items | filter:itemFilter">
 										<td>{{item.name}}</td>
-										<td>{{item.item_code}}</td>
+										<!-- <td>{{item.item_code}}</td> -->
 										<td>{{item.price}}</td>
 										<td><input ng-model="quantity" type='number'/></td>
 										<td><input ng-model="multiplyer" type='number' ng-value="string"/></td>
@@ -57,14 +56,9 @@
 							</div>
 						</div>
 					</div>
-
-
-
-
-
 				</div>
 			</div>
-			<div class="col s4">
+			<div class="col l5 ms12">
 				<div class="row">
 					<div class="col s12">
 						<div id="section-to-print">
@@ -81,6 +75,7 @@
 									<table>
 										<tr>
 											<th>Item</th>
+											<th>Desc</th>
 											<th>Price</th>
 											<th>Qty</th>
 											<th>Disc</th>
@@ -89,14 +84,17 @@
 										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false">
 											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
 											</td>
+											<td>
+													<input ng-model="itemDesc" type="text" ng-keyup = "orderedItemDesc($index,itemDesc)">
+											</td>
 											<td>{{order.price*order.multiplyer}}
 												<div class="customPrice" ng-class="{'active': active === true}">
 													<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
-												</div></td>
+												</div>
+											</td>
 											<td> x {{order.quantity}}</td>
 											<td>{{order.discount}}%</td>
 											<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
-											
 										</tr>
 									</table>
 

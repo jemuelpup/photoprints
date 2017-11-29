@@ -133,7 +133,7 @@
               <label>Category</label>
             </div>
             <div class="input-field col s12">
-              <input placeholder="" ng-model="editItemFields.price" type="number" class="validate" maxlength="11">
+              <input placeholder="" ng-model="editItemFields.price" type="number" class="validate" maxlength="11" step="0.01">
               <label for="price" class="active">price</label>
             </div>
           </div>

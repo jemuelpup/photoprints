@@ -80,4 +80,8 @@ h4 {
 .gender {
   padding: 0 .75rem; }
 
+.data-table-container {
+  height: 500px;
+  overflow: scroll; }
+
 /*# sourceMappingURL=style.css.map */

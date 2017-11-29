@@ -49,6 +49,10 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 		}
 	}
 	
+	$scope.orderedItemDesc = function(orderIndex,itemDesc){
+		$scope.orders[orderIndex].desc = itemDesc;
+		console.log(itemDesc);
+	}
 	$scope.customPrice = function(orderIndex,price){
 		$scope.orders[orderIndex].price = price;
 		console.log(price);
@@ -69,6 +73,7 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 					alert("Please place the cutomer name");
 				}
 				else{
+					$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
 					var orderData = {
 						cashier_fk:1,
 						branch_fk:1,

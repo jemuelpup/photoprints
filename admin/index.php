@@ -67,20 +67,22 @@
 				        <div class="col s6">
 				        	<div class="category-list-table">
 				        		<h3>Item category</h3>
-										<table class="data-clickable">
-											<tbody>
-												<tr>
-													<th>name</th>
-													<th>category_code</th>
-													<th>description</th>
-												</tr>
-												<tr ng-repeat="x in categories" data-id="{{x.id}}">
-													<td name="name">{{x.name}}</td>
-													<td name="category_code">{{x.category_code}}</td>
-													<td name="description">{{x.description}}</td>
-												</tr>
-											</tbody>
-										</table>
+				        		<div class="data-table-container">
+									<table class="data-clickable">
+										<tbody>
+											<tr>
+												<th>name</th>
+												<th>category_code</th>
+												<th>description</th>
+											</tr>
+											<tr ng-repeat="x in categories" data-id="{{x.id}}">
+												<td name="name">{{x.name}}</td>
+												<td name="category_code">{{x.category_code}}</td>
+												<td name="description">{{x.description}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 					        	<button class="waves-effect waves-light btn" id="edit-category-trigger">Edit</button>
 						        <a class="waves-effect waves-light btn">Delete</a>
 						      </div>
@@ -121,24 +123,26 @@
 									<?php getItemUpdateModal(); ?>
 									<div class="item-list-table">
 										<h3>Item list</h3>
-										<table class="data-clickable">
-										    <tbody>
-										        <tr>
-										            <th>name</th>
-										            <th>code</th>
-										            <th>category_fk</th>
-										            <th>date_modified</th>
-										            <th>price</th>
-										        </tr>
-										        <tr ng-repeat="i in items" data-id="{{x.id}}" ng-click="itemIndex($index,x.id)">
-										            <td>{{i.name}}</td>
-										            <td>{{i.item_code}}</td>
-										            <td>{{i.category_fk}}</td>
-										            <td>{{i.date_modified}}</td>
-										            <td>{{i.price}}</td>
-										        </tr>
-										    </tbody>
-										</table>
+										<div class="data-table-container">
+											<table class="data-clickable">
+											    <tbody>
+											        <tr>
+											            <th>name</th>
+											            <th>code</th>
+											            <th>category_fk</th>
+											            <th>date_modified</th>
+											            <th>price</th>
+											        </tr>
+											        <tr ng-repeat="i in items" data-id="{{x.id}}" ng-click="itemIndex($index,x.id)">
+											            <td>{{i.name}}</td>
+											            <td>{{i.item_code}}</td>
+											            <td>{{i.category_fk}}</td>
+											            <td>{{i.date_modified}}</td>
+											            <td>{{i.price}}</td>
+											        </tr>
+											    </tbody>
+											</table>
+										</div>
 										<a class="waves-effect waves-light btn" ng-click="editItemsTrigger()">Edit</a>
 						        <a class="waves-effect waves-light btn" ng-click="deleteItem()">Delete</a>
 									</div>

@@ -37,9 +37,9 @@ function insertOrder($c,$d){
 
 	if (mysqli_query($c, $sql)) {
 		$order_id = mysqli_insert_id($c);
-		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,multiplyer) VALUES";
+		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,multiplyer,description) VALUES";
 		foreach ($d->items as $item) {
-			$sql2 .= " (".validateData($order_id).",".validateData($item->itemID).",'".validateData($item->itemName)."','".validateData($item->code)."',".validateData($item->quantity).",".validateData($item->price).",".validateData($item->discount).",".validateData($item->multiplyer)."),";
+			$sql2 .= " (".validateData($order_id).",".validateData($item->itemID).",'".validateData($item->itemName)."','".validateData($item->code)."',".validateData($item->quantity).",".validateData($item->price).",".validateData($item->discount).",".validateData($item->multiplyer).",'".validateData($item->desc)."'),";
 		}
 
 		$sql2 = rtrim($sql2,',');
