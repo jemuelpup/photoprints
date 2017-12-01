@@ -4,6 +4,7 @@ var strictModeEnabled = 0;
 operations.controller('operator',function($scope,$http,dbOperations,systemOperations){
 
 	var orderSlipPrinted = false;
+	var lockAddToQueue = false;
 	/* Testing sessions */
 	if(loginEnabled){
 		systemOperations.getAccessID().then(function(res){
@@ -16,6 +17,8 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 			if(!(res.data==='2')){ window.location.href = '/'; }
 		});
 	}
+	/* Initial datas: */
+	var initCatAndItems = [];
 	/* /Testing sessions */
 	$scope.catAndItems = [];
 	$scope.orders = [];
@@ -24,9 +27,11 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	$scope.customerName = "";
 	$scope.databaseData = {};
 	$scope.activeCategoryIndex = 0;
+	$scope.disableEditting = false;
 	
 
  	dbOperations.items("getCategoriesAndItems","").then(function(res) {
+ 		initCatAndItems = res;
  		$scope.catAndItems = res;
  	})
 
@@ -35,11 +40,11 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	}
 	
 
-	$scope.addToOrder = function(itemID,quantity=1,itemName,code,multiplyer=1,discount=0,price){
+	$scope.addToOrder = function(itemID,quantity=1,itemName,code,multiplyer=1,discount=0,price,itemDesc=""){
 		// discount = !discount ? 1 : discount;
 		var itemTotalPrice = (multiplyer*price*quantity*(100-discount)/100);
 		if(quantity>0){
-			$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,multiplyer:multiplyer,discount:discount,price:price,itemTotalPrice:itemTotalPrice});
+			$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,multiplyer:multiplyer,discount:discount,price:price,itemTotalPrice:itemTotalPrice,desc:itemDesc});
 			// $scope.totalPrice += itemTotalPrice;
 			updateTotal();
 			// processDataprocessData
@@ -47,6 +52,7 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 		else{
 			alert("please enter the right quantity");
 		}
+		console.log($scope.orders);
 	}
 	
 	$scope.orderedItemDesc = function(orderIndex,itemDesc){
@@ -67,12 +73,14 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	}
 	$scope.addToQueue = function(){
 		// console.log(($scope.orders).length);
+		if(!lockAddToQueue)
 		if(($scope.orders).length){
 			if(orderSlipPrinted){
 				if($scope.customerName==""){
 					alert("Please place the cutomer name");
 				}
 				else{
+
 					$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
 					var orderData = {
 						cashier_fk:1,
@@ -83,20 +91,22 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 						down_payment:$scope.downPayment,
 						items: $scope.orders
 					}
-					dbOperations.processData("addOrder",orderData,function newTransaction(){
-						orderData = {};
-						$scope.customerName = "";
-						$scope.downPayment = 0;
-						$scope.orders = [];
-						$scope.totalPrice = 0;
-					})
-
-
-					$scope.databaseData = {
-						customerName:$scope.customerName,
-						items:$scope.orders
-					}
-					// console.log("push the order to the table...");
+					dbOperations.processData("addOrder",orderData).then(function(res){
+						if((res.indexOf("DatabaseConnectionError"))==-1){
+							orderData = {};
+							$scope.customerName = "";
+							$scope.downPayment = 0;
+							$scope.orders = [];
+							$scope.totalPrice = 0;
+						}
+						else{
+							alert("Something wrong in intranet connection. Check the server.");
+						}
+						lockAddToQueue = true;
+					},function(res){
+						alert(res);
+						lockAddToQueue = true;
+					});
 				}
 			}
 			else{	alert("Print the order slip first");	}
@@ -117,6 +127,8 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 				alert("Please place the cutomer name");
 			}
 			else{
+
+				$scope.disableEditting = true;
 				orderSlipPrinted = true;
 				window.print();
 			}
@@ -172,7 +184,7 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 		if(($scope.change+$scope.cash)>=0){
 			// if(receiptPrinted){ // for printing the receipt
 				$scope.order.cash = $scope.cash;
-				dbOperations.processData("orderPaid",$scope.order,function paidTransaction(){
+				dbOperations.processData("orderPaid",$scope.order).then(function(res){
 					getUnclaimedOrders();
 					$scope.order = {};
 					$scope.orderItems = [];

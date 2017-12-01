@@ -324,10 +324,10 @@
 									<th>total_amount</th>
 								</tr>
 								<tr ng-repeat="transaction in transactions">
-									<td>{{transaction.branch_fk}}</td>
-									<td>{{transaction.cashier_fk}}</td>
+									<td>{{transaction.branch_name}}</td>
+									<td>{{transaction.cashier_name}}</td>
 									<td>{{transaction.customer_name}}</td>
-									<td>{{transaction.operator_fk}}</td>
+									<td>{{transaction.operator_name}}</td>
 									<td>{{transaction.payment}}</td>
 									<td>{{transaction.total_amount}}</td>
 								</tr>

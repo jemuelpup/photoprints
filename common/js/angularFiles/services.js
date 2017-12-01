@@ -15,11 +15,11 @@ operations.service('dbOperations',function($http){
 				'data': dataInputs
 			}
 		}).then(function success(res){
-			callback();
+			// callback();
 			console.log(res);
 			return res.data;
-		}, function myError(response) {
-			// console.log("Error");
+		}, function err(response) {
+			return "Something wrong in intranet connection. Check the server.";
 	    });
 	}
 	this.view = function(process,dataInputs){
@@ -34,7 +34,7 @@ operations.service('dbOperations',function($http){
 			return res.data;
 		}, function myError(response) {
 			return "Something wrong in the system";
-	    });
+	  });
 	}
 	this.unclaimedOrders = function(process,dataInputs){
 		return $http({

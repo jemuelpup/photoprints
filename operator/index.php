@@ -15,7 +15,7 @@
 
 
 	<div class="container">
-		<h1>This is a Heading</h1>
+		<h1>Operator</h1>
 		<p>This is a paragraph.</p>
 		<ul class="category-list">
 			<li ng-repeat="category in catAndItems" ng-click="showCategoryIndex($index)">{{category.categoryName}}</li>
@@ -49,7 +49,7 @@
 										<td><input ng-model="quantity" type='number'/></td>
 										<td><input ng-model="multiplyer" type='number' ng-value="string"/></td>
 										<td><input ng-model="discount" type='number'/></td>
-										<td><button ng-click='addToOrder(item.id,quantity,item.name,item.item_code,multiplyer,discount,item.price)'>Add</button></td>
+										<td><button ng-click='addToOrder(item.id,quantity,item.name,item.item_code,multiplyer,discount,item.price,itemDesc)'>Add</button></td>
 										<td></td>
 									</tr>
 								</table>
@@ -71,7 +71,7 @@
 								</div>
 								<div class="orders">
 					        		<input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
-					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate" ng-model="downPayment">
+					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate" ng-model="downPayment" min="0">
 									<table>
 										<tr>
 											<th>Item</th>
@@ -81,7 +81,7 @@
 											<th>Disc</th>
 											<th>Total</th>
 										</tr>
-										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false">
+										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false" ng-class="{'noHover':disableEditting}">
 											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
 											</td>
 											<td>
@@ -99,6 +99,7 @@
 									</table>
 
 									<p>Total: Php. {{totalPrice}}</p>
+									<p>Down payment: Php. {{downPayment ? downPayment : 0}}</p>
 									<p>------------------------</p>
 									<!-- create table here and remove orders
 									{{orders}}

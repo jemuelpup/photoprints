@@ -16,6 +16,9 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+.noHover{
+	pointer-events: none!important;
+}
 
 .categories{
 	display: none;
@@ -61,7 +64,7 @@ input[type=number]::-webkit-outer-spin-button {
 			td,th{
 				padding: 6px 5px;
 				position: relative;
-				// overflow: hidden;
+				overflow: hidden;
 				.customPrice{
 					position: absolute;
 					bottom: -25px;

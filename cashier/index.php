@@ -13,7 +13,7 @@
 <body ng-app="operations" ng-controller="cashier">
 	
 	<div class="container">
-		<h1>This is a Heading</h1>
+		<h1>Cashier</h1>
 		<p>This is a paragraph.</p>
 		<div class="row">
 			<div class="col s8">
