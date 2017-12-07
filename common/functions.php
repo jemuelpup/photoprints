@@ -97,4 +97,12 @@ function getAccessPosition(){
 	echo $accessPosition;
 }
 
+function changeTheValue($value){
+	$jsonString = file_get_contents('/operations.json');
+	$data = json_decode($jsonString, false);
+	$data[0]['hasChanges'] = $value;
+	$newJsonString = json_encode($data);
+	file_put_contents('/operation.json', $newJsonString);
+}
+
 ?>

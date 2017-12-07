@@ -243,7 +243,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 	}
 })
 
-app.controller("reports",function($scope,$http,dbOperations){
+app.controller("reports",function($scope,$http,dbOperations,$interval){
 
 	$scope.selectedDate = new Date();
 	$scope.transactions = [];
@@ -273,4 +273,34 @@ app.controller("reports",function($scope,$http,dbOperations){
 		getTotalSalesOn($scope.selectedDate);
 		getTransationsOn($scope.selectedDate);
 	}
+
+	// check the update per second
+	var excecuteFet = true;
+
+	// $scope.stream = $interval(function checkUpdate(){
+	// 	// $scope.stream.cancel(stream);
+	// 	if(excecuteFet){
+	// 		excecuteFet = false;
+	// 		$http.get("/operations.json").then(function(data){
+	// 			// console.log("reading json");
+	// 			console.log(data.data);
+	// 			// $interval(checkUpdate(), 1000);
+	// 			excecuteFet = true;
+	// 		});
+
+	// 	}
+	// }, 1000);
+	// var checkUpdate = function(){
+	// 	console.log("hahaha")
+	// }
+
+	// function checkUpdate(){
+	// 	$interval.cancel(stream);
+	// 	$http.get("/operations.json").then(function(data){
+	// 		console.log("reading json");
+	// 		console.log(data);
+	// 		stream = $interval(checkUpdate(), 1000);
+	// 	});
+	// }
+
 });

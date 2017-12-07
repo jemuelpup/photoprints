@@ -5,10 +5,10 @@
 <html>
 	<head>
 		<title>Page Title</title>
-		<link rel="stylesheet" href="/plugin/node_modules/materialize-css/dist/css/materialize.min.css">
+		<link rel="stylesheet" href="/plugin/materialize-css/dist/css/materialize.min.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="/admin/css/style.css">
-		<script src="/plugin/node_modules/angular/angular.min.js"></script>
+		<script src="/plugin/angular/angular.min.js"></script>
 	</head>
 	<body ng-app="photoPrints">
 		<header>
@@ -299,7 +299,7 @@
 			<section class="reports-management" ng-controller="reports">
 				<div class="container">
 					<div class="row">
-						<div class="col s6">
+						<div class="col s4">
 							<h2>Sales</h2>
 							<input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker">
 							<form action="#">
@@ -312,7 +312,7 @@
 						  </form>
 							<p>Total sales : {{totalSales}}</p>
 						</div>
-						<div class="col s6">
+						<div class="col s8">
 							<h2>Transactions</h2>
 							<table>
 								<tr>
@@ -322,6 +322,7 @@
 									<th>operator_fk</th>
 									<th>payment</th>
 									<th>total_amount</th>
+									<th>received_date</th>
 								</tr>
 								<tr ng-repeat="transaction in transactions">
 									<td>{{transaction.branch_name}}</td>
@@ -330,6 +331,7 @@
 									<td>{{transaction.operator_name}}</td>
 									<td>{{transaction.payment}}</td>
 									<td>{{transaction.total_amount}}</td>
+									<td>{{transaction.received_date | date}}</td>
 								</tr>
 							</table>
 						</div>
@@ -340,8 +342,8 @@
 
 
 		
-		<script src="/plugin/node_modules/jquery/dist/jquery.min.js"></script>
-		<script src="/plugin/node_modules/materialize-css/dist/js/materialize.min.js"></script>
+		<script src="/plugin/jquery/dist/jquery.min.js"></script>
+		<script src="/plugin/materialize-css/dist/js/materialize.min.js"></script>
 
 		<script src="/admin/js/angularFiles/modules.js"></script>
 		<script src="/admin/js/angularFiles/services.js"></script>

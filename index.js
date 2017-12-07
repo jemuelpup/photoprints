@@ -1,21 +1,60 @@
-var express = require('express');
+
+var express = require('express'),
+	socket = require('socket.io'),
+	http = require('http'),
+	path = require('path'),
+	logger = require('winston');
+// var http = require('http').Server(app);
+
+logger.remove(logger.transports.Console);
+logger.add(logger.transports.Console, { colorize:true,timestamp:true});
+logger.info('SocketIO > listening on port ')
+
+
+// var server = app.listen(3000,function(){
+// 	console.log("listening on port 3000");
+// });
+
 var app = express();
-var server = app.listen(3000);
-var io = require('socket.io').listen(server);
-// io.connect('http://localhost:3000')
+var http_server = http.createServer(app).listen(3000);
+app.use(express.static('public'))
+
+function emitNewOrder(http_server){
+	var io = socket.listen(http_server);
+	// listen to a connection and run the callback function
+	io.sockets.on('connection',function(socket){
+		socket.on('new_order',function(data){
+			
+		})
+	});
+}
+
+emitNewOrder(http_server);
+
+//static files
 
 
-app.get('/', function(req, res){
-	res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); // If needed
-    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
-	res.send('<h1>Hello world</h1>');
-});
+
+
+
+//socket setup
+/*
+
+var io = socket(server);
+
+
+// listen for connection
+// socket is the instance of the socket
 io.on('connection',function(socket){
-	console.log('a user connected');
+	console.log("made socket connection");
+
+
+	// this is the receive code
+	socket.on('msg',function(data){
+		//this is the broadcast message
+		io.sockets.emit('msg',data);
+		// console.log(data);
+	});
 });
 
-server.listen(3000, function(){
-  console.log('listening on *:3000');
-});
+*/
