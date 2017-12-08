@@ -115,6 +115,7 @@
 			
 			print_r(json_encode($orders));
 		}
+		operationsDataStream("hasNewOrders",false);
 	}
 
 
@@ -142,5 +143,12 @@ function hasRows($c,$sql){
 		return true;
 	}
 	return false;
+}
+
+
+function operationsDataStream($operationKey,$value){
+	$data = json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"].'/operations.json'),true);
+	$data[$operationKey] = $value;
+	file_put_contents($_SERVER["DOCUMENT_ROOT"].'/operations.json', json_encode($data));
 }
 ?>

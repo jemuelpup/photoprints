@@ -45,6 +45,7 @@ function insertOrder($c,$d){
 		$sql2 = rtrim($sql2,',');
 		$c->query($sql2);
 	}
+	operationsDataStream("hasNewOrders",true);
 }
 
 function validateData($d){
@@ -60,11 +61,20 @@ function validateDate($d){
 	return "0000-00-00";
 }
 
+function getSessionId(){
+	$id = isset($_SESSION["employeeID"]) ? $_SESSION["employeeID"] : 0;
+	echo $id;
+}
+
+function getAccessPosition(){
+	$accessPosition = isset($_SESSION["position"]) ? $_SESSION["position"] : 0;
+	echo $accessPosition;
+}
 
 
-
-	/*
+/*
 	FUNCTIONS AREA
+	- these functions are not affected by the switch at the start
 */
 // get the rows of the query
 function selectQuery($c,$sql){
@@ -87,22 +97,10 @@ function hasRows($c,$sql){
 	return false;
 }
 
-function getSessionId(){
-	$id = isset($_SESSION["employeeID"]) ? $_SESSION["employeeID"] : 0;
-	echo $id;
-}
-
-function getAccessPosition(){
-	$accessPosition = isset($_SESSION["position"]) ? $_SESSION["position"] : 0;
-	echo $accessPosition;
-}
-
-function changeTheValue($value){
-	$jsonString = file_get_contents('/operations.json');
-	$data = json_decode($jsonString, false);
-	$data[0]['hasChanges'] = $value;
-	$newJsonString = json_encode($data);
-	file_put_contents('/operation.json', $newJsonString);
+function operationsDataStream($operationKey,$value){
+	$data = json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"].'/operations.json'),true);
+	$data[$operationKey] = $value;
+	file_put_contents($_SERVER["DOCUMENT_ROOT"].'/operations.json', json_encode($data));
 }
 
 ?>

@@ -73,43 +73,48 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	}
 	$scope.addToQueue = function(){
 		// console.log(($scope.orders).length);
-		if(!lockAddToQueue)
-		if(($scope.orders).length){
-			if(orderSlipPrinted){
-				if($scope.customerName==""){
-					alert("Please place the cutomer name");
-				}
-				else{
-
-					$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
-					var orderData = {
-						cashier_fk:1,
-						branch_fk:1,
-						operator_fk:1,
-						total_amount:$scope.totalPrice,
-						customer_name:$scope.customerName,
-						down_payment:$scope.downPayment,
-						items: $scope.orders
+		if(!lockAddToQueue){
+			lockAddToQueue = true;
+			if(($scope.orders).length){
+				console.log("level 1")
+				if(orderSlipPrinted){
+					console.log("level 2")
+					if($scope.customerName==""){
+						alert("Please place the cutomer name");
 					}
-					dbOperations.processData("addOrder",orderData).then(function(res){
-						if((res.indexOf("DatabaseConnectionError"))==-1){
-							orderData = {};
-							$scope.customerName = "";
-							$scope.downPayment = 0;
-							$scope.orders = [];
-							$scope.totalPrice = 0;
+					else{
+						console.log("level 3")
+
+						$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
+						var orderData = {
+							cashier_fk:1,
+							branch_fk:1,
+							operator_fk:1,
+							total_amount:$scope.totalPrice,
+							customer_name:$scope.customerName,
+							down_payment:$scope.downPayment,
+							items: $scope.orders
 						}
-						else{
-							alert("Something wrong in intranet connection. Check the server.");
-						}
-						lockAddToQueue = true;
-					},function(res){
-						alert(res);
-						lockAddToQueue = true;
-					});
+						dbOperations.processData("addOrder",orderData).then(function(res){
+							if((res.indexOf("DatabaseConnectionError"))==-1){
+								orderData = {};
+								$scope.customerName = "";
+								$scope.downPayment = 0;
+								$scope.orders = [];
+								$scope.totalPrice = 0;
+							}
+							else{
+								alert("Something wrong in intranet connection. Check the server.");
+							}
+							lockAddToQueue = false;
+						},function(res){
+							alert(res);
+							lockAddToQueue = false;
+						});
+					}
 				}
+				else{	alert("Print the order slip first");	}
 			}
-			else{	alert("Print the order slip first");	}
 		}
 		else{	alert("place order first");	}
 	}
@@ -137,7 +142,7 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	}
 });
 
-operations.controller('cashier',function($scope,$http,dbOperations,systemOperations){
+operations.controller('cashier',function($scope,$http,$interval,dbOperations,systemOperations){
 	if(loginEnabled){
 		systemOperations.getAccessID().then(function(res){
 			if(res.data==='0'){ window.location.href = '/'; }
@@ -152,23 +157,18 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 	$scope.order = {};
 	$scope.orderItems = [];
 	$scope.change = 0;
+	// check the update per second
+	var excecuteGet = true;
 	// var receiptPrinted = false; // for printing the receipt
-	
-
 	function getUnclaimedOrders(){
 		dbOperations.unclaimedOrders("getUnclaimedOrders","").then(function(res) {
-	 		console.log(res);
 	 		$scope.orders = res;
-	 		console.log(res)
 	 	});
 	}
-
 	$scope.viewItemsOrdered = function(order,orderLine){
 		$scope.order = order;
 		$scope.orderItems = orderLine;
 		$scope.change = $scope.order.down_payment - $scope.order.total_amount;
-		console.log($scope.order,"ito na ako");
-
 	}
 	$scope.printReceipt = function(){
 		if(($scope.cash-$scope.order.total_amount)>-1){
@@ -202,9 +202,26 @@ operations.controller('cashier',function($scope,$http,dbOperations,systemOperati
 		else{
 			alert("Not enough money");
 		}
-		/**/
-		
 	}
+
+
+	$scope.stream = $interval(function checkUpdate(){
+		// $scope.stream.cancel(stream);
+		if(excecuteGet){
+			excecuteGet = false;
+			$http({
+				method: 'get', url: "/operations.json",
+				headers: { 'Cache-Control': 'no-cache', 'Pragma':'no-cache' }
+			})
+			.then(function (res) {
+		        if(res.data.hasNewOrders){
+		        	getUnclaimedOrders();
+		        	console.log("may new orders");
+		        }
+				excecuteGet = true;
+		    });
+		}
+	}, 2000);
 
 
 	getUnclaimedOrders();
