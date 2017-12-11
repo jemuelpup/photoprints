@@ -35,21 +35,16 @@
 								<table>
 									<tr>
 										<th>Name</th>
-										<!-- <th>Code</th> -->
 										<th>Price</th>
 										<th>Quantity</th>
-										<th>Multiplyer</th>
 										<th>Discount(%)</th>
 									</tr>
-									<!-- <p><input type="text" ng-model="test"></p> -->
 									<tr ng-repeat="item in category.items | filter:itemFilter">
 										<td>{{item.name}}</td>
-										<!-- <td>{{item.item_code}}</td> -->
 										<td>{{item.price}}</td>
 										<td><input ng-model="quantity" type='number'/></td>
-										<td><input ng-model="multiplyer" type='number' ng-value="string"/></td>
 										<td><input ng-model="discount" type='number'/></td>
-										<td><button ng-click='addToOrder(item.id,quantity,item.name,item.item_code,multiplyer,discount,item.price,itemDesc)'>Add</button></td>
+										<td><button ng-click='addToOrder(item.id,quantity,item.name,item.item_code,discount,item.price,itemDesc)'>Add</button></td>
 										<td></td>
 									</tr>
 								</table>
@@ -64,14 +59,17 @@
 						<div id="section-to-print">
 							<div class="ordered-items z-depth-2">
 								<div class="data-header">
-									<div class="showOnPrint">
-										<p>OrderSlip</p>
+									<div class="printOnly center-align">
+										<img src="/common/images/logoForReceipt.png" alt="PHOTOPRINTS">
 									</div>
-									<h4>Ordered Items</h4>
+									<div class="printOnly">
+										<p class="centerOnPrint">OrderSlip</p>
+									</div>
+									<h4 class="text12pxOnPrint">Ordered Items</h4>
 								</div>
 								<div class="orders">
 					        		<input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
-					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate" ng-model="downPayment" min="0">
+					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate hideOnPrint" ng-model="downPayment" min="0">
 									<table>
 										<tr>
 											<th>Item</th>
@@ -82,12 +80,12 @@
 											<th>Total</th>
 										</tr>
 										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false" ng-class="{'noHover':disableEditting}">
-											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}-{{order.multiplyer}}
+											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}
 											</td>
 											<td>
 													<input ng-model="itemDesc" type="text" ng-keyup = "orderedItemDesc($index,itemDesc)">
 											</td>
-											<td>{{order.price*order.multiplyer}}
+											<td>{{order.price}}
 												<div class="customPrice" ng-class="{'active': active === true}">
 													<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
 												</div>
@@ -104,8 +102,10 @@
 									<!-- create table here and remove orders
 									{{orders}}
 									{{databaseData}} -->
-									<button ng-click="printOrderSlip()">Print order slip</button>
-									<button ng-click="addToQueue()">Set orders</button>
+									<div class="hideOnPrint">
+										<button ng-click="printOrderSlip()">Print order slip</button>
+										<button ng-click="done()">Done</button>
+									</div>
 								</div>
 							</div>
 						</div>

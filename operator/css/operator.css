@@ -110,6 +110,9 @@ input[type=number]::-webkit-outer-spin-button {
 .showOnPrint {
   display: none; }
 
+.printOnly {
+  display: none; }
+
 @media only screen and (max-width: 1150px) {
   .ms12 {
     width: 100%; } }
@@ -117,6 +120,21 @@ input[type=number]::-webkit-outer-spin-button {
   .ms12 {
     width: 100%; } }
 @media print {
+  .printOnly {
+    display: block; }
+
+  .hideOnPrint {
+    display: none; }
+
+  table input {
+    margin-bottom: 0; }
+
+  .centerOnPrint {
+    text-align: center; }
+
+  .text12pxOnPrint {
+    font-size: 14px; }
+
   body * {
     visibility: hidden; }
 
