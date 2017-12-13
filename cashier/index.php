@@ -61,8 +61,8 @@
 							<th>Total</th>
 						</tr>
 						<tr ng-repeat="orderItem in orderItems">
-							<td>{{orderItem.name}}-{{orderItem.multiplyer}}</td>
-							<td>{{orderItem.price*orderItem.multiplyer}}</td>
+							<td>{{orderItem.name}}</td>
+							<td>{{orderItem.price}}</td>
 							<td> x {{orderItem.quantity}}</td>
 							<td>{{orderItem.discount}}%</td>
 							<td>{{orderItem.price*orderItem.quantity*(100-orderItem.discount)/100}}</td>

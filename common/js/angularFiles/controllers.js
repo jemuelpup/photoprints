@@ -3,8 +3,7 @@ var strictModeEnabled = 0;
 
 operations.controller('operator',function($scope,$http,dbOperations,systemOperations){
 
-	var orderSlipPrinted = false;
-	var lockAddToQueue = false;
+	var newOrderQueued = false;
 	/* Testing sessions */
 	if(loginEnabled){
 		systemOperations.getAccessID().then(function(res){
@@ -40,19 +39,21 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	}
 	
 
-	$scope.addToOrder = function(itemID,quantity=1,itemName,code,multiplyer=1,discount=0,price,itemDesc=""){
+	$scope.addToOrder = function(itemID,quantity=1,itemName,code,discount=0,price,itemDesc=""){
 		// discount = !discount ? 1 : discount;
-		var itemTotalPrice = (multiplyer*price*quantity*(100-discount)/100);
-		if(quantity>0){
-			$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,multiplyer:multiplyer,discount:discount,price:price,itemTotalPrice:itemTotalPrice,desc:itemDesc});
-			// $scope.totalPrice += itemTotalPrice;
-			updateTotal();
-			// processDataprocessData
+		if(!newOrderQueued){
+			var itemTotalPrice = (price*quantity*(100-discount)/100);
+			if(quantity>0){
+				$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,discount:discount,price:price,itemTotalPrice:itemTotalPrice,desc:itemDesc});
+				// $scope.totalPrice += itemTotalPrice;
+				updateTotal();
+				// processDataprocessData
+			}
+			else{
+				alert("please enter the right quantity");
+			}
+			console.log($scope.orders);
 		}
-		else{
-			alert("please enter the right quantity");
-		}
-		console.log($scope.orders);
 	}
 	
 	$scope.orderedItemDesc = function(orderIndex,itemDesc){
@@ -68,23 +69,33 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 	function updateTotal(){
 		$scope.totalPrice = 0;
 		($scope.orders).forEach(function(e){
-			$scope.totalPrice += (e.multiplyer*e.price*e.quantity*(100-e.discount)/100);
+			$scope.totalPrice += (e.price*e.quantity*(100-e.discount)/100);
 		});
 	}
-	$scope.addToQueue = function(){
+
+	$scope.done = function(){
 		// console.log(($scope.orders).length);
-		if(!lockAddToQueue){
-			lockAddToQueue = true;
-			if(($scope.orders).length){
-				console.log("level 1")
-				if(orderSlipPrinted){
-					console.log("level 2")
+		orderData = {};
+		$scope.customerName = "";
+		$scope.downPayment = 0;
+		$scope.orders = [];
+		$scope.totalPrice = 0;
+		newOrderQueued = false;
+		$scope.disableEditting = false;
+	}
+	$scope.printOrderSlip = function(){
+		if(($scope.orders).length){
+			if($scope.customerName==""){
+				alert("Please place the cutomer name");
+			}
+			else{
+				$scope.disableEditting = true;
+				lockAddToQueue = true;
+				if(($scope.orders).length){
 					if($scope.customerName==""){
 						alert("Please place the cutomer name");
 					}
-					else{
-						console.log("level 3")
-
+					else if(!newOrderQueued){// && false){ // remove the false here
 						$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
 						var orderData = {
 							cashier_fk:1,
@@ -97,23 +108,17 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 						}
 						dbOperations.processData("addOrder",orderData).then(function(res){
 							if((res.indexOf("DatabaseConnectionError"))==-1){
-								orderData = {};
-								$scope.customerName = "";
-								$scope.downPayment = 0;
-								$scope.orders = [];
-								$scope.totalPrice = 0;
+								newOrderQueued = true;
 							}
 							else{
 								alert("Something wrong in intranet connection. Check the server.");
 							}
-							lockAddToQueue = false;
 						},function(res){
 							alert(res);
-							lockAddToQueue = false;
 						});
 					}
 				}
-				else{	alert("Print the order slip first");	}
+				window.print();
 			}
 		}
 		else{	alert("place order first");	}
@@ -126,20 +131,7 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 		$scope.orders.splice(index, 1);
 		updateTotal();
 	}
-	$scope.printOrderSlip = function(){
-		if(($scope.orders).length){
-			if($scope.customerName==""){
-				alert("Please place the cutomer name");
-			}
-			else{
 
-				$scope.disableEditting = true;
-				orderSlipPrinted = true;
-				window.print();
-			}
-		}
-		else{	alert("place order first");	}
-	}
 });
 
 operations.controller('cashier',function($scope,$http,$interval,dbOperations,systemOperations){

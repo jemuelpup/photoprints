@@ -1,6 +1,9 @@
-operations.controller('login',function($scope,$http,dbOperations){
+operations.controller('login',function($scope,$http,$timeout,dbOperations){
 	console.log("nasa login ako");
 	var loading = false;
+	$scope.shake = false;
+	$scope.loginMessage = "";
+	$scope.validAcess = true;
 	// access working...
 	$scope.validateAcess = function(){
 		
@@ -8,28 +11,31 @@ operations.controller('login',function($scope,$http,dbOperations){
 		console.log($scope.loginForm);
 
 		dbOperations.access($scope.loginForm).then(function(res){
-			// console.log(res);
+			console.log("Dumaan dito")
+			console.log(res);
 			console.log(res.position);
 			var access = "";
 			switch(res.position){
-				case "1":{
+				case 1:{
 					access = "/cashier";
 				}break;
-				case "2":{
+				case 2:{
 					access = "/operator";
 				}break;
-				case "3":{
+				case 3:{
 					access = "/admin";
 				}break;
 				default:{
-					access = "/";
+					res.position = 0;
 				}break;
 			}
 			if(res.position){
 				window.location.href = access;
 			}
 			else{
-				// make ivalid access message here
+				$scope.shake = true;
+				$timeout(function(){$scope.shake = false}, 830);
+				$scope.loginMessage = "Invalid username and password.";
 			}
 		});
 

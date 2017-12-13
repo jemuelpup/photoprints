@@ -23,42 +23,36 @@ switch($process){
 	}
 }
 
-function updateOrder($c,$d){
-	$cashier = $_SESSION["employeeID"];
-	$sql = "UPDATE order_tbl SET cashier_fk = $cashier,payment = ".validateData($d->cash).",received_date = NOW() WHERE id = ".validateData($d->id)."";
-	echo $sql;
-	return 
-	$msg = ($c->query($sql) === TRUE) ? "Setting order paid success" : "Error: " . $sql . "<br>" . $c->error;
-}
 
+//sql injection safe
+function updateOrder($c,$d){
+	$sql = $c->prepare("UPDATE order_tbl SET cashier_fk = ? ,payment = ?,received_date = NOW() WHERE id = ?");
+	$sql->bind_param('idi', $_SESSION["employeeID"], validateData($d->cash), validateData($d->id));
+	$msg = ($sql->execute() === TRUE) ? "Setting order paid success" : "Error: " . $sql . "<br>" . $c->error;
+	$sql->close();
+	echo $msg;
+}
+//sql injection safe
 function insertOrder($c,$d){
 	$operator = $_SESSION["employeeID"];
-	$sql = "INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name,down_payment) VALUES (NOW(),".validateData($d->cashier_fk).",".validateData($d->branch_fk).",".$operator.",".validateData($d->total_amount).",'".validateData($d->customer_name)."',".validateData($d->down_payment).")";
 
-	if (mysqli_query($c, $sql)) {
+	$sql = $c->prepare("INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name,down_payment) VALUES (NOW(),?,?,?,?,?,?)");
+
+	$sql->bind_param('iiidsd',validateData($d->cashier_fk), validateData($d->branch_fk), $operator, validateData($d->total_amount), validateData($d->customer_name),validateData($d->down_payment));
+
+	if ($sql->execute()) {
 		$order_id = mysqli_insert_id($c);
-		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,multiplyer,description) VALUES";
+		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,description) VALUES";
+		$fields = "";
+		$values = "";
+		$dataType = "";
 		foreach ($d->items as $item) {
-			$sql2 .= " (".validateData($order_id).",".validateData($item->itemID).",'".validateData($item->itemName)."','".validateData($item->code)."',".validateData($item->quantity).",".validateData($item->price).",".validateData($item->discount).",".validateData($item->multiplyer).",'".validateData($item->desc)."'),";
+			$sql2 = $c->prepare("INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,description) VALUES (?,?,?,?,?,?,?,?)");
+			$sql2->bind_param('iissidds',validateData($order_id),validateData($item->itemID),validateData($item->itemName),validateData($item->code),validateData($item->quantity),validateData($item->price),validateData($item->discount),validateData($item->desc));
+			$sql2->execute();
 		}
-
-		$sql2 = rtrim($sql2,',');
-		$c->query($sql2);
 	}
 	operationsDataStream("hasNewOrders",true);
-}
-
-function validateData($d){
-	if(isset($d)){
-		return $d;
-	}
-	return "";
-}
-function validateDate($d){
-	if(isset($d)){
-		return date("Y-m-d", strtotime(str_replace('/', '-',$d)));
-	}
-	return "0000-00-00";
 }
 
 function getSessionId(){
@@ -76,6 +70,23 @@ function getAccessPosition(){
 	FUNCTIONS AREA
 	- these functions are not affected by the switch at the start
 */
+
+// if string is empty, return "" string
+function validateData($d){
+	if(isset($d)){
+		return $d;
+	}
+	return "";
+}
+
+// if date is not valid, return "0000-00-00"
+function validateDate($d){
+	if(isset($d)){
+		return date("Y-m-d", strtotime(str_replace('/', '-',$d)));
+	}
+	return "0000-00-00";
+}
+
 // get the rows of the query
 function selectQuery($c,$sql){
 	$resultSetArray = [];
