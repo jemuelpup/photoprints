@@ -94,8 +94,8 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
 				if(($scope.orders).length){
 					if($scope.customerName==""){
 						alert("Please place the cutomer name");
-					}
-					else if(!newOrderQueued){// && false){ // remove the false here
+					}//----->>>>  
+					else if(!newOrderQueued ){//&& false){ // remove the false here
 						$scope.downPayment = $scope.downPayment ? $scope.downPayment:0;
 						var orderData = {
 							cashier_fk:1,
