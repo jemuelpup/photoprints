@@ -10,7 +10,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	}
 	if(strictModeEnabled){
 		dbOperations.getAccessPosition().then(function(res){
-			console.log(res.data);
+			// console.log(res.data);
 			if(!(res.data==='3')){ window.location.href = '/'; }
 		});
 	}
@@ -50,6 +50,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.categoryFields = {};
 	$scope.itemFields = {};
 	$scope.editItemFields = {};
+	$scope.editCategoryFields = {};
 	$scope.addNewCategory = function(){
 		dbOperations.processData("AddCategory",$scope.categoryFields).then(function(res){
 			alert("New category available.")
@@ -66,10 +67,18 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 		// $(".categoryUpdate [value="+$scope.editItemFields.category_fk+"]").attr("selected='selected'");
 	}
 
+	$scope.categoryIndex = function(i,id){
+		$scope.editCategoryFields = ($scope.categories)[i];
+		// console.log($scope.editCategoryFields);
+	}
+
 	$scope.editItemsTrigger = function(){
 		$('#edit-item').modal('open');
 	}
 
+	$scope.editCategoryTrigger = function(){
+		$('#edit-category').modal('open');
+	}
 	$scope.editItem = function(){
 		if($scope.editItemFields.category_fk){
 			if(!isNaN($("select#categoryUpdate").val())){
@@ -81,14 +90,24 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 			alert("Put Category");
 		}
 	}
+	$scope.editCategory = function(){
+		// var d = $(this).serializeArray();
+	// d.push({name:"id",value:itemId});// get the id... add to serialize array...
+	// dbOperations("EditCategory",d,function(){v.displayItemCategoryList()});
+		dbOperations.processData("EditCategory",$scope.editCategoryFields).then(function(res){
+			// console.log(res);
+			getItems();});
+		// console.log($scope.editCategoryFields);
+	}
 	$scope.deleteItem = function(){
 		if (confirm("Are you sure you want to delete this item?")) {
 			dbOperations.processData("RemoveItem",$scope.editItemFields).then(function(res){
-				console.log(res)
+				// console.log(res)
 				getItems();
 			});
 		}
 	}
+
 
 	function getCategories(){
 		$http({
@@ -96,7 +115,7 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 			data: { 'process': "getItemCategory",'data':'' }
 		}).then(function success(res){
 			$scope.categories = res.data;
-			console.log(res.data,'nandit yun')
+			// console.log(res.data,'nandit yun')
 		}, function myError(response) {
 	    });
     }
@@ -189,9 +208,9 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 			$scope.employeeFields.branch_fk = $(".employee-management select[name='branchField']").val();
 		}
 		// $scope.employeeFields.id = employeeId;
-		console.log($scope.employeeFields);
+		// console.log($scope.employeeFields);
 		dbOperations.processData("EditEmployee",$scope.employeeFields).then(function(res){
-			console.log(res)
+			// console.log(res)
 			getEmployees();//$("#add-employee").modal("close");
 		});
 	}
@@ -230,7 +249,7 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 			alert("Incomplete information");
 		}
 		else{
-			console.log($scope.employeeFields);
+			// console.log($scope.employeeFields);
 			dbOperations.processData("AddEmployee",$scope.employeeFields).then(function(res){getEmployees();$("#add-employee").modal("close");});
 			$scope.employeeFields={};
 		}
@@ -268,7 +287,7 @@ app.controller("reports",function($scope,$http,dbOperations,$interval){
 	function getTransationsOn(selectedDate){
 		dbOperations.getData('getTransationsData',selectedDate).then(function(res) {
 			$scope.transactions = res.data;
-			console.log(res);
+			// console.log(res);
 		});
 	}
 	$scope.getTransactionData = function(){

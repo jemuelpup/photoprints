@@ -75,7 +75,7 @@
 												<th>category_code</th>
 												<th>description</th>
 											</tr>
-											<tr ng-repeat="x in categories" data-id="{{x.id}}">
+											<tr ng-repeat="x in categories" data-id="{{x.id}}" ng-click="categoryIndex($index,x.id)">
 												<td name="name">{{x.name}}</td>
 												<td name="category_code">{{x.category_code}}</td>
 												<td name="description">{{x.description}}</td>

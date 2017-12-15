@@ -80,9 +80,6 @@ $("#edit-category-trigger").click(function(){
 // FOR EDITTING
 $(".edit-category form").submit(function(e){
 	e.preventDefault();
-	var d = $(this).serializeArray();
-	d.push({name:"id",value:itemId});// get the id... add to serialize array...
-	dbOperations("EditCategory",d,function(){v.displayItemCategoryList()});
 	$('#edit-category').modal('close');
 });
 

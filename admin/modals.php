@@ -87,19 +87,19 @@
   function getCategoryUpdateModal(){
     echo '
       <div id="edit-category" class="modal edit-category">
-        <form action="#">
+        <form action="#" ng-submit="editCategory()">
           <div class="modal-content">
             <h4>Edit category</h4>
             <div class="input-field col s12">
-              <input placeholder="" name="name" type="text" class="validate" maxlength="50" required="">
+              <input placeholder="" ng-model="editCategoryFields.name" name="name" type="text" class="validate" maxlength="50" required="">
               <label for="name">name</label>
             </div>
             <div class="input-field col s12">
-              <input placeholder="" name="category_code" type="text" class="validate" maxlength="10">
+              <input placeholder="" ng-model="editCategoryFields.code" name="category_code" type="text" class="validate" maxlength="10">
               <label for="category_code">category_code</label>
             </div>
             <div class="input-field col s12">
-              <input placeholder="" name="description" type="text" class="validate" maxlength="500">
+              <input placeholder="" ng-model="editCategoryFields.description" name="description" type="text" class="validate" maxlength="500">
               <label for="description">description</label>
             </div>
           </div>
