@@ -89,8 +89,8 @@ function insertEmployee($c,$d){
 }
 
 function insertAccess($c,$d){
-	$sql = $c->prepare("INSERT INTO access_tbl (employee_id_fk,username,password) VALUES (?,?,?)");
-	$sql->bind_param('iss',validateData($d->id),validateData($d->username),validateData($d->password));
+	$sql = $c->prepare("INSERT INTO access_tbl (employee_id_fk,username,password) VALUES (?,?,?) ON DUPLICATE KEY UPDATE username=?,password=?");
+	$sql->bind_param('issss',validateData($d->id),validateData($d->username),validateData($d->password),validateData($d->username),validateData($d->password));
 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 

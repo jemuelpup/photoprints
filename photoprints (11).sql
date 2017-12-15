@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2017 at 08:30 AM
+-- Generation Time: Dec 15, 2017 at 10:51 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -41,7 +41,7 @@ INSERT INTO `access_tbl` (`employee_id_fk`, `username`, `password`, `active`) VA
 (1, 'jemuel', '123', 1),
 (2, 'karen', '123', 1),
 (4, 'liah', '123', 1),
-(6, 'jenny', '123', 1);
+(6, 'jenny', '1234', 1);
 
 -- --------------------------------------------------------
 
@@ -91,8 +91,8 @@ INSERT INTO `category_tbl` (`id`, `name`, `category_code`, `description`, `date_
 (1, 'ID', 'id123', 'dsgffdafdsfsdf', '2017-10-13 07:05:06', NULL, 1),
 (2, 'Document', 'D01', 'werwerwerwer', '2017-10-13 07:35:32', NULL, 1),
 (3, 'Pictures', 'p01', 'DUMMY', '2017-10-16 03:06:22', NULL, 1),
-(4, 'Others', 'O01', 'DUMMY', '2017-10-16 03:09:47', NULL, 1),
-(5, 'testing', 't001', 'testing. delete after', '2017-12-15 03:51:41', NULL, 1);
+(4, 'Others', 'O01', 'DUMMY files', '2017-10-16 03:09:47', NULL, 1),
+(5, 'Testing', 't001', 'testing delete after 123', '2017-12-15 03:51:41', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
   `branch_fk` int(11) DEFAULT NULL,
   `salary` decimal(11,2) NOT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by_fk` int(11) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `birth_day` date DEFAULT NULL,
   `gender` tinyint(1) NOT NULL DEFAULT '1'
@@ -119,13 +120,13 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
 -- Dumping data for table `employee_tbl`
 --
 
-INSERT INTO `employee_tbl` (`id`, `name`, `address`, `contact_number`, `email`, `position_fk`, `branch_fk`, `salary`, `date_modified`, `active`, `birth_day`, `gender`) VALUES
-(1, 'jemuel elimanco', 'ewan ko st', '4564564', 'jemuel@gmail.com', 3, 2, '12000.00', '2017-10-18 08:47:39', 1, '1995-02-28', 1),
-(2, 'Karen Talla', 'ewan ko st', '123123', 'karen@gmail.com', 2, 1, '15000.00', '2017-10-18 10:51:25', 1, '1995-02-28', 0),
-(3, 'Gina Talla', 'ewan ko st 1223123', '123', 'karen@gmail.com', 1, 1, '14000.00', '2017-10-20 07:58:50', 1, '1995-02-28', 0),
-(4, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 2, 2, '20000.00', '2017-10-20 08:00:04', 1, '1990-05-04', 0),
-(5, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 1, 2, '20000.00', '2017-10-20 08:09:12', 0, '1990-05-04', 0),
-(6, 'Jenny Elimanco', 'kjfkljdglkhsdjkgf st', '12312312', 'jenny@gmail.com', 1, 1, '20000.00', '2017-10-20 08:13:59', 1, '1991-05-04', 0);
+INSERT INTO `employee_tbl` (`id`, `name`, `address`, `contact_number`, `email`, `position_fk`, `branch_fk`, `salary`, `date_modified`, `modified_by_fk`, `active`, `birth_day`, `gender`) VALUES
+(1, 'jemuel elimanco', 'ewan ko st', '4564564', 'jemuel@gmail.com', 3, 2, '12000.00', '2017-10-18 08:47:39', 0, 1, '1995-02-28', 1),
+(2, 'Karen Talla', 'ewan ko st', '123123', 'karen@gmail.com', 2, 1, '15000.00', '2017-10-18 10:51:25', 0, 1, '1995-02-28', 0),
+(3, 'Gina Talla', 'ewan ko st 1223123', '123', 'karen@gmail.com', 1, 1, '14000.00', '2017-10-20 07:58:50', 0, 1, '1995-02-28', 0),
+(4, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 2, 2, '20000.00', '2017-10-20 08:00:04', 0, 1, '1990-05-04', 0),
+(5, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 1, 2, '20000.00', '2017-10-20 08:09:12', 0, 0, '1990-05-04', 0),
+(6, 'Jenny Elimanco', '17 womens club brgy san isidro galas qc', '12312312', 'jenny@gmail.com', 1, 1, '20000.00', '2017-10-20 08:13:59', 0, 1, '1991-05-04', 0);
 
 -- --------------------------------------------------------
 
@@ -297,7 +298,9 @@ INSERT INTO `order_line_tbl` (`order_id_fk`, `item_id_fk`, `name`, `description`
 (71, 2, 'Name tag', 'werwerwerwer', 'ID02', 1, '50.00', '0.00', '0.00'),
 (72, 1, 'Digital coat', '', 'ID01', 1, '100.00', '0.00', '0.00'),
 (73, 1, 'Digital coat', '120; DROP TABLE testingtable', 'ID01', 1, '100.00', '0.00', '0.00'),
-(74, 16, 'Print', '', 'P001', 1, '1.00', '0.00', '0.00');
+(74, 16, 'Print', '', 'P001', 1, '1.00', '0.00', '0.00'),
+(75, 13, 'Wide format', '', 'OT02', 1, '20.00', '0.00', '0.00'),
+(76, 16, 'Print', '', 'P001', 50, '1.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -317,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `order_tbl` (
   `payment` decimal(11,2) DEFAULT NULL,
   `down_payment` decimal(11,2) NOT NULL DEFAULT '0.00',
   `received_date` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_tbl`
@@ -397,7 +400,9 @@ INSERT INTO `order_tbl` (`id`, `order_date`, `cashier_fk`, `branch_fk`, `operato
 (71, '2017-12-12 03:41:55', 1, 1, 2, 0, '100.00', 'wer', '80.00', '20.00', '2017-12-13 13:16:47'),
 (72, '2017-12-12 03:42:48', 1, 1, 2, 0, '100.00', 'sdf', '100.00', '0.00', '2017-12-13 13:16:53'),
 (73, '2017-12-12 03:46:59', 1, 1, 2, 0, '100.00', 'DROP TABLE testingtable', '100.00', '0.00', '2017-12-13 13:16:57'),
-(74, '2017-12-13 05:19:28', 1, 1, 1, 0, '1.00', 'a', '1.00', '0.00', '2017-12-13 13:19:44');
+(74, '2017-12-13 05:19:28', 1, 1, 1, 0, '1.00', 'a', '1.00', '0.00', '2017-12-13 13:19:44'),
+(75, '2017-12-15 09:08:09', 0, 1, 1, 0, '20.00', 'j', '50.00', '0.00', '2017-12-15 17:09:11'),
+(76, '2017-12-15 09:08:51', 0, 1, 1, 0, '50.00', 'sherleen', '50.00', '0.00', '2017-12-15 17:09:06');
 
 -- --------------------------------------------------------
 
@@ -508,7 +513,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `position_tbl`
 --
