@@ -32,6 +32,7 @@ operations.controller('operator',function($scope,$http,dbOperations,systemOperat
  	dbOperations.items("getCategoriesAndItems","").then(function(res) {
  		initCatAndItems = res;
  		$scope.catAndItems = res;
+ 		console.log(res);
  	})
 
 	$scope.searchKeyword = function(){

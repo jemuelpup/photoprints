@@ -51,7 +51,9 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.itemFields = {};
 	$scope.editItemFields = {};
 	$scope.addNewCategory = function(){
-		dbOperations.processData("AddItem",$scope.categoryFields).then(function(res){getCategories();});
+		dbOperations.processData("AddCategory",$scope.categoryFields).then(function(res){
+			alert("New category available.")
+			getCategories();});
 	}
 
 	$scope.addNewItem = function(){

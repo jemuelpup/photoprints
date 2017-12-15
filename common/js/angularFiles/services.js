@@ -64,15 +64,26 @@ operations.service('dbOperations',function($http){
 			var itemArray = [];
 			var categoryID = "";
 			var categoryName = "";
+			console.log(res);
 			(res.data).forEach(function(e, idx, array){
+				console.log(idx,array);
 				if(prevVal==0){
 					prevVal=e.category_fk;
 					categoryID = e.category_fk;
 					categoryName = e.category_name;
 				}
 				if (idx === array.length - 1){// check if last iteration
-					itemArray.push(e);
-					categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
+					console.log(prevVal+"!="+e.category_fk,"ito yung last")
+					if(prevVal!=e.category_fk){ //pag different category,
+						categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
+						itemArray = [];
+						itemArray.push(e);
+						categorieInQueries.push({categoryID:e.category_fk,categoryName:e.category_name,items:itemArray});
+					}
+					else{
+						itemArray.push(e);
+						categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
+					}
 				}
 				else if(prevVal!=e.category_fk){
 					categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
@@ -86,6 +97,8 @@ operations.service('dbOperations',function($http){
 					itemArray.push(e);
 				}
 			});
+
+			// console.log(itemArray);
 			return categorieInQueries;
 		}, function myError(response) {
 			// console.log("Error");
