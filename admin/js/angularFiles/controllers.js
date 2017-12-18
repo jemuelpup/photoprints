@@ -1,6 +1,17 @@
 var loginEnabled = 1;
 var strictModeEnabled = 1;
 
+app.controller("adminController",function($scope){
+	$scope.sideNavActive = false;
+	$scope.menuClick = function(){
+		$scope.sideNavActive = true;
+	}
+	$scope.shadowClick = function(){
+		$scope.sideNavActive = false;
+	}
+	
+});
+
 app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	/* Testing sessions */
 	if(loginEnabled){
@@ -51,6 +62,15 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 	$scope.itemFields = {};
 	$scope.editItemFields = {};
 	$scope.editCategoryFields = {};
+
+	$scope.deleteCategory = function(){
+		dbOperations.processData("RemoveCategory",$scope.editCategoryFields).then(function(res){
+			console.log("dumaan dito");
+			// console.log($scope.editCategoryFields);
+			console.log(res);
+			// alert("Category deleted")
+			getCategories();});
+	}
 	$scope.addNewCategory = function(){
 		dbOperations.processData("AddCategory",$scope.categoryFields).then(function(res){
 			alert("New category available.")

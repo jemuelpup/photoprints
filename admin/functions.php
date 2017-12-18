@@ -48,13 +48,14 @@ switch($process){
 	case "RemoveItem":{
 		deleteItem($conn,$data);
 	}break;
+	case "RemoveCategory":{
+		deleteCategory($conn,$data);
+	}break;
 }
 
 /****************************************************************************
 	Database operations
 */
-
-
 /* INSERT */
 function insertCategory($c,$d){
 	$sql = $c->prepare("INSERT INTO category_tbl (name,category_code,description) VALUES (?,?,?)");
@@ -81,10 +82,8 @@ function insertBranch($c,$d){
 }
 
 function insertEmployee($c,$d){
-	// print_r($d);
 	$sql = $c->prepare("INSERT INTO employee_tbl (name,address,contact_number,email,position_fk,branch_fk,salary,birth_day,gender) VALUES (?,?,?,?,?,?,?,?,?)");
 	$sql->bind_param('ssssiidsi',validateData($d->name),validateData($d->address),validateData($d->contact_number),validateData($d->email),validateData($d->position_fk),validateData($d->branch_fk),validateData($d->salary),validateDate($d->birth_day),validateData($d->gender));
-	// echo "$sql";
 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
@@ -98,8 +97,6 @@ function insertAccess($c,$d){
 function updateEmployee($c,$d){
 	$sql = $c->prepare("UPDATE employee_tbl SET name = ? ,address = ? ,contact_number = ? ,email = ? ,position_fk = ?,branch_fk = ?,salary = ?,birth_day = ? ,gender = ? WHERE id = ?");
 	$sql->bind_param('ssssiidsii',validateData($d->name),validateData($d->address),validateData($d->contact_number),validateData($d->email),validateData($d->position_fk),validateData($d->branch_fk),validateData($d->salary),validateDate($d->birth_day),validateData($d->gender),validateData($d->id));
-	// echo "$sql";
-	
 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
@@ -107,8 +104,6 @@ function updateCategory($c,$d){
 	$sql = $c->prepare("UPDATE category_tbl SET name = ? ,category_code = ? ,description = ?  WHERE id = ?");
 	$sql->bind_param('sssi',validateData($d->name),validateData($d->category_code),validateData($d->description),validateData($d->id));
 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
-	// echo $sql;
-	// echo $msg;
 }
 
 function updateItem($c,$d){
@@ -133,21 +128,22 @@ function updateBranch(){
 
 /* DELETE */
 function deleteCategory($c,$d){
+	echo "UPDATE category_tbl SET date_modified = NOW(),modified_by_fk = ".$_SESSION["employeeID"].",active = 0 WHERE id = ".$d->id;
 	$sql = $c->prepare("UPDATE category_tbl SET date_modified = NOW(),modified_by_fk = ?,active = 0 WHERE id = ?");
-	$sql->bind_param('ii',$_SESSION["employeeID"],$d.id);
+	$sql->bind_param('ii',$_SESSION["employeeID"],$d->id);
 	$msg = ($sql->execute() === TRUE) ? "deleting Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 function deleteItem($c,$d){
 	$id = $d->id;
 	$sql = $c->prepare("UPDATE item_tbl SET date_modified = NOW(),modified_by_fk = ?, active = 0 WHERE id = ?");
-	$sql->bind_param('ii',$_SESSION["employeeID"],$d.id);
+	$sql->bind_param('ii',$_SESSION["employeeID"],$d->id);
 	$msg = ($sql->execute() === TRUE) ? "deleting item success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
 function deleteEmployee($c,$d){
 	$id = $d->id;
 	$sql = $c->prepare("UPDATE employee_tbl SET date_modified=NOW(), modified_by_fk = ?, active = 0 WHERE id = ?");
-	$sql->bind_param('ii',$_SESSION["employeeID"],$d.id);
+	$sql->bind_param('ii',$_SESSION["employeeID"],$d->id);
 	$msg = ($sql->execute() === TRUE) ? "Deleting employee success" : "Error: " . $sql . "<br>" . $c->error;
 }
 

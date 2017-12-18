@@ -46,7 +46,7 @@ switch($process){
 
 // selectItemCategory($conn);
 function selectItemCategory($c){
-	$sql = "SELECT id,name,category_code,description FROM category_tbl";
+	$sql = "SELECT id,name,category_code,description FROM category_tbl WHERE active = 1";
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 

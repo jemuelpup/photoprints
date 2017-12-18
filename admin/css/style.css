@@ -1,17 +1,28 @@
 header, main {
-  padding-left: 300px; }
+  padding-left: 300px;
+  -webkit-transition: padding 250ms ease;
+  -moz-transition: padding 250ms ease;
+  -ms-transition: padding 250ms ease;
+  -o-transition: padding 250ms ease;
+  transition: padding 250ms ease; }
 
 header {
   display: block; }
 
 .sidenav.fixed {
+  background-color: #fff;
   position: fixed;
   left: 0;
   top: 0;
   width: 300px;
   height: 100%;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  -webkit-transition: left 250ms ease;
+  -moz-transition: left 250ms ease;
+  -ms-transition: left 250ms ease;
+  -o-transition: left 250ms ease;
+  transition: left 250ms ease; }
 
 .container {
   width: 85%; }
@@ -63,11 +74,11 @@ h4 {
   background-color: #4a148c; }
 
 .data-clickable tr {
-  -webkit-transition: background 200ms ease;
-  -moz-transition: background 200ms ease;
-  -ms-transition: background 200ms ease;
-  -o-transition: background 200ms ease;
-  transition: background 200ms ease;
+  -webkit-transition: background 500ms ease;
+  -moz-transition: background 500ms ease;
+  -ms-transition: background 500ms ease;
+  -o-transition: background 500ms ease;
+  transition: background 500ms ease;
   cursor: pointer; }
   .data-clickable tr.active {
     background-color: #7c43bd;
@@ -82,6 +93,49 @@ h4 {
 
 .data-table-container {
   height: 500px;
-  overflow: scroll; }
+  overflow: scroll;
+  margin-bottom: 10px; }
+
+.showOnPC {
+  display: block; }
+
+.showOnSP {
+  display: none; }
+
+.btn {
+  margin-bottom: 5px; }
+
+@media screen and (max-width: 900px) {
+  h2 {
+    font-size: 2.2rem; }
+
+  .showOnSP {
+    display: block; }
+
+  .showOnPC {
+    display: none; }
+
+  .navBarShadow.active {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    z-index: 1;
+    opacity: 0.5; }
+
+  header .sidenav.fixed {
+    left: -320px;
+    z-index: 2; }
+    header .sidenav.fixed.active {
+      left: 0; }
+
+  main {
+    padding-left: 0; }
+    main .menu-btn {
+      padding-top: 1em;
+      margin: 0; } }
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: 1.5rem; } }
 
 /*# sourceMappingURL=style.css.map */
