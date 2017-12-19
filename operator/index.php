@@ -10,10 +10,6 @@
 	<script src="/plugin/angular/angular.min.js"></script>
 </head>
 <body ng-app="operations" ng-controller="operator">
-
-
-
-
 	<div class="container">
 		<h1>Operator</h1>
 		<p>This is a paragraph.</p>
@@ -58,18 +54,24 @@
 					<div class="col s12">
 						<div id="section-to-print">
 							<div class="ordered-items z-depth-2">
-								<div class="data-header">
-									<div class="printOnly center-align">
+								<div class="queuedDataMsg hideOnPrint" ng-class="showQueuedMessage===true ? 'active' : ''">
+									<p class="center-align">New orders queued. Print the order slip.</p>
+								</div>
+								<div class="data-header pr-pb0">
+									<div class="showOnPrint center-align">
 										<img src="/common/images/logoForReceipt.png" alt="PHOTOPRINTS">
 									</div>
-									<div class="printOnly">
-										<p class="centerOnPrint">OrderSlip</p>
+									<div class="showOnPrint">
+										<p class="centerOnPrint pr-mb4">OrderSlip</p>
+										<p class="left-align b">Order id: {{orderID}}</p>
 									</div>
-									<h4 class="text12pxOnPrint">Ordered Items</h4>
+									<h4 class="hideOnPrint">Ordered Items</h4>
 								</div>
-								<div class="orders">
-					        		<input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
-					        		<input placeholder="Down payment" id="down-payment" type="number" class="validate hideOnPrint" ng-model="downPayment" min="0">
+								<div class="orders pr-pt0">
+									<p class="showOnPrint pr-m0">Cutomer name:</p>
+			        		<input placeholder="Customer name" id="customer-name" type="text" class="validate" ng-model="customerName">
+			        		<input placeholder="Down payment" id="down-payment" type="number" class="validate hideOnPrint" ng-model="downPayment" min="0">
+			        		<h4 class="text14pxOnPrint showOnPrint">Ordered Items</h4>
 									<table>
 										<tr>
 											<th>Item</th>
@@ -83,7 +85,7 @@
 											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}
 											</td>
 											<td>
-													<input ng-model="itemDesc" type="text" ng-keyup = "orderedItemDesc($index,itemDesc)">
+												<input ng-model="itemDesc" type="text" ng-keyup = "orderedItemDesc($index,itemDesc)">
 											</td>
 											<td>{{order.price}}
 												<div class="customPrice" ng-class="{'active': active === true}">
@@ -103,6 +105,7 @@
 									{{orders}}
 									{{databaseData}} -->
 									<div class="hideOnPrint">
+										<button ng-click="saveOrder()">Save</button>
 										<button ng-click="printOrderSlip()">Print order slip</button>
 										<button ng-click="done()">Done</button>
 									</div>

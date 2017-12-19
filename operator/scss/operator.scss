@@ -56,6 +56,28 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 }
 .ordered-items{
+	position: relative;
+	overflow:hidden;
+	.queuedDataMsg{
+		position: absolute;
+		top: -80px;
+		width: 50%;
+		margin: 0 auto;
+		left: 0;
+    	right: 0;
+    	@include transition(top 500ms ease);
+		p{
+			padding: 5px 10px;
+			background: #fff;
+			border-radius: 5px;			color: $themeColor;
+			-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+ 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+ 
+		}
+		&.active{
+			top: 4px;
+		}
+	}
 	.orders{
 		padding: $menuPadding;
 		tr{
@@ -142,10 +164,12 @@ input[type=number]::-webkit-outer-spin-button {
 .showOnPrint{
 	display: none;
 }
-.printOnly {
-   display : none;
+.clear{
+	overflow: hidden;
 }
-
+.b{
+   	font-weight: 700;
+}
 
 @media only screen and (max-width: 1150px){
 	.ms12{
@@ -161,18 +185,35 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 @media print {
-	p{
-		margin: 0;
+	.pr-pb0{
+		padding-bottom: 0;
 	}
-	.printOnly {
-       display : block;
+	.pr-pt0{
+		padding-top: 0;
+	}
+	.pr-m0{
+		margin: 0!important;
+	}
+	.pr-mb4{
+		margin-bottom: 5px;
+	}
+	.pr-mb10{
+		margin-bottom: 10px;
+	}
+	.pr-mb20{
+		margin-bottom: 20px;
+	}
+
+	.showOnPrint {
+		color: #000;
+    	display : block;
     }
     .hideOnPrint{
     	display: none;
     }
     table{
     	* {
-    		font-size: 10px!important;
+    		font-size: 14px!important;
     		margin: 0!important;
 			border: 0!important;
     	}
@@ -181,16 +222,13 @@ input[type=number]::-webkit-outer-spin-button {
     .centerOnPrint{
     	text-align: center;
     }
-    .text12pxOnPrint{
-    	font-size: 14px;
+    .text14pxOnPrint{
+    	font-size: 20px;
+    	color: #000!important;
     }
 	body * {
 		visibility: hidden;
 
-	}
-	.showOnPrint{
-		display: block;
-		text-align: center;
 	}
 	#section-to-print, #section-to-print * {
 		visibility: visible;

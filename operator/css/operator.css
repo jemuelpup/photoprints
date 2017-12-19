@@ -36,39 +36,63 @@ input[type=number]::-webkit-outer-spin-button {
     .category-list li:hover {
       color: #7c43bd; }
 
-.ordered-items .orders {
-  padding: 8px 15px; }
-  .ordered-items .orders tr {
-    position: relative;
-    overflow: hidden; }
-    .ordered-items .orders tr td, .ordered-items .orders tr th {
-      padding: 6px 5px;
+.ordered-items {
+  position: relative;
+  overflow: hidden; }
+  .ordered-items .queuedDataMsg {
+    position: absolute;
+    top: -80px;
+    width: 50%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    -webkit-transition: top 500ms ease;
+    -moz-transition: top 500ms ease;
+    -ms-transition: top 500ms ease;
+    -o-transition: top 500ms ease;
+    transition: top 500ms ease; }
+    .ordered-items .queuedDataMsg p {
+      padding: 5px 10px;
+      background: #fff;
+      border-radius: 5px;
+      color: #4a148c;
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+    .ordered-items .queuedDataMsg.active {
+      top: 4px; }
+  .ordered-items .orders {
+    padding: 8px 15px; }
+    .ordered-items .orders tr {
       position: relative;
       overflow: hidden; }
-      .ordered-items .orders tr td .customPrice, .ordered-items .orders tr th .customPrice {
-        position: absolute;
-        bottom: -25px;
-        -webkit-transition: bottom 200ms ease;
-        -moz-transition: bottom 200ms ease;
-        -ms-transition: bottom 200ms ease;
-        -o-transition: bottom 200ms ease;
-        transition: bottom 200ms ease; }
-        .ordered-items .orders tr td .customPrice.active, .ordered-items .orders tr th .customPrice.active {
-          bottom: -4px; }
-        .ordered-items .orders tr td .customPrice input, .ordered-items .orders tr th .customPrice input {
-          border-bottom-color: #309b1c; }
-      .ordered-items .orders tr td .itemDesc, .ordered-items .orders tr th .itemDesc {
-        position: absolute;
-        background-color: #000;
-        bottom: -75px;
-        width: 100%; }
-.ordered-items input {
-  margin-top: 0;
-  margin-bottom: 0; }
-.ordered-items tr {
-  border-bottom: 1px solid #e4e4e4; }
-  .ordered-items tr:hover {
-    background-color: #e4e4e4; }
+      .ordered-items .orders tr td, .ordered-items .orders tr th {
+        padding: 6px 5px;
+        position: relative;
+        overflow: hidden; }
+        .ordered-items .orders tr td .customPrice, .ordered-items .orders tr th .customPrice {
+          position: absolute;
+          bottom: -25px;
+          -webkit-transition: bottom 200ms ease;
+          -moz-transition: bottom 200ms ease;
+          -ms-transition: bottom 200ms ease;
+          -o-transition: bottom 200ms ease;
+          transition: bottom 200ms ease; }
+          .ordered-items .orders tr td .customPrice.active, .ordered-items .orders tr th .customPrice.active {
+            bottom: -4px; }
+          .ordered-items .orders tr td .customPrice input, .ordered-items .orders tr th .customPrice input {
+            border-bottom-color: #309b1c; }
+        .ordered-items .orders tr td .itemDesc, .ordered-items .orders tr th .itemDesc {
+          position: absolute;
+          background-color: #000;
+          bottom: -75px;
+          width: 100%; }
+  .ordered-items input {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .ordered-items tr {
+    border-bottom: 1px solid #e4e4e4; }
+    .ordered-items tr:hover {
+      background-color: #e4e4e4; }
 
 .show-on-hover {
   position: relative; }
@@ -110,8 +134,11 @@ input[type=number]::-webkit-outer-spin-button {
 .showOnPrint {
   display: none; }
 
-.printOnly {
-  display: none; }
+.clear {
+  overflow: hidden; }
+
+.b {
+  font-weight: 700; }
 
 @media only screen and (max-width: 1150px) {
   .ms12 {
@@ -120,10 +147,26 @@ input[type=number]::-webkit-outer-spin-button {
   .ms12 {
     width: 100%; } }
 @media print {
-  p {
-    margin: 0; }
+  .pr-pb0 {
+    padding-bottom: 0; }
 
-  .printOnly {
+  .pr-pt0 {
+    padding-top: 0; }
+
+  .pr-m0 {
+    margin: 0 !important; }
+
+  .pr-mb4 {
+    margin-bottom: 5px; }
+
+  .pr-mb10 {
+    margin-bottom: 10px; }
+
+  .pr-mb20 {
+    margin-bottom: 20px; }
+
+  .showOnPrint {
+    color: #000;
     display: block; }
 
   .hideOnPrint {
@@ -132,22 +175,19 @@ input[type=number]::-webkit-outer-spin-button {
   table {
     margin-bottom: 5px; }
     table * {
-      font-size: 10px !important;
+      font-size: 14px !important;
       margin: 0 !important;
       border: 0 !important; }
 
   .centerOnPrint {
     text-align: center; }
 
-  .text12pxOnPrint {
-    font-size: 14px; }
+  .text14pxOnPrint {
+    font-size: 20px;
+    color: #000 !important; }
 
   body * {
     visibility: hidden; }
-
-  .showOnPrint {
-    display: block;
-    text-align: center; }
 
   #section-to-print, #section-to-print * {
     visibility: visible; }
