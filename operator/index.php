@@ -75,7 +75,6 @@
 									<table>
 										<tr>
 											<th>Item</th>
-											<th>Desc</th>
 											<th>Price</th>
 											<th>Qty</th>
 											<th>Disc</th>
@@ -83,9 +82,6 @@
 										</tr>
 										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false" ng-class="{'noHover':disableEditting}">
 											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}
-											</td>
-											<td>
-												<input ng-model="itemDesc" type="text" ng-keyup = "orderedItemDesc($index,itemDesc)">
 											</td>
 											<td>{{order.price}}
 												<div class="customPrice" ng-class="{'active': active === true}">
@@ -101,6 +97,7 @@
 									<p>Total: Php. {{totalPrice}}</p>
 									<p>Down payment: Php. {{downPayment ? downPayment : 0}}</p>
 									<p>------------------------</p>
+									<textarea class="notes" rows="4" ng-model="orderNotes"></textarea>
 									<!-- create table here and remove orders
 									{{orders}}
 									{{databaseData}} -->

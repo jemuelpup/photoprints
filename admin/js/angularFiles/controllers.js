@@ -79,7 +79,10 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 
 	$scope.addNewItem = function(){
 		$scope.itemFields.category = $("select#category").val();
-		dbOperations.processData("AddItem",$scope.itemFields).then(function(res){getItems();});
+		dbOperations.processData("AddItem",$scope.itemFields).then(function(res){
+			alert("New item available.");
+			getItems();
+		});
 	}
 
 	$scope.itemIndex = function(i,id){

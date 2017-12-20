@@ -35,24 +35,24 @@ function updateOrder($c,$d){
 //sql injection safe
 function insertOrder($c,$d){
 	$operator = $_SESSION["employeeID"];
+	$sql = $c->prepare("INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name,down_payment,notes) VALUES (NOW(),?,?,?,?,?,?,?)");
 
-	$sql = $c->prepare("INSERT INTO order_tbl (order_date,cashier_fk,branch_fk,operator_fk,total_amount,customer_name,down_payment) VALUES (NOW(),?,?,?,?,?,?)");
-
-	$sql->bind_param('iiidsd',validateData($d->cashier_fk), validateData($d->branch_fk), $operator, validateData($d->total_amount), validateData($d->customer_name),validateData($d->down_payment));
+	$sql->bind_param('iiidsds',validateData($d->cashier_fk), validateData($d->branch_fk), $operator, validateData($d->total_amount), validateData($d->customer_name),validateData($d->down_payment),validateData($d->notes));
 
 	if ($sql->execute()) {
 		$order_id = mysqli_insert_id($c);
-		$sql2 = "INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,description) VALUES";
-		$fields = "";
-		$values = "";
-		$dataType = "";
 		foreach ($d->items as $item) {
-			$sql2 = $c->prepare("INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount,description) VALUES (?,?,?,?,?,?,?,?)");
-			$sql2->bind_param('iissidds',validateData($order_id),validateData($item->itemID),validateData($item->itemName),validateData($item->code),validateData($item->quantity),validateData($item->price),validateData($item->discount),validateData($item->desc));
+			$sql2 = $c->prepare("INSERT INTO order_line_tbl (order_id_fk,item_id_fk,name,code,quantity,price,discount) VALUES (?,?,?,?,?,?,?)");
+			$sql2->bind_param('iissidd',$order_id,validateData($item->itemID),validateData($item->itemName),validateData($item->code),validateData($item->quantity),validateData($item->price),validateData($item->discount));
 			$sql2->execute();
 		}
+		header("Content-type:application/json");
+		echo json_encode(["orderID" => $order_id ]);
 	}
 	operationsDataStream("hasNewOrders",true);
+
+
+
 }
 
 function getSessionId(){

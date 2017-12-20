@@ -17,7 +17,7 @@
 		<h1>Cashier</h1>
 		<p>This is a paragraph.</p>
 		<div class="row">
-			<div class="col s8">
+			<div class="col l8 m7 s12">
 				<div class="orders">
 					<div class="data-header">
 						<h4 class="left w50p">Orders</h4>
@@ -43,7 +43,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="col s4">
+			<div class="col l4 m5 s12">
 				<div id="section-to-print">
 					<div class="order-details">
 						<div class="data-header">

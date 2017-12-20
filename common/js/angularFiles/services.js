@@ -15,8 +15,6 @@ operations.service('dbOperations',function($http){
 				'data': dataInputs
 			}
 		}).then(function success(res){
-			// callback();
-			console.log(res);
 			return res.data;
 		}, function err(response) {
 			return "Something wrong in intranet connection. Check the server.";
@@ -64,16 +62,16 @@ operations.service('dbOperations',function($http){
 			var itemArray = [];
 			var categoryID = "";
 			var categoryName = "";
-			console.log(res);
+			// console.log(res);
 			(res.data).forEach(function(e, idx, array){
-				console.log(idx,array);
+				// console.log(idx,array);
 				if(prevVal==0){
 					prevVal=e.category_fk;
 					categoryID = e.category_fk;
 					categoryName = e.category_name;
 				}
 				if (idx === array.length - 1){// check if last iteration
-					console.log(prevVal+"!="+e.category_fk,"ito yung last")
+					// console.log(prevVal+"!="+e.category_fk,"ito yung last")
 					if(prevVal!=e.category_fk){ //pag different category,
 						categorieInQueries.push({categoryID:categoryID,categoryName:categoryName,items:itemArray});
 						itemArray = [];
