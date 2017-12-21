@@ -9,6 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="/plugin/materialize-css/dist/css/materialize.min.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/common/css/common.css">
 		<link rel="stylesheet" href="/admin/css/style.css">
 		<script src="/plugin/angular/angular.min.js"></script>
 	</head>
@@ -325,7 +326,7 @@
 						<div class="col l8 m12 s12">
 							<h2>Transactions</h2>
 							<div class="data-table-container">
-							<table>
+							<table class="table-data">
 								<tr>
 									<th>branch_fk</th>
 									<th>cashier_fk</th>
@@ -335,7 +336,7 @@
 									<th>total_amount</th>
 									<th>received_date</th>
 								</tr>
-								<tr ng-repeat="transaction in transactions">
+								<tr ng-repeat="transaction in transactions" ng-click="getTransactionNotes($index)" ng-class="transaction.notes.length>0 ? 'hasOrderNotes':''">
 									<td>{{transaction.branch_name}}</td>
 									<td>{{transaction.cashier_name}}</td>
 									<td>{{transaction.customer_name}}</td>
@@ -346,6 +347,8 @@
 								</tr>
 							</table>
 							</div>
+							<h4>Transaction notes</h4>
+							<p>{{transactionNotes}}</p>
 						</div>
 					</div>
 				</div>
