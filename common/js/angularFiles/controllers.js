@@ -1,5 +1,5 @@
-var loginEnabled = 0;
-var strictModeEnabled = 0;
+var loginEnabled = 1;
+var strictModeEnabled = 1;
 
 operations.controller('operator',function($scope,$http,$timeout,dbOperations,systemOperations){
 
@@ -14,7 +14,7 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 	if(strictModeEnabled){
 		systemOperations.getAccessPosition().then(function(res){
 			// console.log(res.data);
-			if(!(res.data==='2')){ window.location.href = '/'; }
+			if(!(res.data==='2'||res.data==='6')){ window.location.href = '/'; }
 		});
 	}
 	/* Initial datas: */
@@ -150,6 +150,11 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 		$scope.orders.splice(index, 1);
 		updateTotal();
 	}
+	$scope.logout = function(){
+		dbOperations.processData("Logout","").then(function(res){
+			window.location.href = '/';
+		});
+	}
 
 });
 
@@ -161,7 +166,7 @@ operations.controller('cashier',function($scope,$http,$interval,dbOperations,sys
 	}
 	if(strictModeEnabled){
 		systemOperations.getAccessPosition().then(function(res){
-			if(!(res.data==='1')){ window.location.href = '/'; }
+			if(!(res.data==='1'||res.data==='6')){ window.location.href = '/'; }
 		});
 	}
 	$scope.orders = [];
@@ -213,6 +218,11 @@ operations.controller('cashier',function($scope,$http,$interval,dbOperations,sys
 			$scope.cash = "";
 			alert("Not enough money");
 		}
+	}
+	$scope.logout = function(){
+		dbOperations.processData("Logout","").then(function(res){
+			window.location.href = '/';
+		});
 	}
 
 

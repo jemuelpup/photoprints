@@ -1,7 +1,7 @@
 var loginEnabled = 1;
 var strictModeEnabled = 1;
 
-app.controller("adminController",function($scope){
+app.controller("adminController",function($scope,dbOperations){
 	$scope.sideNavActive = false;
 	$scope.menuClick = function(){
 		$scope.sideNavActive = true;
@@ -9,7 +9,11 @@ app.controller("adminController",function($scope){
 	$scope.shadowClick = function(){
 		$scope.sideNavActive = false;
 	}
-	
+	$scope.logout = function(){
+		dbOperations.processData("Logout","").then(function(res){
+			window.location.href = '/';
+		});
+	}
 });
 
 app.controller("buisnessManagement",function($scope,$http,dbOperations){

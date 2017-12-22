@@ -20,7 +20,10 @@ switch($process){
 	}break;
 	case "getAccessPosition":{
 		getAccessPosition($conn,$data);
-	}
+	}break;
+	case "Logout":{
+		session_destroy(); // php code
+	}break;
 }
 
 

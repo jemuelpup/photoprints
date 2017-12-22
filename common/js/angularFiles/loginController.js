@@ -25,6 +25,10 @@ operations.controller('login',function($scope,$http,$timeout,dbOperations){
 				case 3:{
 					access = "/admin";
 				}break;
+				case 6:{ // cashier and operator
+					access = "/cashier";
+					window.open("/operator", '_blank')
+				}break;
 				default:{
 					res.position = 0;
 				}break;

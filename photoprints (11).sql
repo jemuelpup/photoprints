@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2017 at 11:38 AM
+-- Generation Time: Dec 22, 2017 at 04:49 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `employee_tbl` (
 
 INSERT INTO `employee_tbl` (`id`, `name`, `address`, `contact_number`, `email`, `position_fk`, `branch_fk`, `salary`, `date_modified`, `modified_by_fk`, `active`, `birth_day`, `gender`) VALUES
 (1, 'jemuel elimanco', 'ewan ko st', '4564564', 'jemuel@gmail.com', 3, 2, '12000.00', '2017-10-18 08:47:39', 0, 1, '1995-02-28', 1),
-(2, 'Karen Talla', 'ewan ko st', '123123', 'karen@gmail.com', 2, 1, '15000.00', '2017-10-18 10:51:25', 0, 1, '1995-02-28', 0),
+(2, 'Karen Talla', 'ewan ko st', '123123', 'karen@gmail.com', 6, 1, '15000.00', '2017-10-18 10:51:25', 0, 1, '1995-02-28', 0),
 (3, 'Gina Talla', 'ewan ko st 1223123', '123', 'karen@gmail.com', 1, 1, '14000.00', '2017-10-20 07:58:50', 0, 1, '1995-02-28', 0),
 (4, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 2, 2, '20000.00', '2017-10-20 08:00:04', 0, 1, '1990-05-04', 0),
 (5, 'Liah talla', 'wenrq;werjqej', '123123123', 'lkdslksdafjlk@gmail.com', 1, 2, '20000.00', '2017-10-20 08:09:12', 0, 0, '1990-05-04', 0),
@@ -214,7 +214,13 @@ INSERT INTO `order_line_tbl` (`order_id_fk`, `item_id_fk`, `name`, `code`, `quan
 (2, 7, 'Package D', 'ID04P04', 1, '160.00', '0.00', '0.00'),
 (3, 6, 'Package C', 'ID04P03', 1, '140.00', '0.00', '0.00'),
 (3, 7, 'Package D', 'ID04P04', 1, '160.00', '0.00', '0.00'),
-(4, 3, 'Change background', 'ID02', 1, '100.00', '0.00', '0.00');
+(4, 3, 'Change background', 'ID02', 1, '100.00', '0.00', '0.00'),
+(5, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
+(6, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
+(6, 2, 'Name tag', 'ID02', 1, '50.00', '0.00', '0.00'),
+(7, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
+(7, 2, 'Name tag', 'ID02', 1, '50.00', '0.00', '0.00'),
+(8, 16, 'Print', 'P001', 500, '1.00', '12.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -235,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `order_tbl` (
   `notes` varchar(200) DEFAULT NULL,
   `down_payment` decimal(11,2) NOT NULL DEFAULT '0.00',
   `received_date` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_tbl`
@@ -245,7 +251,11 @@ INSERT INTO `order_tbl` (`id`, `order_date`, `cashier_fk`, `branch_fk`, `operato
 (1, '2017-12-20 09:12:25', 2, 1, 2, 0, '150.00', 'jem', '150.00', '', '0.00', '2017-12-20 17:12:38'),
 (2, '2017-12-20 09:17:05', 1, 1, 2, 0, '300.00', 'adf', '500.00', '', '0.00', '2017-12-20 18:31:14'),
 (3, '2017-12-20 10:28:54', 1, 1, 2, 0, '300.00', '', '500.00', '', '0.00', '2017-12-20 18:33:18'),
-(4, '2017-12-20 10:30:43', 1, 1, 2, 0, '100.00', 'a', '100.00', '', '0.00', '2017-12-20 18:33:23');
+(4, '2017-12-20 10:30:43', 1, 1, 2, 0, '100.00', 'a', '100.00', '', '0.00', '2017-12-20 18:33:23'),
+(5, '2017-12-21 06:48:32', 1, 1, 2, 0, '100.00', 'adsf', '100.00', '', '0.00', '2017-12-21 16:08:53'),
+(6, '2017-12-21 06:51:16', 1, 1, 2, 0, '150.00', 'sre', '0.00', '', '150.00', '2017-12-21 16:03:27'),
+(7, '2017-12-21 06:55:41', 1, 1, 2, 0, '150.00', '', NULL, '', '0.00', NULL),
+(8, '2017-12-21 08:25:12', 1, 1, 1, 0, '440.00', 'r', '250.00', 'Bukas babayaran yung kulang', '200.00', '2017-12-21 16:25:43');
 
 -- --------------------------------------------------------
 
@@ -258,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `position_tbl` (
   `name` varchar(50) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `position_tbl`
@@ -269,7 +279,8 @@ INSERT INTO `position_tbl` (`id`, `name`, `description`, `active`) VALUES
 (2, 'operator', 'makes the services', 1),
 (3, 'admin', 'Can access the whole buisness system', 1),
 (4, 'supervisor', 'Super vice the whole branch', 1),
-(5, 'Trainee', 'Training employee', 1);
+(5, 'Trainee', 'Training employee', 1),
+(6, 'Cashier/Operator', 'Acts as cashier and operator', 1);
 
 --
 -- Indexes for dumped tables
@@ -356,12 +367,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `position_tbl`
 --
 ALTER TABLE `position_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --

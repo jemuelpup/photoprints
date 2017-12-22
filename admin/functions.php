@@ -15,6 +15,9 @@ else{
 }
 
 switch($process){
+	case "Logout":{
+		session_destroy(); // php code
+	}
 	case "AddCategory": {
 		insertCategory($conn,$data);
 	}break;
@@ -52,6 +55,7 @@ switch($process){
 		deleteCategory($conn,$data);
 	}break;
 }
+
 
 /****************************************************************************
 	Database operations

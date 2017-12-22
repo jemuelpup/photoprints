@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Page Title</title>
+	<title>Cashier</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/plugin/materialize-css/dist/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,8 +14,12 @@
 <body ng-app="operations" ng-controller="cashier">
 	
 	<div class="container">
-		<h1>Cashier</h1>
-		<p>This is a paragraph.</p>
+		<div class="banner-container">
+			<h1>Cashier</h1>
+			<div class="logout" ng-click="logout()">
+				<p>logout</p><i class="material-icons">exit_to_app</i>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col l8 m7 s12">
 				<div class="orders">
@@ -25,22 +29,26 @@
 							<input placeholder="Search" type="text" class="validate" ng-model="orderFilter" ng-focus="focus=true" ng-blur="focus=false">
 						</div>
 					</div>
-					<table class="table-data">
-						<tr>
-							<th>Customer name</th>
-							<th>Amount</th>
-							<th>Down payment</th>
-							<th>Operator</th>
-							<th>Order date</th>
-						</tr>
-						<tr ng-repeat="order in orders|filter:orderFilter" ng-click="viewItemsOrdered(order,order.order_line)">
-							<td>{{order.customer_name}}</td>
-							<td>{{order.total_amount}}</td>
-							<td>{{order.down_payment}}</td>
-							<td>{{order.operator_fk}}</td>
-							<td>{{order.order_date}}</td>
-						</tr>
-					</table>
+					<div class="data-table-container">
+						<table class="table-data">
+							<tr>
+								<th>Order id</th>
+								<th>Customer name</th>
+								<th>Amount</th>
+								<th>Down payment</th>
+								<th>Operator</th>
+								<th>Order date</th>
+							</tr>
+							<tr ng-repeat="order in orders|filter:orderFilter" ng-click="viewItemsOrdered(order,order.order_line)">
+								<td>{{order.id}}</td>
+								<td>{{order.customer_name}}</td>
+								<td>{{order.total_amount}}</td>
+								<td>{{order.down_payment}}</td>
+								<td>{{order.operator_name}}</td>
+								<td>{{order.order_date}}</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="col l4 m5 s12">

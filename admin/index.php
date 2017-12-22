@@ -37,8 +37,13 @@
 			<div class="navBarShadow" ng-click="shadowClick()" ng-class="sideNavActive ? 'active':''"></div>
 			<div class="banner-area">
 				<div class="container">
-					<p class="menu-btn"><i class="material-icons showOnSP menu" ng-click="menuClick()">menu</i></p>
-					<h2>Point of sale System</h2>
+					<p class="menu-btn showOnSP"><i class="material-icons showOnSP menu" ng-click="menuClick()">menu</i></p>
+					<div class="banner">
+						<h2>Point of sale System</h2>
+						<div class="logout" ng-click="logout()">
+							<p>logout</p><i class="material-icons">exit_to_app</i>
+						</div>
+					</div>	
 				</div>
 			</div>
 			<section class="product-management" ng-controller="productManagement">
@@ -320,35 +325,38 @@
 						      	<label for={{repFilter.id}}>{{repFilter.name}}</label>
 						    	</li>
 						    </ul>
-						  </form>
+							</form>
 							<p>Total sales : {{totalSales}}</p>
 						</div>
 						<div class="col l8 m12 s12">
 							<h2>Transactions</h2>
+							<h3>Transaction notes</h3>
+							<textarea rows="4" cols="50">{{transactionNotes}}</textarea>
+							<h3>Transaction notes</h3>
 							<div class="data-table-container">
-							<table class="table-data">
-								<tr>
-									<th>branch_fk</th>
-									<th>cashier_fk</th>
-									<th>customer_name</th>
-									<th>operator_fk</th>
-									<th>payment</th>
-									<th>total_amount</th>
-									<th>received_date</th>
-								</tr>
-								<tr ng-repeat="transaction in transactions" ng-click="getTransactionNotes($index)" ng-class="transaction.notes.length>0 ? 'hasOrderNotes':''">
-									<td>{{transaction.branch_name}}</td>
-									<td>{{transaction.cashier_name}}</td>
-									<td>{{transaction.customer_name}}</td>
-									<td>{{transaction.operator_name}}</td>
-									<td>{{transaction.payment}}</td>
-									<td>{{transaction.total_amount}}</td>
-									<td>{{transaction.received_date | date}}</td>
-								</tr>
-							</table>
+								<table class="table-data">
+									<tr>
+										<th>branch</th>
+										<th>Cashier</th>
+										<th>Operator</th>
+										<th>Customer</th>
+										<th>DP</th>
+										<th>payment</th>
+										<th>amount</th>
+										<th>received_date</th>
+									</tr>
+									<tr ng-repeat="transaction in transactions" ng-click="getTransactionNotes($index)" ng-class="transaction.notes.length>0 ? 'hasOrderNotes':''">
+										<td>{{transaction.branch_name}}</td>
+										<td>{{transaction.cashier_name}}</td>
+										<td>{{transaction.operator_name}}</td>
+										<td>{{transaction.customer_name}}</td>
+										<td>{{transaction.down_payment}}</td>
+										<td>{{transaction.payment}}</td>
+										<td>{{transaction.total_amount}}</td>
+										<td>{{transaction.received_date | date}}</td>
+									</tr>
+								</table>
 							</div>
-							<h4>Transaction notes</h4>
-							<p>{{transactionNotes}}</p>
 						</div>
 					</div>
 				</div>

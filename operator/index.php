@@ -11,8 +11,12 @@
 </head>
 <body ng-app="operations" ng-controller="operator">
 	<div class="container">
-		<h1>Operator</h1>
-		<p>This is a paragraph.</p>
+		<div class="banner-container">
+			<h1>Operator</h1>
+			<div class="logout" ng-click="logout()">
+				<p>logout</p><i class="material-icons">exit_to_app</i>
+			</div>
+		</div>
 		<ul class="category-list">
 			<li ng-repeat="category in catAndItems" ng-click="showCategoryIndex($index)">{{category.categoryName}}</li>
 		</ul>
