@@ -122,12 +122,12 @@
 
 	<!-- <div class="category" ng-repeat=""></div> -->
 
-<script src="/plugin/jquery/dist/jquery.min.js"></script>
+	<script src="/plugin/jquery/dist/jquery.min.js"></script>
 	<script src="/common/js/angularFiles/modules.js"></script>
 	<script src="/common/js/angularFiles/services.js"></script>
 	<!-- <script src="/common/js/angularFiles/directives.js"></script>
 	<script src="/common/js/angularFiles/filters.js"></script> -->
-	<script src="/common/js/angularFiles/controllers.js"></script>
+	<script src="/operator/js/operatorController.js"></script>
 	<script>
 		// $(document).ready(function() {
 	 //    Materialize.updateTextFields();

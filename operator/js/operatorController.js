@@ -47,12 +47,16 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 	$scope.addToOrder = function(itemID,quantity=1,itemName,code,discount=0,price){
 		// discount = !discount ? 1 : discount;
 		if(!newOrderQueued){
+			if(quantity==""){ quantity=1; }
+			if(discount==""){ discount=0; }
 			var itemTotalPrice = (price*quantity*(100-discount)/100);
 			if(quantity>0){
 				$scope.orders.push({quantity:quantity,itemID:itemID,itemName:itemName,code:code,discount:discount,price:price,itemTotalPrice:itemTotalPrice});
 				// $scope.totalPrice += itemTotalPrice;
 				updateTotal();
 				// processDataprocessData
+				this.quantity = "";
+				this.discount = "";
 			}
 			else{
 				alert("please enter the right quantity");
@@ -155,96 +159,5 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 			window.location.href = '/';
 		});
 	}
-
-});
-
-operations.controller('cashier',function($scope,$http,$interval,dbOperations,systemOperations){
-	if(loginEnabled){
-		systemOperations.getAccessID().then(function(res){
-			if(res.data==='0'){ window.location.href = '/'; }
-		});
-	}
-	if(strictModeEnabled){
-		systemOperations.getAccessPosition().then(function(res){
-			if(!(res.data==='1'||res.data==='6')){ window.location.href = '/'; }
-		});
-	}
-	$scope.orders = [];
-	$scope.order = {};
-	$scope.orderItems = [];
-	$scope.change = 0;
-	// check the update per second
-	var excecuteGet = true;
-	// var receiptPrinted = false; // for printing the receipt
-	function getUnclaimedOrders(){
-		dbOperations.unclaimedOrders("getUnclaimedOrders","").then(function(res) {
-	 		$scope.orders = res;
-	 	});
-	}
-	$scope.viewItemsOrdered = function(order,orderLine){
-		$scope.order = order;
-		$scope.orderItems = orderLine;
-		$scope.change = $scope.order.down_payment - $scope.order.total_amount;
-	}
-	$scope.printReceipt = function(){
-		if(($scope.cash-$scope.order.total_amount)>-1){
-			window.print();
-			// receiptPrinted = true; // for printing the receipt
-		}
-		else{
-			alert("Not enough money");
-		}
-	}
-	$scope.setOrderPaid = function(){
-		$scope.cash = $scope.cash ? $scope.cash : 0;
-		if(($scope.change+$scope.cash)>=0){
-			// if(receiptPrinted){ // for printing the receipt
-				$scope.order.cash = $scope.cash;
-				dbOperations.processData("orderPaid",$scope.order).then(function(res){
-					getUnclaimedOrders();
-					$scope.order = {};
-					$scope.orderItems = [];
-					$scope.cash = "";
-					receiptPrinted = false;
-					$scope.change = 0;
-				})
-			// } // for printing the receipt
-			// else{ // for printing the receipt
-			// 	alert("Print the receipt first"); // for printing the receipt
-			// } // for printing the receipt
-			
-		}
-		else{
-			$scope.cash = "";
-			alert("Not enough money");
-		}
-	}
-	$scope.logout = function(){
-		dbOperations.processData("Logout","").then(function(res){
-			window.location.href = '/';
-		});
-	}
-
-
-	$scope.stream = $interval(function checkUpdate(){
-		// $scope.stream.cancel(stream);
-		if(excecuteGet){
-			excecuteGet = false;
-			$http({
-				method: 'get', url: "/operations.json",
-				headers: { 'Cache-Control': 'no-cache', 'Pragma':'no-cache' }
-			})
-			.then(function (res) {
-		        if(res.data.hasNewOrders){
-		        	getUnclaimedOrders();
-		        	// console.log("may new orders");
-		        }
-				excecuteGet = true;
-		    });
-		}
-	}, 2000);
-
-
-	getUnclaimedOrders();
 
 });

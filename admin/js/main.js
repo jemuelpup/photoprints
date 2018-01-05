@@ -14,7 +14,6 @@ $(document).ready(function(){
 	Variables:
 */
 	var itemId = 0; // this is the active item in the table
-	var v = views;
 	// console.log(v);
 
 

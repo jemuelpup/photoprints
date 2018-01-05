@@ -292,7 +292,6 @@ app.controller("employeeManagement",function($scope,$http,dbOperations){
 })
 
 app.controller("reports",function($scope,$http,dbOperations,$interval){
-
 	$scope.selectedDate = new Date();
 	$scope.transactions = [];
 	$scope.totalSales = 0;
@@ -303,18 +302,20 @@ app.controller("reports",function($scope,$http,dbOperations,$interval){
 		{"name":"Monthly","id":"d3","val":3},
 		{"name":"Yearly","id":"d4","val":4},
 	];
-
 	getTotalSalesOn($scope.selectedDate);
 	getTransationsOn($scope.selectedDate);
+	
+	console.log($scope.selectedDate);
 	function getTotalSalesOn(selectedDate){
 		dbOperations.getData('getTotalSales',selectedDate).then(function(res) {
 			$scope.totalSales = res.data;
+			// console.log(res);
 		});
 	}
 	function getTransationsOn(selectedDate){
 		dbOperations.getData('getTransationsData',selectedDate).then(function(res) {
 			$scope.transactions = res.data;
-			// console.log(res);
+			console.log(res);
 		});
 	}
 	$scope.getTransactionNotes = function(i){
@@ -324,8 +325,5 @@ app.controller("reports",function($scope,$http,dbOperations,$interval){
 		getTotalSalesOn($scope.selectedDate);
 		getTransationsOn($scope.selectedDate);
 	}
-
-	
-
-
-});
+}
+);

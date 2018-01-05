@@ -83,8 +83,8 @@
 					<p>Change: Php. <span>{{ cash + change}}</span></p>
 					<p>------------------------</p>
 				</div>
-		<!-- 		 <button class="btn waves-effect waves-light" name="action" ng-click="printReceipt()">Print<i class="material-icons right">local_printshop</i></button> -->
-				 <button class="btn waves-effect waves-light right" name="action" ng-click="setOrderPaid(order.id);">Paid<i class="material-icons right">payment</i></button>
+				<button class="btn waves-effect waves-light right" name="action" ng-click="setOrderPaid(order.id);">Paid<i class="material-icons right">payment</i></button>
+				<a href="reports.html" class="btn waves-effect waves-light left">Report<i class="material-icons right">book</i></a>
 			</div>
 		</div>
 		
@@ -94,9 +94,10 @@
 	<script src="/plugin/jquery/dist/jquery.min.js"></script>
 	<script src="/common/js/angularFiles/modules.js"></script>
 	<script src="/common/js/angularFiles/services.js"></script>
-	<!-- <script src="/common/js/angularFiles/directives.js"></script>
-	<script src="/common/js/angularFiles/filters.js"></script> -->
-	<script src="/common/js/angularFiles/controllers.js"></script>
+	<!-- <script src="/common/js/angularFiles/directives.js"></script> -->
+	<script src="/common/js/angularFiles/filters.js"></script>
+	<!-- <script src="/common/js/angularFiles/controllers.js"></script> -->
+	<script src="/cashier/js/cashierController.js"></script>
 	<script>
 		// $(document).ready(function() {
 	 //    Materialize.updateTextFields();

@@ -332,7 +332,7 @@
 							<h2>Transactions</h2>
 							<h3>Transaction notes</h3>
 							<textarea rows="4" cols="50">{{transactionNotes}}</textarea>
-							<h3>Transaction notes</h3>
+							<h3>Transaction details</h3>
 							<div class="data-table-container">
 								<table class="table-data">
 									<tr>
@@ -367,15 +367,14 @@
 		
 		<script src="/plugin/jquery/dist/jquery.min.js"></script>
 		<script src="/plugin/materialize-css/dist/js/materialize.min.js"></script>
-
+		<!-- <script src="/common/js/angularFiles/commonController.js"></script> -->
 		<script src="/admin/js/angularFiles/modules.js"></script>
 		<script src="/admin/js/angularFiles/services.js"></script>
 		<script src="/admin/js/angularFiles/directives.js"></script>
 		<script src="/admin/js/angularFiles/filters.js"></script>
-		<script src="/admin/js/angularFiles/controllers.js"></script>
 		
+		<script src="/admin/js/angularFiles/controllers.js"></script>		
 		<!-- <script src="/common/js/operations.js"></script> -->
-		<script src="/admin/js/view.js"></script>
 		<script src="/admin/js/main.js"></script>
 		<!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 		<script>

@@ -115,7 +115,20 @@ operations.service('dbOperations',function($http){
 			return "Something wrong in the system";
 	    });
 	}
-
+	this.getData = function(process,date){
+		return $http({
+			method:"POST",
+			url:"/admin/view.php",
+			data: {
+				'process': process,
+				'data': date
+			}
+		}).then(function success(res){
+			return res;
+		}, function myError(response) {
+			return 0;
+	    });
+	}
 });
 
 operations.service('systemOperations',function($http){
