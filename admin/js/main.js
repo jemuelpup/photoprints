@@ -76,6 +76,22 @@ $("#edit-category-trigger").click(function(){
 	}
 	else{ alert("Select item category"); }
 });
+
+$("#edit-branch-trigger").click(function(){
+	var activeRow = $(".branch-list-table table tr.active");
+	itemId = activeRow.attr("data-id");
+	if(itemId){
+		$(activeRow.children("td")).each(function(e){
+			$('#edit-branch input[name="'+$(this).attr('name')+'"]').val($(this).text())
+			console.log($(this).attr('name'));
+		});
+		$('#edit-branch').modal('open');
+	}
+	else{ alert("Select item branch"); }
+});
+
+
+
 // FOR EDITTING
 $(".edit-category form").submit(function(e){
 	e.preventDefault();

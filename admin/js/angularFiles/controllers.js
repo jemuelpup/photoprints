@@ -35,6 +35,20 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	$scope.branches = [];
 	$scope.positionFields = {};
 	$scope.positions = [];
+	$scope.editBranchFields = {};
+
+	$scope.branchIndex = function(i,id){
+		$scope.editBranchFields = ($scope.branches)[i];
+		console.log($scope.editBranchFields);
+	}
+	$scope.editBranch = function(e){
+		// if(false)
+		dbOperations.processData("EditBranch",$scope.editBranchFields).then(function(res){
+			console.log(res);
+			getBranches();
+		});
+		// console.log("Dumaan dito");
+	}
 	$scope.newBranch = function(){
 		dbOperations.processData("AddBranch",$scope.branchFields).then(function(res){
 			getBranches();

@@ -216,56 +216,59 @@
 					<h2>Buisness management</h2>
 					<div class="row">
 						<div class="col s12">
-							<h3>Branch management</h3>
-							<div class="row">
-				      	<div class="col m6 s12">
-				      		<div class="branch">
-										<h4>Add Branch</h4>
-										<form action="#" ng-submit="newBranch()">
-											<div class="input-field col s12">
-												<input ng-model="branchFields.name" value="" type="text" class="validate" maxlength="50" required>
-												<label for="name">name</label>
-											</div>
-											<div class="input-field col s12">
-												<input ng-model="branchFields.address" value="" type="text" class="validate" maxlength="200">
-												<label for="address">address</label>
-											</div>
-											<div class="input-field col s12">
-												<input ng-model="branchFields.description" value="" type="text" class="validate" maxlength="200">
-												<label for="description">description</label>
-											</div>
-											<div class="input-field col s12">
-												<input ng-model="branchFields.branch_code" value="" type="text" class="validate" maxlength="10" required>
-												<label for="branch_code">branch_code</label>
-											</div>
-							        <button class="waves-effect waves-light btn" type="submit">Add</button>
-								      <a class="waves-effect waves-light btn">Clear</a>
-							      </form>
+							<div class="branch-list-table">
+								<h3>Branch management</h3>
+								<div class="row">
+					      	<div class="col m6 s12">
+					      		<div class="branch">
+											<h4>Add Branch</h4>
+											<form action="#" ng-submit="newBranch()">
+												<div class="input-field col s12">
+													<input ng-model="branchFields.name" value="" type="text" class="validate" maxlength="50" required>
+													<label for="name">name</label>
+												</div>
+												<div class="input-field col s12">
+													<input ng-model="branchFields.address" value="" type="text" class="validate" maxlength="200">
+													<label for="address">address</label>
+												</div>
+												<div class="input-field col s12">
+													<input ng-model="branchFields.description" value="" type="text" class="validate" maxlength="200">
+													<label for="description">description</label>
+												</div>
+												<div class="input-field col s12">
+													<input ng-model="branchFields.branch_code" value="" type="text" class="validate" maxlength="10" required>
+													<label for="branch_code">branch_code</label>
+												</div>
+								        <button class="waves-effect waves-light btn" type="submit">Add</button>
+									      <a class="waves-effect waves-light btn">Clear</a>
+								      </form>
+							      </div>
 						      </div>
-					      </div>
-					      <div class="col m6 s12">
-									<h4>Branch list</h4>
-									<div class="data-table-container">
-										<table>
-											<tbody>
-												<tr>
-													<th>name</th>
-													<th>address</th>
-													<th>description</th>
-													<th>branch_code</th>
-												</tr>
-												<tr ng-repeat="branch in branches" data-id="{{branch.id}}">
-													<td name="name">{{branch.name}}</td>
-													<td name="address">{{branch.address}}</td>
-													<td name="description">{{branch.description}}</td>
-													<td name="branch_code">{{branch.branch_code}}</td>
-												</tr>
-											</tbody>
-										</table>
+						      <div class="col m6 s12">
+						      	<?php getBranchListUpdateModal(); ?>
+										<h4>Branch list</h4>
+										<div class="data-table-container branch">
+											<table class="data-clickable">
+												<tbody>
+													<tr>
+														<th>name</th>
+														<th>address</th>
+														<th>description</th>
+														<th>branch_code</th>
+													</tr>
+													<tr ng-repeat="branch in branches" data-id="{{branch.id}}" ng-click="branchIndex($index,branch.id)">
+														<td name="name">{{branch.name}}</td>
+														<td name="address">{{branch.address}}</td>
+														<td name="description">{{branch.description}}</td>
+														<td name="branch_code">{{branch.branch_code}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<a class="waves-effect waves-light btn" id="edit-branch-trigger">Edit</a>
+							      <a class="waves-effect waves-light btn">Delete</a>
 									</div>
-									<a class="waves-effect waves-light btn">Edit</a>
-						      <a class="waves-effect waves-light btn">Delete</a>
-								</div>
+					      </div>
 				      </div>
 						</div>
 						<div class="col s12">
@@ -291,7 +294,7 @@
 					      <div class="col m6 s12">
 									<h4>Employee Position list</h4>
 									<div class="data-table-container">
-										<table>
+										<table class="data-clickable">
 											<tbody>
 												<tr>
 													<th>name</th>

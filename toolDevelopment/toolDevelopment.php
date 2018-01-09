@@ -24,10 +24,18 @@ $query = $_POST["createQuery"];
 $formattedQuery = formatStringForCodeGeneration($query);
 $jsonObject = json_decode(formatData($formattedQuery));
 
+
+// print_r($jsonObject);
+// echo "<br><br><br>".addFunctionCall("getFieldValue",createUpdateQueriesStoredProcedure($jsonObject));
+
+
+
+// if(0)
 echo "
 {	\"htmlForms\":\"".createHTMLForms($jsonObject)."\",
 	\"insertQuery\":\"".addFunctionCall("getFieldValue",createInsertQueries($jsonObject))."\",
 	\"updateQuery\":\"".addFunctionCall("getFieldValue",createUpdateQueries($jsonObject))."\",
+	\"updateQueryStoredProcedure\":\"".addFunctionCall("getFieldValue",createUpdateQueriesStoredProcedure($jsonObject))."\",
 	\"selectQuery\":\"".createSelectQueries($jsonObject)."\",
 	\"dataTable\":\"".createDynamicDataTable($jsonObject)."\",
 	\"viewDataTableFunc\":\"".createPHPselect($jsonObject)."\",
@@ -35,6 +43,9 @@ echo "
 }
 ";
 
+// $x = str_replace(">","&gt;",$x);
+// $x = str_replace("<","&lt;",$x);
+// echo $x;
 
 
 /*********************************************************************************************************
@@ -42,7 +53,7 @@ echo "
 * Output formatter here
 *********************************************************************************************************/
 function addFunctionCall($fc,$str){
-	return preg_replace('/\$(\w*)/', ("\\\".validateData(\$d->$1).\\\""), $str);
+	return preg_replace('/\$(\w*)/', ("validateData(\$d->$1)"), $str);
 }
 
 /********************************************************************************************************/
@@ -99,7 +110,7 @@ function createInsertQueries($jsonObject){
 		foreach($object->data as $key){
 			$fields .= $key->columnName.",";
 			if ($key->dataType == "str"||$key->dataType == "date") {	$values .= "'$".$key->columnName."',";	}
-			elseif("num") {	$values .= "$".$key->columnName.",";	};
+			elseif($key->dataType == "num" or $key->dataType == "dec") {	$values .= "$".$key->columnName.",";	};
 		}
 	}
 	$fields = "(".substr($fields, 0, -1).")";
@@ -116,13 +127,46 @@ function createUpdateQueries($jsonObject){
 		$tableName = $object->tableName;
 		foreach($object->data as $key){
 			if ($key->dataType == "str") {	$updateVal .= "$key->columnName = '$$key->columnName',";	}
-			elseif("num") {	$updateVal .= "$key->columnName = $$key->columnName,";	};
+			elseif($key->dataType == "num" or $key->dataType == "dec") {	$updateVal .= "$key->columnName = $$key->columnName,";	};
 		}
 	}
 	$updateVal = substr($updateVal, 0, -1);
 	$sql = "UPDATE $tableName SET $updateVal";
 	return "$sql";
 }
+
+
+function createUpdateQueriesStoredProcedure($jsonObject){
+	$tableName = "";
+	$updateVal = "";
+	$bindParameters = "";
+	$bindValues = "";
+	foreach($jsonObject as $object){
+		$tableName = $object->tableName;
+		foreach($object->data as $key){
+			// echo $key->dataType;
+			$updateVal .= "$key->columnName = ?,";
+			$bindValues .= ",$$key->columnName";
+			if ($key->dataType == "str" or $key->dataType == "date") {
+				$bindParameters .= "s";
+			}
+			elseif($key->dataType == "num") {
+				$bindParameters .= "i";
+			}
+			elseif($key->dataType == "dec") {
+				$bindParameters .= "d";
+			}
+		}
+	}
+	$updateVal = substr($updateVal, 0, -1);
+	$sql = "(UPDATE $tableName SET $updateVal);('$bindParameters'$bindValues);";
+	return "$sql";
+}
+
+ // $sql = $c->prepare("UPDATE item_tbl SET name = ? ,item_code = ? ,category_fk = ?,price = ? WHERE id = ?");
+// 	$sql->bind_param('ssidi',validateData($d->name),validateData($d->item_code),validateData($d->category_fk),validateData($d->price),validateData($d->id));
+// 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
+
 
 
 
@@ -138,7 +182,7 @@ function createHTMLForms($jsonObject){
 		$code = "";
 		foreach($object->data as $jsonData){
 			$inputType = "text";
-			if($jsonData->dataType=="num"){
+			if($jsonData->dataType=="num" or $jsonData->dataType=="dec"){
 				$inputType = "number";
 			}
 			// $code .= "<div class='input-field col s12'><input placeholder='' name='$jsonData->columnName' value='$jsonData->defaultVal' type='$inputType' class='validate' maxlength='$jsonData->length' $jsonData->attribute/><label for='$jsonData->columnName'>$jsonData->columnName</label></div>";
@@ -258,12 +302,17 @@ function formatData($formattedQuery){
 					strtolower($queryWord)==strtolower("TINYINT") or
 					strtolower($queryWord)==strtolower("MEDIUMINT") or
 					strtolower($queryWord)==strtolower("BIGINT") or
-					strtolower($queryWord)==strtolower("FLOAT") or
-					strtolower($queryWord)==strtolower("DOUBLE") or
-					strtolower($queryWord)==strtolower("BIT") or
-					strtolower($queryWord)==strtolower("DECIMAL")
+					strtolower($queryWord)==strtolower("BIT")
+					
 				){
 					$dataType = "num";
+				}
+				elseif(
+					strtolower($queryWord)==strtolower("FLOAT") or
+					strtolower($queryWord)==strtolower("DOUBLE") or
+					strtolower($queryWord)==strtolower("DECIMAL")
+				){
+					$dataType = "dec";
 				}
 				elseif(
 					strtolower($queryWord)==strtolower("time") or
@@ -363,7 +412,8 @@ function formatData($formattedQuery){
 function formatStringForCodeGeneration($query){
 	// echo preg_replace('/uel\d+/','asd',"jemuel123");
 	
-	$query = preg_replace('/decimal\(\d+,?\d\)/', 'int(11)' ,$query);
+	// $query = preg_replace('/decimal\(\d+,?\d\)/', 'int(11)' ,$query);
+	$query = preg_replace('/decimal\(\d+,?\d\)/', 'decimal(11)' ,$query);
 	$query = trim(preg_replace('/\s+/', ' ', $query));// trim removes space before and after the string
 	$query = str_replace('(', ' ( ', $query);
 	$query = str_replace(')', ' ) ', $query);
@@ -426,7 +476,7 @@ function createHTMLFormsTest($jsonObject){
 		foreach($object->data as $jsonData){
 			$inputType = "text";
 			$dummyValues = "hahhahah";
-			if($jsonData->dataType=="num"){
+			if($jsonData->dataType=="num" or $jsonData->dataType=="dec"){
 				$inputType = "number";
 				$dummyValues = "'0'";
 			}
