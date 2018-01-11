@@ -83,6 +83,10 @@ function getTotalSales($c,$date){
 	return $totalSales ? $totalSales : 0;
 }
 function getTransationsDataOn($c,$data){
+	/*
+		SELECT o.id, o.order_date, (SELECT name FROM employee_tbl WHERE id = o.cashier_fk) as cashier_name, o.cashier_fk, b.name as branch_name, o.branch_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operator_name, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.down_payment, o.received_date, o.notes FROM order_tbl o , branch_tbl b WHERE b.id = o.branch_fk AND o.received_date AND o.received_date BETWEEN '2017-12-20' AND '2018-01-20'
+	*/
+
 	$date = substr($data,0,10);
 	// $sql = "SELECT `id`, `cashier_fk`, `branch_fk`, `operator_fk`, `void_fk`, `total_amount`, `customer_name`, `payment`, `received_date` FROM `order_tbl` WHERE order_date LIKE '$date%'";
 

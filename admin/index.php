@@ -321,7 +321,15 @@
 					<div class="row">
 						<div class="col l4 m12 s12">
 							<h2>Sales</h2>
+
+							
+							<input type="date" ng-model="fromDate">
+							<input type="date" ng-model="topDate">
+
+
 							<input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker">
+
+
 							<form action="#">
 						    <ul>
 						    	<li ng-repeat="repFilter in reportFilters">
