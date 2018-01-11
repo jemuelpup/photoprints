@@ -90,6 +90,20 @@ $("#edit-branch-trigger").click(function(){
 	else{ alert("Select item branch"); }
 });
 
+$("#edit-position-trigger").click(function(){
+	console.log("gumagana position")
+	var activeRow = $(".position-list-table table tr.active");
+	itemId = activeRow.attr("data-id");
+	if(itemId){
+		$(activeRow.children("td")).each(function(e){
+			$('#edit-position input[name="'+$(this).attr('name')+'"]').val($(this).text())
+			console.log($(this).attr('name'));
+		});
+		$('#edit-position').modal('open');
+	}
+	else{ alert("Select item position"); }
+});
+
 
 
 // FOR EDITTING

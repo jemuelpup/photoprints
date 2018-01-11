@@ -48,6 +48,9 @@ switch($process){
 	case "EditBranch": {
 		updateBranch($conn,$data);
 	}break;
+	case "EditPosition": {
+		updatePosition($conn,$data);
+	}break;
 	case "RemoveEmployee":{
 		deleteEmployee($conn,$data);
 	}break;
@@ -127,11 +130,10 @@ function updateItem($c,$d){
 	$msg = ($sql->execute() === TRUE) ? "Adding new Category success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
-function updatePosition(){
-	$id = $_POST['id'];
-	$d = $_POST['data'];
-	$sql = " WHERE id = $id";
-	echo $sql;
+function updatePosition($c,$d){
+	$sql = $c->prepare("UPDATE position_tbl SET name = ?,description = ? WHERE id = ?");
+	$sql->bind_param('ssi',validateData($d->name),validateData($d->description),validateData($d->id));
+	$msg = ($sql->execute() === TRUE) ? "Updating position success" : "Error: " . $sql . "<br>" . $c->error;
 }
 
 

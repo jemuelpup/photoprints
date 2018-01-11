@@ -292,22 +292,23 @@
 						      </div>
 					      </div>
 					      <div class="col m6 s12">
+					      	<?php getPositionUpdateModal(); ?>
 									<h4>Employee Position list</h4>
-									<div class="data-table-container">
+									<div class="data-table-container position-list-table">
 										<table class="data-clickable">
 											<tbody>
 												<tr>
 													<th>name</th>
 													<th>description</th>
 												</tr>
-												<tr ng-repeat="position in positions" data-id="{{x.id}}">
+												<tr ng-repeat="position in positions" data-id="{{position.id}}"  ng-click="positionIndex($index,position.id)">
 													<td name="name">{{position.name}}</td>
 													<td name="description">{{position.description}}</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-									<a class="waves-effect waves-light btn">Edit</a>
+									<a class="waves-effect waves-light btn" id="edit-position-trigger">Edit</a>
 						      <a class="waves-effect waves-light btn">Delete</a>
 								</div>
 				      </div>

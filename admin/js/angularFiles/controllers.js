@@ -41,13 +41,21 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 		$scope.editBranchFields = ($scope.branches)[i];
 		console.log($scope.editBranchFields);
 	}
+	$scope.positionIndex = function(i,id){
+		$scope.editPositionFields = ($scope.positions)[i];
+		console.log($scope.positionFields);
+	}
 	$scope.editBranch = function(e){
-		// if(false)
 		dbOperations.processData("EditBranch",$scope.editBranchFields).then(function(res){
 			console.log(res);
 			getBranches();
 		});
-		// console.log("Dumaan dito");
+	}
+	$scope.editPosition = function(){
+		dbOperations.processData("EditPosition",$scope.editPositionFields).then(function(res){
+			console.log(res);
+			getPositions();
+		});
 	}
 	$scope.newBranch = function(){
 		dbOperations.processData("AddBranch",$scope.branchFields).then(function(res){
@@ -66,6 +74,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	}
 	function getPositions(){
 		dbOperations.views("getPositions","").then(function(res){
+			console.log(res,"position");
 			$scope.positions = res;
 		});
 	}
