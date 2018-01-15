@@ -3,7 +3,9 @@
   overflow: scroll;
   margin-bottom: 10px;
 }
-
+.refreshOrders{
+  cursor: pointer;
+}
 
 @media print {
   body * {

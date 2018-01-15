@@ -24,7 +24,7 @@
 			<div class="col l8 m7 s12">
 				<div class="orders">
 					<div class="data-header">
-						<h4 class="left w50p">Orders</h4>
+						<h4 class="refreshOrders left w50p" ng-click="viewUnclaimedOrders()">Orders <i class="material-icons">refresh</i></h4>
 						<div class="headerSearch right w50p">
 							<input placeholder="Search" type="text" class="validate" ng-model="orderFilter" ng-focus="focus=true" ng-blur="focus=false">
 						</div>

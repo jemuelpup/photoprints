@@ -21,10 +21,12 @@ operations.controller('cashier',function($scope,$http,$interval,dbOperations,sys
 	// var receiptPrinted = false; // for printing the receipt
 	function getUnclaimedOrders(){
 		dbOperations.unclaimedOrders("getUnclaimedOrders","").then(function(res) {
-			console.log("dumaan dito");
-			console.log(res);
+			// console.log(res);
 	 		$scope.orders = res;
 	 	});
+	}
+	$scope.viewUnclaimedOrders = function(){
+		getUnclaimedOrders();
 	}
 	$scope.viewItemsOrdered = function(order,orderLine){
 		$scope.order = order;
