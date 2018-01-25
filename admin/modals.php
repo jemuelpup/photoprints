@@ -69,11 +69,11 @@
 				<div class="modal-content">
 				    <h4>Add access</h4>
 				    <div class="input-field col s12">
-                <input ng-model="employeeAccessFields.username" type="text" class="validate" maxlength="50" required="">
+                <input ng-model="employeeAccessFields.username" type="text" class="validate" maxlength="50" required>
                 <label for="username">username</label>
             </div>
             <div class="input-field col s12">
-                <input ng-model="employeeAccessFields.password" type="text" class="validate" maxlength="50" required="">
+                <input ng-model="employeeAccessFields.password" type="text" class="validate" maxlength="50" required>
                 <label for="password">password</label>
             </div>
 				</div>
@@ -91,7 +91,7 @@
           <div class="modal-content">
             <h4>Edit category</h4>
             <div class="input-field col s12">
-              <input placeholder="" ng-model="editCategoryFields.name" name="name" type="text" class="validate" maxlength="50" required="">
+              <input placeholder="" ng-model="editCategoryFields.name" name="name" type="text" class="validate" maxlength="50" required>
               <label for="name">name</label>
             </div>
             <div class="input-field col s12">
@@ -167,7 +167,7 @@
           <div class="modal-content">
             <h4>Edit Item</h4>
             <div class="input-field col s12">
-              <input placeholder="" ng-model="editItemFields.name" type="text" class="validate" maxlength="50" required="">
+              <input placeholder="" ng-model="editItemFields.name" type="text" class="validate" maxlength="50" required>
               <label for="name" class="active">name</label>
             </div>
             <div class="input-field col s12">

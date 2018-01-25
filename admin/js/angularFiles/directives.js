@@ -4,7 +4,7 @@ app.directive("employeeModal",function(){
 			<div id="add-employee" class="modal">
 			    <div class="modal-content">
 			        <div class="input-field col s12">
-			            <input placeholder="" name="name" value="" type="text" class="validate" maxlength="100" required="">
+			            <input placeholder="" name="name" value="" type="text" class="validate" maxlength="100" required>
 			            <label for="name">name</label>
 			        </div>
 			        <div class="input-field col s12">
@@ -28,7 +28,7 @@ app.directive("employeeModal",function(){
 			            <label for="branch_fk">branch_fk</label>
 			        </div>
 			        <div class="input-field col s12">
-			            <input placeholder="" name="salary" value="" type="number" class="validate" maxlength="11" required="">
+			            <input placeholder="" name="salary" value="" type="number" class="validate" maxlength="11" required>
 			            <label for="salary">salary</label>
 			        </div>
 			        <div class="input-field col s12">
@@ -36,7 +36,7 @@ app.directive("employeeModal",function(){
 			            <label for="birth_day">birth_day</label>
 			        </div>
 			        <div class="input-field col s12">
-			            <input placeholder="" name="gender" value="1" type="number" class="validate" maxlength="1" required="">
+			            <input placeholder="" name="gender" value="1" type="number" class="validate" maxlength="1" required>
 			            <label for="gender">gender</label>
 			        </div>
 			    </div>

@@ -39,21 +39,21 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 
 	$scope.branchIndex = function(i,id){
 		$scope.editBranchFields = ($scope.branches)[i];
-		console.log($scope.editBranchFields);
+		// console.log($scope.editBranchFields);
 	}
 	$scope.positionIndex = function(i,id){
 		$scope.editPositionFields = ($scope.positions)[i];
-		console.log($scope.positionFields);
+		// console.log($scope.positionFields);
 	}
 	$scope.editBranch = function(e){
 		dbOperations.processData("EditBranch",$scope.editBranchFields).then(function(res){
-			console.log(res);
+			// console.log(res);
 			getBranches();
 		});
 	}
 	$scope.editPosition = function(){
 		dbOperations.processData("EditPosition",$scope.editPositionFields).then(function(res){
-			console.log(res);
+			// console.log(res);
 			getPositions();
 		});
 	}
@@ -74,7 +74,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 	}
 	function getPositions(){
 		dbOperations.views("getPositions","").then(function(res){
-			console.log(res,"position");
+			// console.log(res,"position");
 			$scope.positions = res;
 		});
 	}
@@ -92,9 +92,9 @@ app.controller("productManagement",function($scope,$http,dbOperations){
 
 	$scope.deleteCategory = function(){
 		dbOperations.processData("RemoveCategory",$scope.editCategoryFields).then(function(res){
-			console.log("dumaan dito");
+			// console.log("dumaan dito");
 			// console.log($scope.editCategoryFields);
-			console.log(res);
+			// console.log(res);
 			// alert("Category deleted")
 			getCategories();});
 	}
@@ -325,28 +325,39 @@ app.controller("reports",function($scope,$http,dbOperations,$interval){
 		{"name":"Monthly","id":"d3","val":3},
 		{"name":"Yearly","id":"d4","val":4},
 	];
-	getTotalSalesOn($scope.selectedDate);
-	getTransationsOn($scope.selectedDate);
+	$scope.fromdateInput = new Date();
+	$scope.todateInput = new Date(($scope.fromdateInput).getTime() + (24 * 60 * 60 * 1000));
+
+	// .from = new Date();
+	// $scope.dateInput.to = new Date();
 	
 	console.log($scope.selectedDate);
-	function getTotalSalesOn(selectedDate){
-		dbOperations.getData('getTotalSales',selectedDate).then(function(res) {
+	function getTotalSalesOn(){
+		dbOperations.getData('getTotalSales',{
+			"from":$scope.fromdateInput,
+			"to":$scope.todateInput
+		}).then(function(res) {
 			$scope.totalSales = res.data;
 			// console.log(res);
 		});
 	}
-	function getTransationsOn(selectedDate){
-		dbOperations.getData('getTransationsData',selectedDate).then(function(res) {
+	function getTransationsOn(){
+		dbOperations.getData('getTransationsData',{
+			"from":$scope.fromdateInput,
+			"to":$scope.todateInput
+		}).then(function(res) {
 			$scope.transactions = res.data;
-			console.log(res);
+			// console.log(res);
 		});
 	}
 	$scope.getTransactionNotes = function(i){
 		$scope.transactionNotes = $scope.transactions[i].notes;
 	}
 	$scope.getTransactionData = function(){
-		getTotalSalesOn($scope.selectedDate);
-		getTransationsOn($scope.selectedDate);
+		getTotalSalesOn();
+		getTransationsOn();
 	}
+	getTotalSalesOn();
+	getTransationsOn();
 }
 );

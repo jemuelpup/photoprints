@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Page Title</title>
+		<title>Photoprints Admin</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="/plugin/materialize-css/dist/css/materialize.min.css">
@@ -53,22 +53,22 @@
 						<div class="col s12">
 							<?php getCategoryUpdateModal(); ?>
 							<div class="row">
-									<div class="col m6 s12">
-										<div class="category">
-											<h3>Category</h3>
-											<form action="#" ng-submit="addNewCategory()">
-												<div class="input-field col s12">
-												    <input ng-model="categoryFields.name" value="adasfdadsfasdf" type="text" class="validate" maxlength="50" required="">
-												    <label for="name">name</label>
-												</div>
-												<div class="input-field col s12">
-												    <input ng-model="categoryFields.category_code" value="sdfsdfsdf" type="text" class="validate" maxlength="10">
-												    <label for="category_code">category_code</label>
-												</div>
-												<div class="input-field col s12">
-												    <input ng-model="categoryFields.description" value="sdfsdfsdf" type="text" class="validate" maxlength="500">
-												    <label for="description">description</label>
-												</div>
+								<div class="col m6 s12">
+									<div class="category">
+										<h3>Category</h3>
+										<form action="#" ng-submit="addNewCategory()">
+											<div class="input-field col s12">
+											    <input ng-model="categoryFields.name" value="" type="text" class="validate" maxlength="50" required>
+											    <label for="name">name</label>
+											</div>
+											<div class="input-field col s12">
+											    <input ng-model="categoryFields.category_code" value="" type="text" class="validate" maxlength="10">
+											    <label for="category_code">category_code</label>
+											</div>
+											<div class="input-field col s12">
+											    <input ng-model="categoryFields.description" value="" type="text" class="validate" maxlength="500">
+											    <label for="description">description</label>
+											</div>
 								        <button class="waves-effect waves-light btn" type="submit">Add</button>
 								        <a class="waves-effect waves-light btn">Clear</a>
 							        </form>
@@ -103,31 +103,31 @@
 							<div class="row">
 								<div class="col m6 s12">
 									<div class="item">
-					        	<h3>Item</h3>
-					        	<form action="#" ng-submit="addNewItem()">
-						        	<div class="input-field col s12">
-											    <input ng-model="itemFields.name" value="" type="text" class="validate" maxlength="50" required="">
-											    <label for="name">name</label>
-											</div>
-											<div class="input-field col s12">
-											    <input ng-model="itemFields.code" value="" type="text" class="validate" maxlength="10">
-											    <label for="item_code">item_code</label>
-											</div>
-											<div class="input-field col s12">
-													<select name="itemCategory" id="category" ng-model="itemFields.category">
-														<option value="" disabled selected>Choose your option</option>
-														<option value="{{c.id}}" ng-repeat="c in categories">{{c.name}}</option>
-													</select>
-											    <label>Category</label>
-											</div>
-											<div class="input-field col s12">
-											    <input ng-model="itemFields.price" value="" type="number" class="validate" maxlength="11">
-											    <label for="price">price</label>
-											</div>
-							        <button class="waves-effect waves-light btn" type="submit">Add</button>
-						        </form>
-						        <a class="waves-effect waves-light btn">Clear</a>
-					        </div>
+							        	<h3>Item</h3>
+							        	<form action="#" ng-submit="addNewItem()">
+								        	<div class="input-field col s12">
+													    <input ng-model="itemFields.name" value="" type="text" class="validate" maxlength="50" required>
+													    <label for="name">name</label>
+													</div>
+													<div class="input-field col s12">
+													    <input ng-model="itemFields.code" value="" type="text" class="validate" maxlength="10">
+													    <label for="item_code">item_code</label>
+													</div>
+													<div class="input-field col s12">
+															<select name="itemCategory" id="category" ng-model="itemFields.category">
+																<option value="" disabled selected>Choose your option</option>
+																<option value="{{c.id}}" ng-repeat="c in categories">{{c.name}}</option>
+															</select>
+													    <label>Category</label>
+													</div>
+													<div class="input-field col s12">
+													    <input ng-model="itemFields.price" value="" type="number" class="validate" maxlength="11">
+													    <label for="price">price</label>
+													</div>
+									        <button class="waves-effect waves-light btn" type="submit">Add</button>
+								        </form>
+								        <a class="waves-effect waves-light btn">Clear</a>
+							        </div>
 								</div>
 								<div class="col m6 s12">
 									<?php getItemUpdateModal(); ?>
@@ -143,7 +143,7 @@
 											            <th>date_modified</th>
 											            <th>price</th>
 											        </tr>
-											        <tr ng-repeat="i in items" data-id="{{x.id}}" ng-click="itemIndex($index,x.id)">
+											        <tr ng-repeat="i in items" data-id="{{i.id}}" ng-click="itemIndex($index,i.id)">
 											            <td>{{i.name}}</td>
 											            <td>{{i.item_code}}</td>
 											            <td>{{i.category_fk}}</td>
@@ -154,7 +154,7 @@
 											</table>
 										</div>
 										<a class="waves-effect waves-light btn" ng-click="editItemsTrigger()">Edit</a>
-						        <a class="waves-effect waves-light btn" ng-click="deleteItem()">Delete</a>
+						        		<a class="waves-effect waves-light btn" ng-click="deleteItem()">Delete</a>
 									</div>
 								</div>
 							</div>
@@ -279,7 +279,7 @@
 					      		<form action="#" ng-submit="newPosition()">
 											<h4>Add Employee Position</h4>
 											<div class="input-field col s12">
-											    <input ng-model="positionFields.name" value="" type="text" class="validate" maxlength="50" required="">
+											    <input ng-model="positionFields.name" value="" type="text" class="validate" maxlength="50" required>
 											    <label for="name">name</label>
 											</div>
 											<div class="input-field col s12">
@@ -322,22 +322,25 @@
 						<div class="col l4 m12 s12">
 							<h2>Sales</h2>
 
-							
-							<input type="date" ng-model="fromDate">
-							<input type="date" ng-model="topDate">
+							<h3>Get transactions on</h3>
+							<input type="date" ng-model="fromdateInput" class="datepicker">
+							<input type="date" ng-model="todateInput" class="datepicker">
+							<button class="waves-effect waves-light btn" ng-click="getTransactionData()">VIEW</button>
+
+							<!-- <input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker"> -->
 
 
-							<input type="date" ng-model="selectedDate" ng-change="getTransactionData()" class="datepicker">
-
-
-							<form action="#">
+					<!-- 		<form action="#">
 						    <ul>
 						    	<li ng-repeat="repFilter in reportFilters">
 						    		<input name="reportFilter1" class="filled-in" type="radio" id={{repFilter.id}} />
 						      	<label for={{repFilter.id}}>{{repFilter.name}}</label>
 						    	</li>
 						    </ul>
-							</form>
+							</form> -->
+
+
+
 							<p>Total sales : {{totalSales}}</p>
 						</div>
 						<div class="col l8 m12 s12">

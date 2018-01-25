@@ -12,14 +12,20 @@ var reports = function($scope,$http,dbOperations,$interval){
 	getTotalSalesOn($scope.selectedDate);
 	getTransationsOn($scope.selectedDate);
 	
-	console.log($scope.selectedDate);
+
 	function getTotalSalesOn(selectedDate){
-		dbOperations.getData('getTotalSales',selectedDate).then(function(res) {
+		dbOperations.getData('getTotalSales',{
+			"from":new Date(),
+			"to":new Date((new Date()).getTime() + (24 * 60 * 60 * 1000))
+		}).then(function(res) {
 			$scope.totalSales = res.data;
 		});
 	}
 	function getTransationsOn(selectedDate){
-		dbOperations.getData('getTransationsData',selectedDate).then(function(res) {
+		dbOperations.getData('getTransationsData',{
+			"from":new Date(),
+			"to":new Date((new Date()).getTime() + (24 * 60 * 60 * 1000))
+		}).then(function(res) {
 			$scope.transactions = res.data;
 			// console.log(res);
 		});
