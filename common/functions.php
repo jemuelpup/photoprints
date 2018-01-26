@@ -52,6 +52,7 @@ function insertOrder($c,$d){
 		header("Content-type:application/json");
 		echo json_encode(["orderID" => $order_id ]);
 	}
+	$sql->close();
 }
 
 function getSessionId(){
