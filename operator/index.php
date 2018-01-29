@@ -4,7 +4,7 @@
 	<title>Operator</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/plugin/materialize-css/dist/css/materialize.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="/plugin/materialize/css/materialFont.css">
 	<link rel="stylesheet" href="/common/css/common.css">
 	<link rel="stylesheet" href="/operator/css/operator.css">
 	<script src="/plugin/angular/angular.min.js"></script>
