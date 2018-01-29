@@ -80,20 +80,20 @@ function getTotalSales($c,$data){
 	// $from = substr($data->from,0,10);
 	// $to = substr($data->to,0,10);
 	// return "$from, $to";
-	$sql = "SELECT SUM(total_amount) as totalSales FROM `order_tbl` WHERE received_date BETWEEN '".substr($data->from,0,10)."' AND '".substr($data->to,0,10)."' AND received_date IS NOT NULL";
+	$sql = "SELECT SUM(total_amount) as totalSales FROM `order_tbl` WHERE void_fk = 0 AND received_date BETWEEN '".substr($data->from,0,10)."' AND '".substr($data->to,0,10)."' AND received_date IS NOT NULL";
 	// echo "$sql";
 	$totalSales = selectQuery($c,$sql)[0]["totalSales"];
 	return $totalSales ? $totalSales : 0;
 }
 function getTransationsDataOn($c,$data){
 
-	$sql = "SELECT o.id, o.order_date, (SELECT name FROM employee_tbl WHERE id = o.cashier_fk) as cashier_name, o.cashier_fk, b.name as branch_name, o.branch_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operator_name, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.down_payment, o.received_date, o.notes FROM order_tbl o , branch_tbl b WHERE b.id = o.branch_fk AND o.received_date AND o.received_date BETWEEN '".substr($data->from,0,10)."' AND '".substr($data->to,0,10)."'";
+	$sql = "SELECT o.id, o.order_date, (SELECT name FROM employee_tbl WHERE id = o.cashier_fk) as cashier_name, o.cashier_fk, b.name as branch_name, o.branch_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operator_name, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.down_payment, o.received_date, o.notes FROM order_tbl o , branch_tbl b WHERE o.void_fk = 0 AND b.id = o.branch_fk AND o.received_date AND o.received_date BETWEEN '".substr($data->from,0,10)."' AND '".substr($data->to,0,10)."'";
 	
 
 	// $date = substr($data,0,10);
 	// $sql = "SELECT `id`, `cashier_fk`, `branch_fk`, `operator_fk`, `void_fk`, `total_amount`, `customer_name`, `payment`, `received_date` FROM `order_tbl` WHERE order_date LIKE '$date%'";
 
-	// $sql = "SELECT o.id, o.order_date, (SELECT name FROM employee_tbl WHERE id = o.cashier_fk) as cashier_name, o.cashier_fk, b.name as branch_name, o.branch_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operator_name, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.down_payment, o.received_date, o.notes FROM order_tbl o , branch_tbl b WHERE b.id = o.branch_fk and o.received_date LIKE '$date%'";
+	// $sql = "SELECT o.id, o.order_date, (SELECT name FROM employee_tbl WHERE id = o.cashier_fk) as cashier_name, o.cashier_fk, b.name as branch_name, o.branch_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operator_name, o.operator_fk, o.void_fk, o.total_amount, o.customer_name, o.payment, o.down_payment, o.received_date, o.notes FROM order_tbl o , branch_tbl b WHERE o.void_fk = 0 AND b.id = o.branch_fk and o.received_date LIKE '$date%'";
 	// echo $sql;
 	// echo $data;
 	// echo (substr($data->from,"yyyy-mm-dd"));

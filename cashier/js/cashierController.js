@@ -25,6 +25,19 @@ operations.controller('cashier',function($scope,$http,$interval,dbOperations,sys
 	 		$scope.orders = res;
 	 	});
 	}
+	$scope.setOrderVoid = function(id){
+		if((typeof ($scope.voidReason) !== "undefined" || $scope.voidReason!=="") && typeof (id) !== "undefined"){
+			dbOperations.processData("VoidOrder",{"id":id,"reason":$scope.voidReason}).then(function(res) {
+				console.log(res);
+		 		// $scope.orders = res;
+		 		getUnclaimedOrders();
+		 		$scope.voidReason = "";
+		 	});
+		}
+		else{
+			alert("Please select order and enter the reason for voiding order.");
+		}
+	}
 	$scope.viewUnclaimedOrders = function(){
 		getUnclaimedOrders();
 	}

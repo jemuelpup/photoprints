@@ -46,11 +46,11 @@ function selectCategory($c){
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 function selectCategoriesAndItems($c){
-	$sql = "SELECT i.id, i.name, i.item_code, i.category_fk, i.price, c.name as category_name FROM item_tbl i, category_tbl c WHERE i.active = 1 and i.category_fk = c.id ORDER BY category_fk,id";
+	$sql = "SELECT i.id, i.name, i.item_code, i.category_fk, i.price, c.name as category_name FROM item_tbl i, category_tbl c WHERE i.active = 1 AND i.category_fk = c.id ORDER BY category_fk,id";
 	print_r(hasRows($c,$sql) ? json_encode(selectQuery($c,$sql)) : "");
 }
 function selectUnclaimedOrders($c){
-	$sql = "SELECT o.id, o.order_date, o.cashier_fk, o.branch_fk, o.operator_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operatorName, o.void_fk, o.total_amount, o.customer_name, o.payment, o.received_date, o.down_payment, o.notes, ol.order_id_fk, ol.item_id_fk, ol.name, ol.code, ol.quantity, ol.price, ol.discount FROM order_line_tbl ol, order_tbl o WHERE ol.order_id_fk = o.id and o.received_date IS NULL";
+	$sql = "SELECT o.id, o.order_date, o.cashier_fk, o.branch_fk, o.operator_fk, (SELECT name FROM employee_tbl WHERE id = o.operator_fk) as operatorName, o.void_fk, o.total_amount, o.customer_name, o.payment, o.received_date, o.down_payment, o.notes, ol.order_id_fk, ol.item_id_fk, ol.name, ol.code, ol.quantity, ol.price, ol.discount FROM order_line_tbl ol, order_tbl o WHERE o.void_fk = 0 AND ol.order_id_fk = o.id AND o.received_date IS NULL";
 
 
 	$orders = array();

@@ -6,6 +6,9 @@
 .refreshOrders {
   cursor: pointer; }
 
+.mb10 {
+  margin-bottom: 10px; }
+
 @media print {
   body * {
     visibility: hidden; }

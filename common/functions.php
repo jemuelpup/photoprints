@@ -21,6 +21,9 @@ switch($process){
 	case "getAccessPosition":{
 		getAccessPosition($conn,$data);
 	}break;
+	case "VoidOrder":{
+		voidOrder($conn,$data);
+	}break;
 	case "Logout":{
 		session_destroy(); // php code
 	}break;
@@ -28,6 +31,15 @@ switch($process){
 
 
 //sql injection safe
+
+function voidOrder($c,$d){
+	$sql = $c->prepare("UPDATE order_tbl SET void_fk = ?,void_reason=?, cashier_fk = ? WHERE id = ?");
+	$sql->bind_param('isii', $_SESSION["employeeID"], validateData($d->reason), $_SESSION["employeeID"], validateData($d->id));
+	$msg = ($sql->execute() === TRUE) ? "Voiding order paid success" : "Error: " . $sql . "<br>" . $c->error;
+	$sql->close();
+	echo $msg;
+}
+
 function updateOrder($c,$d){
 	$sql = $c->prepare("UPDATE order_tbl SET cashier_fk = ? ,payment = ?,received_date = NOW() WHERE id = ?");
 	$sql->bind_param('idi', $_SESSION["employeeID"], validateData($d->cash), validateData($d->id));

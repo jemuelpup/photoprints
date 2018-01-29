@@ -83,8 +83,18 @@
 					<p>Change: Php. <span>{{ cash + change}}</span></p>
 					<p>------------------------</p>
 				</div>
-				<button class="btn waves-effect waves-light right" name="action" ng-click="setOrderPaid(order.id);">Paid<i class="material-icons right">payment</i></button>
-				<a href="reports.html" class="btn waves-effect waves-light left">Report<i class="material-icons right">book</i></a>
+				<div class="row">
+					<div class="col s12 mb10">
+						<button class="btn waves-effect waves-light" name="action" ng-click="setOrderPaid(order.id);">Paid<i class="material-icons right">payment</i></button>
+					</div>
+					<div class="col s12">
+						<a href="reports.html" class="btn waves-effect waves-light">Report<i class="material-icons right">book</i></a>
+					</div>
+				</div>
+				<div class="row">
+					<input type="text" placeholder="Void reason" ng-model="voidReason">
+					<button class="btn waves-effect waves-light right" name="action" ng-click="setOrderVoid(order.id);">Void<i class="material-icons right">cancel</i></button>
+				</div>
 			</div>
 		</div>
 		
