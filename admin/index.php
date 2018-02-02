@@ -372,6 +372,30 @@
 									</tr>
 								</table>
 							</div>
+							<textarea rows="4" cols="50">{{voidReason}}</textarea>
+							<h3>Void Transaction details</h3>
+							<div class="data-table-container">
+								<table class="table-data">
+									<tr>
+										<th>branch</th>
+										<th>Cashier</th>
+										<th>Operator</th>
+										<th>Customer</th>
+										<th>DP</th>
+										<th>payment</th>
+										<th>amount</th>
+									</tr>
+									<tr ng-repeat="void in voidTransactions" ng-click="getVoidReason($index)">
+										<td>{{void.branch_name}}</td>
+										<td>{{void.cashier_name}}</td>
+										<td>{{void.operator_name}}</td>
+										<td>{{void.customer_name}}</td>
+										<td>{{void.down_payment}}</td>
+										<td>{{void.payment}}</td>
+										<td>{{void.total_amount}}</td>
+									</tr>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

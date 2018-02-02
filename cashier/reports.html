@@ -41,6 +41,29 @@
 							</tr>
 						</table>
 						<p><b>Total Sales: </b>{{totalSales}}</p>
+						<h2>Void Transactions</h2>
+							<div class="data-table-container">
+								<table class="table-data">
+									<tr>
+										<th>branch</th>
+										<th>Cashier</th>
+										<th>Operator</th>
+										<th>Customer</th>
+										<th>DP</th>
+										<th>payment</th>
+										<th>amount</th>
+									</tr>
+									<tr ng-repeat="void in voidTransactions" ng-class="transaction.notes.length>0 ? 'hasOrderNotes':''">
+										<td>{{void.branch_name}}</td>
+										<td>{{void.cashier_name}}</td>
+										<td>{{void.operator_name}}</td>
+										<td>{{void.customer_name}}</td>
+										<td>{{void.down_payment}}</td>
+										<td>{{void.payment}}</td>
+										<td>{{void.total_amount}}</td>
+									</tr>
+								</table>
+							</div>
 					</div>
 				</div>
 			</div>

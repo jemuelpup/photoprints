@@ -37,5 +37,21 @@ var reports = function($scope,$http,dbOperations,$interval){
 		getTotalSalesOn($scope.selectedDate);
 		getTransationsOn($scope.selectedDate);
 	}
+	$scope.voidTransactions = [];
+
+	var fromdateInput = new Date();
+	var todateInput = new Date((fromdateInput).getTime() + (24 * 60 * 60 * 1000));
+
+	function getVoidTransactionsOn(){
+		console.log("nasa void transactions");
+		dbOperations.getData('getVoidTransactionsOn',{
+			"from":fromdateInput,
+			"to":todateInput
+		}).then(function(res) {
+			$scope.voidTransactions = res.data;
+			// console.log(res);
+		});
+	}
+	getVoidTransactionsOn();
 }
 
