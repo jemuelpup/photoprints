@@ -5,6 +5,7 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 
 	var newOrderQueued = false;
 	var orderPrinted = false;
+	$scope.onHardPrintNoDisplay = true;
 	/* Testing sessions */
 	if(loginEnabled){
 		systemOperations.getAccessID().then(function(res){
@@ -90,6 +91,7 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 			$scope.showQueuedMessage = false;
 			orderPrinted = false;
 			$scope.orderNotes = "";
+			$scope.onHardPrintNoDisplay = true;
 		}
 		else{
 			alert("Print the order slip first");
@@ -126,7 +128,9 @@ operations.controller('operator',function($scope,$http,$timeout,dbOperations,sys
 						notes:$scope.orderNotes
 					}
 					$scope.showQueuedMessage = true;
-					console.log($scope.showQueuedMessage, "ito yun");
+
+					$scope.onHardPrintNoDisplay = false;
+					// console.log($scope.showQueuedMessage, "ito yun");
 
 					$timeout(function(){
 						$scope.showQueuedMessage = false;

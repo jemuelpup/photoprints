@@ -56,7 +56,7 @@
 			<div class="col l5 ms12">
 				<div class="row">
 					<div class="col s12">
-						<div id="section-to-print">
+						<div id="section-to-print" class="" ng-class="onHardPrintNoDisplay===true ? 'noDisplayOnHardPrint':''">
 							<div class="ordered-items z-depth-2">
 								<div class="queuedDataMsg hideOnPrint" ng-class="showQueuedMessage===true ? 'active' : ''">
 									<p class="center-align">New orders queued. Print the order slip.</p>
@@ -85,8 +85,8 @@
 											<th>Total</th>
 										</tr>
 										<tr ng-repeat="order in orders" class="show-on-hover" ng-init="active = false" ng-class="{'noHover':disableEditting}">
-											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}
-											</td>
+											<td><button class="edit-btn" ng-click="active=true">Edit Price</button>{{order.itemName}}</td>
+											<!-- <td>{{order.itemName}}</td> -->
 											<td>{{order.price}}
 												<div class="customPrice" ng-class="{'active': active === true}">
 													<input ng-model="cPrice" type="number" ng-keyup = "customPrice($index,cPrice)">
@@ -94,12 +94,12 @@
 											</td>
 											<td> x {{order.quantity}}</td>
 											<td>{{order.discount}}%</td>
-											<td>{{order.itemTotalPrice}} <button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
+											<td><span class="b">{{order.itemTotalPrice}}</span><button class="close-btn" ng-click="removeItem(orders.indexOf(order),order.itemTotalPrice);">x</button></td>
 										</tr>
 									</table>
 
-									<p>Total: Php. {{totalPrice}}</p>
-									<p>Down payment: Php. {{downPayment ? downPayment : 0}}</p>
+									<p>Total: Php. <span class="b">{{totalPrice}}</span></p>
+									<p>Down payment: Php. <span class="b">{{downPayment ? downPayment : 0}}</span></p>
 									<p>------------------------</p>
 									<textarea class="notes" rows="4" ng-model="orderNotes"></textarea>
 									<!-- create table here and remove orders

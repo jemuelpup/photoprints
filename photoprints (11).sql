@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2018 at 09:16 AM
+-- Generation Time: Feb 02, 2018 at 03:34 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -253,7 +253,17 @@ INSERT INTO `order_line_tbl` (`order_id_fk`, `item_id_fk`, `name`, `code`, `quan
 (34, 5, 'Package B', 'ID04P02', 1, '150.00', '0.00', '0.00'),
 (35, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
 (36, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
-(37, 2, 'Name tag', 'ID02', 1, '50.00', '0.00', '0.00');
+(37, 2, 'Name tag', 'ID02', 1, '50.00', '0.00', '0.00'),
+(38, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
+(39, 1, 'Digital coat', 'ID01', 1, '100.00', '0.00', '0.00'),
+(39, 16, 'Print', 'P001', 50, '1.00', '0.00', '0.00'),
+(40, 7, 'Package D', 'ID04P04', 1, '160.00', '0.00', '0.00'),
+(41, 6, 'Package C', 'ID04P03', 1, '140.00', '0.00', '0.00'),
+(42, 6, 'Package C', 'ID04P03', 1, '140.00', '0.00', '0.00'),
+(43, 6, 'Package C', 'ID04P03', 1, '140.00', '0.00', '0.00'),
+(43, 5, 'Package B', 'ID04P02', 1, '150.00', '0.00', '0.00'),
+(43, 4, 'Package A', 'ID04P01', 1, '100.00', '0.00', '0.00'),
+(44, 5, 'Package B', 'ID04P02', 1, '150.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -275,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `order_tbl` (
   `down_payment` decimal(11,2) NOT NULL DEFAULT '0.00',
   `received_date` datetime DEFAULT NULL,
   `void_reason` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_tbl`
@@ -318,7 +328,14 @@ INSERT INTO `order_tbl` (`id`, `order_date`, `cashier_fk`, `branch_fk`, `operato
 (34, '2018-01-26 07:27:03', 2, 1, 2, 0, '150.00', '123', '150.00', '', '0.00', '2018-01-26 15:27:28', NULL),
 (35, '2018-01-29 07:17:35', 2, 1, 2, 0, '100.00', 'a', '100.00', '', '0.00', '2018-01-29 15:17:54', NULL),
 (36, '2018-01-29 07:37:25', 2, 1, 2, 2, '100.00', '', NULL, '', '0.00', NULL, 'NAGKAMALI'),
-(37, '2018-01-29 08:02:02', 2, 1, 2, 2, '50.00', '', NULL, '', '0.00', NULL, 'NAGKAMALI DIN');
+(37, '2018-01-29 08:02:02', 2, 1, 2, 2, '50.00', '', NULL, '', '0.00', NULL, 'NAGKAMALI DIN'),
+(38, '2018-02-02 00:20:51', 2, 1, 2, 2, '100.00', 'adfa', NULL, '', '0.00', NULL, 'nagkamali ng click'),
+(39, '2018-02-02 02:01:23', 2, 1, 1, 0, '150.00', 'jemuel', '150.00', '', '0.00', '2018-02-02 10:33:52', NULL),
+(40, '2018-02-02 02:31:13', 2, 1, 2, 0, '160.00', '', '160.00', '', '0.00', '2018-02-02 10:33:58', NULL),
+(41, '2018-02-02 02:31:43', 2, 1, 2, 0, '140.00', '', '150.00', '', '0.00', '2018-02-02 10:34:03', NULL),
+(42, '2018-02-02 02:32:06', 2, 1, 2, 0, '140.00', '', '140.00', '', '0.00', '2018-02-02 10:34:08', NULL),
+(43, '2018-02-02 02:32:59', 2, 1, 2, 0, '390.00', '', '500.00', '', '0.00', '2018-02-02 10:34:12', NULL),
+(44, '2018-02-02 02:33:31', 2, 1, 2, 0, '150.00', '', '150.00', '', '0.00', '2018-02-02 10:34:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -430,7 +447,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `position_tbl`
 --
