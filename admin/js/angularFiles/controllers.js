@@ -58,6 +58,7 @@ app.controller("buisnessManagement",function($scope,$http,dbOperations){
 		});
 	}
 	$scope.newBranch = function(){
+		console.log($scope.branchFields);
 		dbOperations.processData("AddBranch",$scope.branchFields).then(function(res){
 			getBranches();
 		});
